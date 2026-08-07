@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Super Moverz Coach Playbook — Field-ready guide to every Super Moverz game." />
+  <meta name="theme-color" content="#0a1220" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SMZ Coaches" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <title>Super Moverz — Coach Playbook</title>
+
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Stylesheets — order matters -->
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- App root — router renders into this -->
+  <div id="app">
+    <!-- Initial loading state shown before JS runs -->
+    <div class="loading">Loading Coach Playbook…</div>
+  </div>
+
+  <!-- Page renderers -->
+  <script src="pages/home.js"></script>
+  <script src="pages/library.js"></script>
+  <script src="pages/detail.js"></script>
+  <script src="pages/favorites.js"></script>
+
+  <!-- Core modules -->
+  <script src="js/state.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/data.js"></script>
+
+  <!-- App entry point — must load last -->
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.info('SMZ: Service worker registered.', reg.scope))
+          .catch(err => console.warn('SMZ: Service worker registration failed.', err));
+      });
+    }
+  </script>
+
+</body>
+</html>

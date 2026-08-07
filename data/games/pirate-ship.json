@@ -1,0 +1,42 @@
+{
+  "id": "pirate-ship",
+  "name": "Pirate Ship",
+  "guardian": "Woodsy the Wizard",
+  "crystal": "Energy",
+  "phase": "Mid-Session Team Strategy",
+  "focus": "Target selection, defensive positioning, team throwing coordination",
+  "space": "Field",
+  "summary": "Two opposing teams defend their ships while launching cannon balls across the water to land inside the opposing ship. Scuba Divers retrieve loose cannon balls and return them to their team.",
+  "diagramReady": true,
+  "diagram": "diagrams/pirate-ship.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Soft Dodge Balls (10 or more)"
+  ],
+  "overview": "Two opposing teams defend their ships while launching cannon balls across the water to land inside the opposing ship. Scuba Divers retrieve loose cannon balls from the water and return them to their team while protecting their ship from incoming throws.",
+  "setup": "Create two oval-shaped cone grids facing each other to represent opposing ships. Leave at least 10 feet of space between the ships to represent the water. Place all cannon balls in a row between the two ships. Divide players into two teams positioned inside their ships. Select one player from each team to begin as the Scuba Diver, positioned behind their team's ship holding a Zaber.",
+  "steps": [
+    "All players begin inside their team's ship.",
+    "One Scuba Diver per team starts behind their ship.",
+    "When music begins, Scuba Divers move into the water zone and begin returning cannon balls to their team using their Zabers.",
+    "Players inside the ship throw cannon balls toward the opposing ship.",
+    "A team earns one point each time a ball lands inside the opposing ship.",
+    "If a ball is caught by the opposing team, the catching team earns one point instead.",
+    "Continue play until one team reaches 10 points.",
+    "Coach announces the score after each successful point to maintain game awareness and excitement."
+  ],
+  "powerDown": "Players remain active throughout the round. Standard tagging rules apply only if coaches introduce optional Zaber-tag defensive variations.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — Single Scuba Diver per team retrieving cannon balls",
+    "Level 2 — Teams organize defensive ship positioning",
+    "Level 3 — Add additional Scuba Divers",
+    "Level 4 — Limit number of players allowed in front defensive zones",
+    "Level 5 — Reduce ship size to increase scoring pressure"
+  ],
+  "coachingObjective": "Teach players to recognize defensive gaps, coordinate throwing strategy, and adjust positioning to protect shared territory under continuous projectile pressure.",
+  "guardianConnection": "Woodsy the Wizard teaches Super Moverz how to move with energy and awareness while working together to defend their space and create opportunities through coordinated action.",
+  "quickReset": "Return all cannon balls to the center water zone, reset Scuba Divers behind ships, and restart immediately with a new round."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "survivor",
+  "name": "Survivor",
+  "guardian": "Master Commander",
+  "crystal": "Will Power",
+  "phase": "Full-Session / Competitive Progression",
+  "focus": "Spatial control, tagging accuracy, teamwork rescue strategy",
+  "space": "Any",
+  "summary": "Players move inside a circular boundary attempting to tag opponents below the waist using controlled Zaber contact while advancing through cooperative and competitive mission levels.",
+  "diagramReady": true,
+  "diagram": "diagrams/survivor.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers (1 per player)",
+    "Inflatable Zylons",
+    "Optional Yellow Ball (Thunder Dome power-up variation)",
+    "Optional Obstacle Course Setup (Ultimate Survivor variation)"
+  ],
+  "overview": "Players move inside a circular boundary attempting to tag opponents below the waist using controlled Zaber contact while avoiding being tagged themselves. As the game progresses, players advance through increasingly cooperative and competitive mission levels.",
+  "setup": "Create a circular cone boundary sized to fit the group. Place 2–3 inflatable Zylons spaced evenly inside the play zone approximately 10 feet apart. All players begin inside the boundary holding one Zaber each. Players must remain inside the circle and avoid contact with the Zylons during gameplay.",
+  "steps": [
+    "Level 1 — Solo Mission: Players move freely inside the boundary attempting to tag other players below the waist using their Zaber.",
+    "Tagged players immediately power down and wait for the coach's 'power up' command before reentering play.",
+    "Players who step outside the boundary or touch a Zylon power down immediately.",
+    "Ultimate Survivor Variation: Tagged players complete the obstacle course before returning. If one player remains while all others are completing the course, that player becomes the Ultimate Survivor.",
+    "Level 2 — Rescue Mission: Players form teams of two. Tagged players remain powered down until rescued by their partner by touching Zabers. If both partners are tagged, they crawl toward each other to reconnect.",
+    "Level 3 — Thunder Dome: Players form teams of 4–5 and wait outside the circle. Coach calls two teams in to compete. Teams attempt to tag all opposing players down. Winning team stays in for the next matchup.",
+    "Power-Up Option: Add one yellow ball into the arena. Players may throw the ball to tag opponents. If a thrown ball is caught, the thrower is immediately down.",
+    "Continue rotating challenger teams into the arena until the session ends."
+  ],
+  "powerDown": "Tagged players immediately stop play, raise their hand, and power down in place until the coach gives a reset signal or a rescue condition is met. Players also power down if they step outside the boundary or touch a Zylon obstacle.",
+  "rescue": "Active during Level 2 only. Partners rescue each other by touching Zabers. If both players are down, they must move toward each other before reconnecting.",
+  "levelUp": [
+    "Level 1 — Solo tagging inside boundary with obstacle awareness",
+    "Level 2 — Partner rescue system introduced",
+    "Level 3 — Thunder Dome rotating team arena competition",
+    "Level 4 — Add yellow ball projectile tagging option inside arena",
+    "Level 5 — Ultimate Survivor obstacle-course reentry challenge"
+  ],
+  "coachingObjective": "Teach players to control space under pressure while maintaining tagging accuracy, safe movement awareness, and coordinated rescue decision-making.",
+  "guardianConnection": "Master Commander trains Super Moverz to control the arena by staying aware of obstacles, protecting teammates, and choosing the right moment to engage or recover during competition.",
+  "quickReset": "Call 'Power Up,' release all players back into the boundary, and restart immediately from open movement positions or rotate the next Thunder Dome matchup."
+}

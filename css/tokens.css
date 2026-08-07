@@ -1,0 +1,73 @@
+/* ── SMZ Coaches V2 — Design Tokens ── */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+
+  /* ── Brand Colors ── */
+  --brand-green:        #79b72c;
+  --brand-green-dark:   #5a8a1e;
+  --brand-green-glow:   rgba(121, 183, 44, 0.18);
+  --brand-gold:         #eab308;
+  --brand-gold-light:   #f5d67a;
+
+  /* ── Crystal Colors ── */
+  --crystal-safety:     #ef4444;
+  --crystal-unity:      #22c55e;
+  --crystal-willpower:  #3b82f6;
+  --crystal-energy:     #eab308;
+  --crystal-reaction:   #a855f7;
+
+  /* ── Background & Surface ── */
+  --ink:                #0a1220;
+  --ink-mid:            #1c2a3a;
+  --ink-light:          #2e3f55;
+  --surface:            #0f1e30;
+  --surface-card:       rgba(255, 255, 255, 0.055);
+  --surface-card-hover: rgba(255, 255, 255, 0.09);
+  --surface-nav:        rgba(10, 18, 32, 0.88);
+
+  /* ── Borders ── */
+  --border:             rgba(255, 255, 255, 0.10);
+  --border-strong:      rgba(255, 255, 255, 0.18);
+
+  /* ── Text ── */
+  --text-primary:       #f0f4f8;
+  --text-muted:         #8fa8c2;
+  --text-faint:         #4e6a82;
+
+  /* ── Typography ── */
+  --font-display:       'Bebas Neue', sans-serif;
+  --font-body:          'DM Sans', sans-serif;
+
+  /* ── Border Radius ── */
+  --radius-sm:          8px;
+  --radius-md:          14px;
+  --radius-lg:          22px;
+  --radius-pill:        999px;
+
+  /* ── Spacing Scale ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ── Nav ── */
+  --nav-height: 60px;
+
+  /* ── Max Width ── */
+  --max-width: 1160px;
+
+  /* ── Transitions ── */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-card-hover: 0 14px 36px rgba(0, 0, 0, 0.35);
+}

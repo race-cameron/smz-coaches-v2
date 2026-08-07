@@ -1,0 +1,44 @@
+{
+  "id": "royal-rescue",
+  "name": "Royal Rescue",
+  "guardian": "Master Commander",
+  "crystal": "Unity",
+  "phase": "Large Team Strategy / Finale",
+  "focus": "Team coordination, escort strategy, rescuing teammates, and role-based gameplay",
+  "space": "Field",
+  "summary": "Two Royal Families battle to escort their Royal safely across the battlefield and into the opposing castle, progressing through multiple rounds of increasing strategy and equipment.",
+  "diagramReady": true,
+  "diagram": "diagrams/royal-rescue.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Blockers",
+    "Inflatables",
+    "Large Rocks or Obstacles",
+    "Royal Identifier Item (cape, crown, pinnie, etc.)"
+  ],
+  "overview": "Royal Rescue places two Royal Families in a battle to escort their Royal safely across the battlefield and into the opposing castle. Players progress through multiple rounds of increasing strategy and equipment while learning teamwork, protection systems, and battlefield coordination.",
+  "setup": "Create two large castle circles approximately 40–50 yards apart and at least 10 yards wide. Place blockers, inflatables, rocks, and obstacles throughout the battlefield between the castles to create cover and hiding areas. Divide players into two Royal Families. Each team begins inside their own castle.",
+  "steps": [
+    "Level 1 — Castle Switch: No weapons used. Teams attempt to reach the opposing castle before the other team. If opposing players collide, both power down and must be rescued by a teammate. Play best-of-three rounds.",
+    "Level 2 — Knights: Each Royal Family selects one Knight with a Zaber. Knights may tag unarmed players only. Knights may not battle each other. Continue castle-switch gameplay. Play best-of-three rounds.",
+    "Level 3 — Archers: Add one Archer per team using a soft dodge ball. Continue best-of-three gameplay. Larger groups may use multiple Knights, Archers, and role players.",
+    "Level 4 — Wizards: Add Wizards using Zields. Continue team battle progression with all active roles.",
+    "Final Round — Royal Escort: Arm teams evenly with Zeapons. Each team selects one Royal. Escort the Royal safely into the opposing castle. Regular players who are tagged remain powered down. Royals may still be rescued and continue moving. The first Royal to safely enter the opposing castle wins."
+  ],
+  "powerDown": "Tagged players immediately sit down and wait for a teammate rescue unless using the return-to-castle variation.",
+  "rescue": "Instead of sitting where tagged, players may return to their original castle, power up, and rejoin the battle from base.",
+  "levelUp": [
+    "Level 1 — No weapons, castle-switch race",
+    "Level 2 — Add Knights",
+    "Level 3 — Add Archers",
+    "Level 4 — Add Wizards",
+    "Final Level — Escort the Royal mission"
+  ],
+  "coachingObjective": "Teach players battlefield awareness, role responsibility, rescue timing, escort strategy, and coordinated team movement.",
+  "guardianConnection": "Master Commander teaches that leadership means protecting others and working together under pressure. Super Moverz learn that victory comes from teamwork, sacrifice, and coordinated strategy.",
+  "quickReset": "Reset all players to their castles, redistribute equipment, revive powered down players, and begin the next battle immediately."
+}

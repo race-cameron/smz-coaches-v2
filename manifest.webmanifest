@@ -1,0 +1,25 @@
+{
+  "name": "Super Moverz Coach Playbook",
+  "short_name": "SMZ Coaches",
+  "description": "Field-ready guide to every Super Moverz game — diagrams, rules, equipment, and guardian missions.",
+  "start_url": "./index.html#home",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a1220",
+  "theme_color": "#0a1220",
+  "categories": ["education", "sports"],
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

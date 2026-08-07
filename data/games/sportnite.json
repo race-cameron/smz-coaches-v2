@@ -1,0 +1,44 @@
+{
+  "id": "sportnite",
+  "name": "Sportnite",
+  "guardian": "Master Commander",
+  "crystal": "Will Power",
+  "phase": "End-of-Session Finale",
+  "focus": "Arena awareness, equipment decision-making, survival timing under pressure",
+  "space": "Field",
+  "summary": "Players enter a free-movement arena to collect equipment and compete in a survival challenge with reboot mechanics. As the storm closes in, players return to the shrinking battle zone for a final showdown.",
+  "diagramReady": true,
+  "diagram": "diagrams/sportnite.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Reboot Challenge Station Materials"
+  ],
+  "overview": "Players enter a free-movement arena to collect equipment and compete in a survival challenge with reboot mechanics. As the storm closes in, players must return to the shrinking battle zone for a final showdown until only one player remains active.",
+  "setup": "Create a large starting circle using cones. Spread equipment throughout the play space outside the circle so players must move to retrieve it. Set up a designated Reboot Center where tagged players complete a short challenge before returning to play.",
+  "steps": [
+    "All players begin inside the starting circle without equipment.",
+    "On the coach's signal, players leave the circle to collect equipment from the arena.",
+    "Players move freely and attempt to tag opponents below the waist.",
+    "Tagged players crawl or walk safely to the Reboot Center.",
+    "Players complete the reboot challenge before reentering play without equipment.",
+    "Reentering players must collect new equipment from the field.",
+    "Coach announces the approaching storm — players have 15 seconds to return inside the starting circle.",
+    "Any player outside the circle after the countdown powers down. Remaining players compete inside the circle until one player remains active."
+  ],
+  "powerDown": "Tagged players immediately stop play and move safely to the Reboot Center to complete the reboot challenge before returning to the arena. Players outside the circle after the storm countdown power down and are eliminated from the final round.",
+  "rescue": "Teammates may escort tagged players to the Reboot Center. Escorted players return to play together after completing the challenge. Advanced variation: two teammates required for escort.",
+  "levelUp": [
+    "Level 1 — Free equipment collection with reboot challenge reentry",
+    "Level 2 — Limit equipment availability across arena zones",
+    "Level 3 — Add moving patrol zones before storm announcement",
+    "Level 4 — Shorten storm countdown window",
+    "Level 5 — Final shrinking circle rounds after first storm closure"
+  ],
+  "coachingObjective": "Teach players to balance movement timing, equipment selection, and survival awareness while adapting quickly to changing arena conditions.",
+  "guardianConnection": "Master Commander trains Super Moverz to stay alert in fast-changing arena environments by choosing the right equipment, managing risk, and responding quickly when the battlefield shifts.",
+  "quickReset": "Return all players to the starting circle, redistribute equipment across the arena, and restart with a fresh deployment round."
+}

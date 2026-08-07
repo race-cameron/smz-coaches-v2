@@ -1,0 +1,43 @@
+{
+  "id": "meteor-shower",
+  "name": "Meteor Shower",
+  "guardian": "Hero",
+  "crystal": "Safety",
+  "phase": "Warm-Up / Transition",
+  "focus": "Lane awareness, timing movement under pressure, safe projectile navigation",
+  "space": "Field",
+  "summary": "Players travel across a rectangular movement zone while avoiding flying meteors thrown by Space Monkeys. Tagged players join the Space Monkeys until only one runner remains.",
+  "diagramReady": true,
+  "diagram": "diagrams/meteor-shower.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers (Level Up variation)",
+    "Zylons (optional obstacles)",
+    "Yellow Dodge Balls (meteors)"
+  ],
+  "overview": "Players travel across a rectangular movement zone while avoiding flying meteors thrown by Space Monkeys positioned along the sides of the grid. Tagged players join the Space Monkeys and help defend the meteor field until only one runner remains.",
+  "setup": "Create a rectangular cone grid approximately 20 ft wide x 60 ft long. All runners begin together along one short end of the rectangle. Select several players to begin as Space Monkeys, positioned behind the cones along the two long sides of the grid holding meteor balls. Space Monkeys remain outside the running lane boundaries.",
+  "steps": [
+    "All runners begin on one short end of the grid.",
+    "When the music starts, runners move across the rectangle toward the opposite side.",
+    "Space Monkeys throw meteors from outside the sidelines attempting to tag runners below the neck.",
+    "Players hit by meteors immediately become Space Monkeys.",
+    "Remaining runners wait safely at the far end once they cross.",
+    "When music stops, Space Monkeys retrieve meteor balls and reset behind the sidelines.",
+    "When music restarts, runners cross back in the opposite direction.",
+    "Continue rounds until all but one runner have become Space Monkeys or time expires."
+  ],
+  "powerDown": "Players tagged by a meteor immediately stop movement and join the Space Monkeys along the sidelines for the next crossing round.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — Standard crossing with sideline meteor throws",
+    "Level 2 — Increase number of Space Monkeys",
+    "Level 3 — Introduce Zaber blocking shields",
+    "Level 4 — Add Zylons inside grid as movement obstacles",
+    "Level 5 — Limit runners to grouped crossing waves"
+  ],
+  "coachingObjective": "Teach players to scan movement lanes, time acceleration safely, and maintain awareness while traveling through an active projectile zone.",
+  "guardianConnection": "Hero trains Super Moverz to recognize danger early and move through crowded pathways safely by keeping their heads up and choosing the right moment to cross.",
+  "quickReset": "Return runners to the starting boundary, reset Space Monkeys behind sidelines, collect meteors, and restart crossing when music begins again."
+}

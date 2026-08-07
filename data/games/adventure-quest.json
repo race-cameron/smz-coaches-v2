@@ -1,0 +1,47 @@
+{
+  "id": "adventure-quest",
+  "name": "Adventure Quest",
+  "guardian": "Woodsy the Wizard",
+  "crystal": "Unity",
+  "phase": "Large Team Battle",
+  "focus": "Team survival, crystal control, rescuing teammates, and battlefield strategy",
+  "space": "Field",
+  "summary": "Multiple teams compete to collect and control every crystal in the valley — battle, rescue teammates, protect crystal carriers, and eliminate opposing teams to become quest champions.",
+  "diagramReady": true,
+  "diagram": "diagrams/adventure-quest.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Unity Crystals",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Zenectors",
+    "Blockers",
+    "Inflatables"
+  ],
+  "overview": "Adventure Quest transforms the battlefield into a massive crystal war where multiple teams compete to collect and control every crystal in the valley. Teams must battle, rescue teammates, protect their crystal carriers, and eliminate opposing teams in order to become the ultimate quest champions.",
+  "setup": "Create a large central battlefield similar to Survivor. Scatter blockers, inflatables, rocks, obstacles, and Zeapons throughout the field. Divide players into 3, 4, or 5 teams depending on group size. Each team begins outside the battlefield with one Unity Crystal.",
+  "steps": [
+    "When the music begins, all teams enter the battlefield and attempt to collect all crystals.",
+    "Teams battle using available Zeapons while protecting their own crystal carrier.",
+    "If a player is tagged, they immediately power down and drop everything they are carrying — including crystals and Zeapons.",
+    "Active teammates may rescue powered down teammates by tagging them.",
+    "Powered down players may crawl through the battlefield to seek rescue.",
+    "If two teammates are both powered down, they may NOT rescue each other.",
+    "If an entire team is powered down at the same time, that team is eliminated for the remainder of the round.",
+    "The winning condition is one player holding ALL crystals at the same time."
+  ],
+  "powerDown": "Tagged players immediately sit down or crawl while dropping all carried items.",
+  "rescue": "Active teammates may reactivate powered down players through direct teammate tags.",
+  "levelUp": [
+    "Level 1 — Three teams, limited Zeapons",
+    "Level 2 — Add more teams and more battlefield obstacles",
+    "Level 3 — Add additional Zeapons",
+    "Level 4 — Introduce timed crystal control rounds",
+    "Level 5 — Shrink battlefield size as teams are eliminated"
+  ],
+  "coachingObjective": "Teach players teamwork, battlefield awareness, communication, rescue timing, and strategic objective control under pressure.",
+  "guardianConnection": "Woodsy the Wizard teaches that every great quest requires teamwork, bravery, and protecting others along the journey. Super Moverz learn that true adventure is achieved together.",
+  "quickReset": "Reset all crystals to team starting positions, redistribute Zeapons throughout the battlefield, revive eliminated teams, and restart from outside the play area."
+}

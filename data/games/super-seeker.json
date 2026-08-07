@@ -1,0 +1,41 @@
+{
+  "id": "super-seeker",
+  "name": "Super Seeker",
+  "guardian": "Hero",
+  "crystal": "Safety",
+  "phase": "Transition / Awareness Builder",
+  "focus": "Spatial awareness, quiet movement, coordinated rescue timing",
+  "space": "Field",
+  "summary": "Players move across the play space attempting to return safely to base while avoiding Seekers. Tagged players power down until rescued by teammates.",
+  "diagramReady": true,
+  "diagram": "diagrams/super-seeker.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers (optional rescue tool variation)"
+  ],
+  "overview": "Players move across the play space attempting to return safely to base while avoiding Seekers who are trying to tag them. Tagged players power down until rescued by teammates, encouraging teamwork and smart movement decisions.",
+  "setup": "Create a clearly defined base zone using cones at one end of the field. Select 1–2 players to begin as Seekers positioned between the base and the remaining players. All remaining players spread out across the play area away from the base before the round begins.",
+  "steps": [
+    "Players begin scattered across the field away from the base.",
+    "Seekers patrol the space between players and the base.",
+    "Players attempt to move safely back to base without being tagged.",
+    "Tagged players power down where tagged and raise their hand.",
+    "Teammates may rescue powered-down players by touching hands or Zabers.",
+    "Rescued players receive a protected walk back to base.",
+    "Round ends when all players reach base or time expires.",
+    "Add an additional Seeker each round to increase difficulty."
+  ],
+  "powerDown": "Tagged players immediately stop movement, power down, raise their hand, and remain in place until rescued by a teammate. After rescue, players receive a protected walk back to base.",
+  "rescue": "Rescuers must touch hands or connect Zabers before escorting teammates safely back to base. Advanced variation: two rescuers required before escort begins.",
+  "levelUp": [
+    "Level 1 — One Seeker patrols between players and base",
+    "Level 2 — Add additional Seekers each round",
+    "Level 3 — Require grouped movement toward base",
+    "Level 4 — Limit rescue escorts to walking speed only",
+    "Level 5 — Seekers patrol designated movement lanes inside the field"
+  ],
+  "coachingObjective": "Teach players to recognize safe movement windows, communicate quietly with teammates, and coordinate rescues while navigating shared space under pressure.",
+  "guardianConnection": "Hero trains Super Moverz to recognize safe pathways through danger zones by keeping their heads up, moving at the right time, and helping teammates return safely to base.",
+  "quickReset": "Select new Seekers, reposition players across the field, and restart immediately from scattered movement positions."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "troopers-vs-jedi",
+  "name": "Troopers Vs. Jedi",
+  "guardian": "Serenity",
+  "crystal": "Reaction",
+  "phase": "Warm-Up / Skill Builder",
+  "focus": "Reaction time and defensive awareness",
+  "space": "Any",
+  "summary": "Players start as Jedi in a zone avoiding balls by blocking projectiles from Troopers. If a Jedi is hit, they drop their Zaber and become a Trooper.",
+  "diagramReady": true,
+  "diagram": "diagrams/troopers-vs-jedi.png",
+  "videoUrl": null,
+  "equipment": [
+    "Zabers",
+    "Zorbs",
+    "Cones",
+    "Blockers"
+  ],
+  "overview": "Troopers vs. Jedi develops reaction timing and defensive awareness using projectile play and Zaber blocking. Players all start as Jedi in a zone avoiding balls by blocking projectiles from one Trooper. If a Jedi is hit, they drop their Zaber and become a Trooper.",
+  "setup": "Create a circular play boundary using cones. Set up blockers throughout the boundary for players to hide behind. Almost all players will start in the middle of the boundary with Zabers. Select 1–2 players who will start as Troopers throwing Zorbs from outside the cones.",
+  "steps": [
+    "Jedi all start in the zone with Zabers.",
+    "One Trooper starts on the outside of the boundary with balls.",
+    "Trooper starts throwing balls at Jedi or rolling them inside the boundary.",
+    "If a Jedi is hit, they drop their Zaber and move to the outside to become a Trooper.",
+    "If a Trooper's ball lands and stays in the Jedi's boundary, Troopers count out loud to 10 seconds. If they reach 10 seconds without a Jedi batting the ball out, Troopers win and the game resets.",
+    "The game continues until only one Jedi remains, or the Trooper's ball 'explodes' and the game resets."
+  ],
+  "powerDown": "When hit with a Zorb, Jedi must drop their Zaber and transition to the Trooper role.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [],
+  "coachingObjective": "Troopers vs. Jedi develops reaction timing and defensive awareness using projectile play and Zaber blocking.",
+  "guardianConnection": "Serenity teaches Super Moverz about reaction — whether that be physical reaction time or emotional reaction to a situation. She encourages players to be aware and thoughtful about their next step.",
+  "quickReset": "Select a new player to be the first Trooper and encourage the rest to grab Zabers and reset in the zone."
+}

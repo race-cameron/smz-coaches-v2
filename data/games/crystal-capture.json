@@ -1,0 +1,39 @@
+{
+  "id": "crystal-capture",
+  "name": "Crystal Capture",
+  "guardian": "Master Commander",
+  "crystal": "Unity",
+  "phase": "Large Team Strategy",
+  "focus": "Team coordination, territory control, rescuing teammates, and crystal retrieval strategy",
+  "space": "Field",
+  "summary": "Royal Teams compete to collect all three Unity Crystals scattered across the battlefield — balance offense, defense, rescues, and Zeapon control while protecting your own crystal.",
+  "diagramReady": true,
+  "diagram": "diagrams/crystal-capture.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Unity Crystals",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Zenectors"
+  ],
+  "overview": "Crystal Capture is a large-scale team battle where Royal Teams compete to collect all three Unity Crystals scattered across the battlefield. Players must balance offense, defense, rescues, and Zeapon control while protecting their own crystal and stealing from enemy bases.",
+  "setup": "Create three separate team bases using large cone circles spread across the field. Place one Unity Crystal inside each base. Scatter all Zeapons throughout the battlefield before the game begins. Assign players evenly into three teams. Each team begins inside their own base.",
+  "steps": [
+    "When the game begins, players leave their base and attempt to retrieve enemy crystals.",
+    "Players may only carry one crystal at a time.",
+    "After the game starts, players may NOT step back inside their own base.",
+    "Players ARE safe inside enemy team bases as long as they remain standing inside the circle.",
+    "Players may steal crystals from enemy bases, collect Zeapons from the battlefield, and rescue teammates.",
+    "If a player is tagged, they immediately power down and drop everything they are carrying — including crystals and Zeapons.",
+    "Teammates may rescue powered down players by tagging them.",
+    "The first team to collect all three Unity Crystals inside their base wins the game."
+  ],
+  "powerDown": "Tagged players immediately sit down and drop all carried items where they were tagged.",
+  "rescue": "Teammates may reactivate powered down players by tagging them.",
+  "levelUp": [],
+  "coachingObjective": "Teach players strategic movement, communication, territory awareness, rescuing teammates, and balancing offensive and defensive responsibilities.",
+  "guardianConnection": "Master Commander teaches that true victory comes through teamwork, sacrifice, and coordinated strategy. Super Moverz learn that protecting teammates is just as important as capturing objectives.",
+  "quickReset": "Return all crystals to their starting bases, scatter Zeapons back across the battlefield, revive all players, and restart from team bases."
+}

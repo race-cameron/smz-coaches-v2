@@ -1,0 +1,102 @@
+[
+  {
+    "id": "adventure-quest",
+    "name": "Adventure Quest",
+    "guardian": "Woodsy the Wizard",
+    "crystal": "Unity",
+    "phase": "Large Team Battle",
+    "space": "Field",
+    "summary": "Multiple teams compete to collect and control every crystal in the valley — battle, rescue teammates, protect crystal carriers, and eliminate opposing teams to become quest champions.",
+    "diagramReady": true
+  },
+  {
+    "id": "crystal-capture",
+    "name": "Crystal Capture",
+    "guardian": "Master Commander",
+    "crystal": "Unity",
+    "phase": "Large Team Strategy",
+    "space": "Field",
+    "summary": "Royal Teams compete to collect all three Unity Crystals scattered across the battlefield — balance offense, defense, rescues, and Zeapon control while protecting your own crystal.",
+    "diagramReady": true
+  },
+  {
+    "id": "meteor-shower",
+    "name": "Meteor Shower",
+    "guardian": "Hero",
+    "crystal": "Safety",
+    "phase": "Warm-Up / Transition",
+    "space": "Field",
+    "summary": "Players travel across a rectangular movement zone while avoiding flying meteors thrown by Space Monkeys. Tagged players join the Space Monkeys until only one runner remains.",
+    "diagramReady": true
+  },
+  {
+    "id": "pirate-ship",
+    "name": "Pirate Ship",
+    "guardian": "Woodsy the Wizard",
+    "crystal": "Energy",
+    "phase": "Mid-Session Team Strategy",
+    "space": "Field",
+    "summary": "Two opposing teams defend their ships while launching cannon balls across the water to land inside the opposing ship. Scuba Divers retrieve loose cannon balls and return them to their team.",
+    "diagramReady": true
+  },
+  {
+    "id": "robo-shark",
+    "name": "Robo Shark",
+    "guardian": "Hero",
+    "crystal": "Safety",
+    "phase": "Warmup / Transition",
+    "space": "Any",
+    "summary": "Players move freely inside a boundary while avoiding Robo Sharks who attempt to tag them using controlled movement and awareness.",
+    "diagramReady": true
+  },
+  {
+    "id": "royal-rescue",
+    "name": "Royal Rescue",
+    "guardian": "Master Commander",
+    "crystal": "Unity",
+    "phase": "Large Team Strategy / Finale",
+    "space": "Field",
+    "summary": "Two Royal Families battle to escort their Royal safely across the battlefield and into the opposing castle, progressing through multiple rounds of increasing strategy and equipment.",
+    "diagramReady": true
+  },
+  {
+    "id": "sportnite",
+    "name": "Sportnite",
+    "guardian": "Master Commander",
+    "crystal": "Will Power",
+    "phase": "End-of-Session Finale",
+    "space": "Field",
+    "summary": "Players enter a free-movement arena to collect equipment and compete in a survival challenge with reboot mechanics. As the storm closes in, players return to the shrinking battle zone for a final showdown.",
+    "diagramReady": true
+  },
+  {
+    "id": "super-seeker",
+    "name": "Super Seeker",
+    "guardian": "Hero",
+    "crystal": "Safety",
+    "phase": "Transition / Awareness Builder",
+    "space": "Field",
+    "summary": "Players move across the play space attempting to return safely to base while avoiding Seekers. Tagged players power down until rescued by teammates.",
+    "diagramReady": true
+  },
+  {
+    "id": "survivor",
+    "name": "Survivor",
+    "guardian": "Master Commander",
+    "crystal": "Will Power",
+    "phase": "Full-Session / Competitive Progression",
+    "space": "Any",
+    "summary": "Players move inside a circular boundary attempting to tag opponents below the waist using controlled Zaber contact while advancing through cooperative and competitive mission levels.",
+    "diagramReady": true
+  },
+  {
+    "id": "troopers-vs-jedi",
+    "name": "Troopers Vs. Jedi",
+    "guardian": "Serenity",
+    "crystal": "Reaction",
+    "phase": "Warm-Up / Skill Builder",
+    "space": "Any",
+    "summary": "Players start as Jedi in a zone avoiding balls by blocking projectiles from Troopers. If a Jedi is hit, they drop their Zaber and become a Trooper.",
+    "diagramReady": true
+  }
+]

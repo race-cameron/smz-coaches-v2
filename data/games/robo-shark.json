@@ -1,0 +1,42 @@
+{
+  "id": "robo-shark",
+  "name": "Robo Shark",
+  "guardian": "Hero",
+  "crystal": "Safety",
+  "phase": "Warmup / Transition",
+  "focus": "Navigating shared space safely",
+  "space": "Any",
+  "summary": "Players move freely inside a boundary while avoiding Robo Sharks who attempt to tag them using controlled movement and awareness.",
+  "diagramReady": true,
+  "diagram": "diagrams/robo-shark.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers (optional variation)",
+    "Blockers"
+  ],
+  "overview": "Players move freely inside a boundary while avoiding Robo Sharks who attempt to tag them using controlled movement and awareness.",
+  "setup": "Create a rectangular or circular play boundary using cones. Select 1–2 players to begin as Robo Sharks who will start by walking around the border of the zone until the coach releases them in. All remaining players spread out throughout the space before the round begins.",
+  "steps": [
+    "Robo Sharks start walking on the outside of the boundary while the Jaws song plays.",
+    "Coaches yell 'Shark Attack!' to trigger the Robo Sharks to run into the zone.",
+    "Players avoid being tagged using safe movement and spatial awareness.",
+    "Tagged players raise their hand and move to sit outside the zone when tagged.",
+    "Sharks must 'chomp' players with two Zabers below the waist.",
+    "The round continues until all but one player is out or time expires.",
+    "Rotate new Robo Sharks and restart the round.",
+    "Add one Robo Shark each round to level up (coach's discretion to choose when leveling up)."
+  ],
+  "powerDown": "Tagged players move to the outside of the circle with their hands up and power down to wait for the next round.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — One Robo Shark",
+    "Level 2 — Add a second Robo Shark",
+    "Level 3 — Add a third Robo Shark",
+    "Level 4 — Add a fourth Robo Shark",
+    "Level 5 — Robo Sharks hold other upgraded equipment"
+  ],
+  "coachingObjective": "Teach players to scan movement lanes before accelerating through shared play space.",
+  "guardianConnection": "Hero trains Super Moverz to recognize danger early and move safely through crowded environments by keeping their heads up and making smart movement choices.",
+  "quickReset": "Select new Robo Sharks immediately, release all sitting players, and restart from open movement positions inside the boundary."
+}
