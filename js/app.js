@@ -19,8 +19,9 @@ function escHtml(str) {
 function renderNav(route) {
   const favCount = State.getFavoriteIds().size;
   const tabs = [
-    { hash: '#home',      label: 'Home',                    screen: 'home'      },
-    { hash: '#games',     label: 'Games',                   screen: 'games'     },
+    { hash: '#home',      label: 'Home',                      screen: 'home'      },
+    { hash: '#games',     label: 'Games',                     screen: 'games'     },
+    { hash: '#cards',     label: 'Power Cards',               screen: 'cards'     },
     { hash: '#favorites', label: `★ Favorites (${favCount})`, screen: 'favorites' },
   ];
 
@@ -52,9 +53,128 @@ function renderPage(route) {
     case 'home':      return renderHome();
     case 'games':     return renderLibrary();
     case 'favorites': return renderFavorites();
+    case 'cards':     return renderCards();
     case 'detail':    return ''; // async — renderDetail writes directly to #main-content
     default:          return renderHome();
   }
+}
+
+// ── Loading Screen ─────────────────────────────────────────────────
+function showLoadingScreen() {
+  const existing = document.getElementById('smz-loader');
+  if (existing) existing.remove();
+
+  const loader = document.createElement('div');
+  loader.className = 'loader-screen';
+  loader.id = 'smz-loader';
+  loader.innerHTML = `
+    <div class="loader-scene">
+      <div class="loader-card" id="loader-card">
+        <div class="loader-card-face loader-card-front">
+          <img alt="SMZ Power Card Front" />
+        </div>
+        <div class="loader-card-face loader-card-back">
+          <img alt="SMZ Power Card Back" />
+        </div>
+      </div>
+    </div>
+    <div class="loader-text" id="loader-text">POWER CARDS</div>
+    <button class="loader-skip" id="loader-skip">TAP TO ENTER</button>
+  `;
+
+  document.body.appendChild(loader);
+
+  const card = document.getElementById('loader-card');
+  let currentRotation = 0;
+  let isDragging = false;
+  let startX = 0;
+  let startRotation = 0;
+  let animationComplete = false;
+  let floatTimeout = null;
+
+  // After reveal animation completes, switch to float mode
+  floatTimeout = setTimeout(() => {
+    animationComplete = true;
+    if (!isDragging) {
+      card.classList.add('floating');
+    }
+  }, 4200);
+
+  // ── Drag to rotate ──────────────────────────────────────────────
+  function getClientX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+
+  function onDragStart(e) {
+    if (!animationComplete) return;
+    isDragging = true;
+    startX = getClientX(e);
+    startRotation = currentRotation;
+    card.classList.remove('floating');
+    card.classList.add('dragging');
+    card.style.animation = 'none';
+    card.style.transform = `rotateY(${currentRotation}deg)`;
+    e.preventDefault();
+  }
+
+  function onDragMove(e) {
+    if (!isDragging) return;
+    const deltaX = getClientX(e) - startX;
+    currentRotation = startRotation - deltaX * 0.5;
+    card.style.transform = `rotateY(${currentRotation}deg)`;
+    e.preventDefault();
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    card.classList.remove('dragging');
+
+    // Snap to nearest face (0 = front, 180/-180 = back)
+    const mod = ((currentRotation % 360) + 360) % 360;
+    const snapToBack = mod > 90 && mod < 270;
+    const targetRotation = snapToBack
+      ? (currentRotation > 0 ? 180 : -180)
+      : Math.round(currentRotation / 360) * 360;
+
+    card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+    card.style.transform = `rotateY(${targetRotation}deg)`;
+    currentRotation = targetRotation;
+
+    setTimeout(() => {
+      card.style.transition = '';
+      card.classList.add('floating');
+    }, 420);
+  }
+
+  // Mouse events
+  card.addEventListener('mousedown', onDragStart);
+  window.addEventListener('mousemove', onDragMove);
+  window.addEventListener('mouseup', onDragEnd);
+
+  // Touch events
+  card.addEventListener('touchstart', onDragStart, { passive: false });
+  window.addEventListener('touchmove', onDragMove, { passive: false });
+  window.addEventListener('touchend', onDragEnd);
+
+  // ── Dismiss ─────────────────────────────────────────────────────
+  function dismiss() {
+    clearTimeout(floatTimeout);
+    window.removeEventListener('mousemove', onDragMove);
+    window.removeEventListener('mouseup', onDragEnd);
+    window.removeEventListener('touchmove', onDragMove);
+    window.removeEventListener('touchend', onDragEnd);
+    loader.classList.add('fade-out');
+    setTimeout(() => loader.remove(), 800);
+  }
+
+  // Auto dismiss after 8 seconds (reveal + linger + float time)
+  setTimeout(dismiss, 8000);
+
+  document.getElementById('loader-skip').addEventListener('click', e => {
+    e.stopPropagation();
+    dismiss();
+  });
 }
 
 // ── Main render function ───────────────────────────────────────────
@@ -74,6 +194,17 @@ function render(route) {
 
   // Attach search input handler if on library screen
   attachSearchHandler();
+
+  // Attach cards events if on cards screen
+  if (route.screen === 'cards') {
+    attachCardsEvents();
+  }
+
+  // Show loading screen when entering cards for the first time
+  if (route.screen === 'cards' && !window._cardsLoadShown) {
+    window._cardsLoadShown = true;
+    showLoadingScreen();
+  }
 
   // Trigger async detail render if on detail screen
   if (route.screen === 'detail' && route.id) {

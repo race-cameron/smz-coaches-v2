@@ -33,6 +33,10 @@ const Router = (() => {
       return { screen: 'favorites', id: null };
     }
 
+    if (clean === 'cards') {
+      return { screen: 'cards', id: null };
+    }
+
     if (clean.startsWith('game/')) {
       const id = clean.slice(5);
       return { screen: 'detail', id: id || null };
