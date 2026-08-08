@@ -70,12 +70,11 @@ function showLoadingScreen() {
   loader.innerHTML = `
     <div class="loader-scene">
       <div class="loader-card" id="loader-card">
-        <div class="loader-card-face loader-card-front">
-          <img alt="SMZ Power Card Front" />
-        </div>
-        <div class="loader-card-face loader-card-back">
-          <img alt="SMZ Power Card Back" />
-        </div>
+        <div class="loader-card-face loader-card-front"></div>
+        <div class="loader-card-face loader-card-back"></div>
+        <div class="loader-card-edge loader-card-edge-left"></div>
+        <div class="loader-card-edge loader-card-edge-right"></div>
+        <div class="loader-card-sheen"></div>
       </div>
     </div>
     <div class="loader-text" id="loader-text">POWER CARDS</div>
@@ -85,20 +84,33 @@ function showLoadingScreen() {
   document.body.appendChild(loader);
 
   const card = document.getElementById('loader-card');
-  let currentRotation = 0;
+  const frontFace = card.querySelector('.loader-card-front');
+  const backFace = card.querySelector('.loader-card-back');
+  const sheen = card.querySelector('.loader-card-sheen');
+
+  // currentRotation is a REAL rotateY angle applied straight to the
+  // card, so dragging gets true perspective foreshortening for free.
+  // Which face is opaque is driven separately (by angle), never by
+  // backface-visibility, so there's nothing here for Safari to get
+  // wrong.
+  let currentRotation = -180; // front showing, matches end of cardReveal
   let isDragging = false;
   let startX = 0;
   let startRotation = 0;
-  let animationComplete = false;
   let floatTimeout = null;
+
+  function isFrontShowing(rotation) {
+    const mod = ((rotation % 360) + 360) % 360;
+    return mod > 90 && mod < 270;
+  }
 
   // After reveal animation completes, switch to float mode
   floatTimeout = setTimeout(() => {
-    animationComplete = true;
+    currentRotation = -180; // front is showing after animation
     if (!isDragging) {
       card.classList.add('floating');
     }
-  }, 4200);
+  }, 12500);
 
   // ── Drag to rotate ──────────────────────────────────────────────
   function getClientX(e) {
@@ -106,14 +118,26 @@ function showLoadingScreen() {
   }
 
   function onDragStart(e) {
-    if (!animationComplete) return;
     isDragging = true;
     startX = getClientX(e);
     startRotation = currentRotation;
     card.classList.remove('floating');
     card.classList.add('dragging');
+
+    // Freeze whatever is currently showing (whether mid-reveal-animation
+    // or already floating) as explicit inline values, then kill the
+    // animations so dragging takes over cleanly with no jump.
+    const frontOpacity = getComputedStyle(frontFace).opacity;
+    const backOpacity = getComputedStyle(backFace).opacity;
     card.style.animation = 'none';
+    frontFace.style.animation = 'none';
+    backFace.style.animation = 'none';
+    sheen.style.animation = 'none';
+    sheen.style.opacity = '0';
     card.style.transform = `rotateY(${currentRotation}deg)`;
+    frontFace.style.opacity = frontOpacity;
+    backFace.style.opacity = backOpacity;
+
     e.preventDefault();
   }
 
@@ -122,6 +146,11 @@ function showLoadingScreen() {
     const deltaX = getClientX(e) - startX;
     currentRotation = startRotation - deltaX * 0.5;
     card.style.transform = `rotateY(${currentRotation}deg)`;
+
+    const showFront = isFrontShowing(currentRotation);
+    frontFace.style.opacity = showFront ? '1' : '0';
+    backFace.style.opacity = showFront ? '0' : '1';
+
     e.preventDefault();
   }
 
@@ -130,19 +159,31 @@ function showLoadingScreen() {
     isDragging = false;
     card.classList.remove('dragging');
 
-    // Snap to nearest face (0 = front, 180/-180 = back)
+    // Snap to the nearest face — always take the shortest path from
+    // wherever the drag currently is. (The old version re-derived a
+    // "base" from scratch each time, which after a couple of drags
+    // could land a full 360deg away from the current angle, making it
+    // visibly spin all the way around again before landing.)
     const mod = ((currentRotation % 360) + 360) % 360;
-    const snapToBack = mod > 90 && mod < 270;
-    const targetRotation = snapToBack
-      ? (currentRotation > 0 ? 180 : -180)
-      : Math.round(currentRotation / 360) * 360;
+    const snapToFront = mod > 90 && mod < 270;
+    const targetMod = snapToFront ? 180 : 0;
+    let delta = targetMod - mod;
+    if (delta > 180) delta -= 360;
+    if (delta <= -180) delta += 360;
+    const targetRotation = currentRotation + delta;
 
     card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+    frontFace.style.transition = 'opacity 0.15s ease';
+    backFace.style.transition = 'opacity 0.15s ease';
     card.style.transform = `rotateY(${targetRotation}deg)`;
+    frontFace.style.opacity = snapToFront ? '1' : '0';
+    backFace.style.opacity = snapToFront ? '0' : '1';
     currentRotation = targetRotation;
 
     setTimeout(() => {
       card.style.transition = '';
+      frontFace.style.transition = '';
+      backFace.style.transition = '';
       card.classList.add('floating');
     }, 420);
   }
@@ -168,8 +209,8 @@ function showLoadingScreen() {
     setTimeout(() => loader.remove(), 800);
   }
 
-  // Auto dismiss after 8 seconds (reveal + linger + float time)
-  setTimeout(dismiss, 8000);
+  // Auto dismiss after 18 seconds (reveal + linger + float time)
+  setTimeout(dismiss, 18000);
 
   document.getElementById('loader-skip').addEventListener('click', e => {
     e.stopPropagation();
