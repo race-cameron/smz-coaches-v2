@@ -11,8 +11,8 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v2';
-const DATA_CACHE     = 'smz-v2-data-v2';
+const CACHE_VERSION  = 'smz-v2-v4';
+const DATA_CACHE     = 'smz-v2-data-v4';
 
 // ── App shell — cached on install ─────────────────────────────────
 const SHELL_ASSETS = [
@@ -29,14 +29,25 @@ const SHELL_ASSETS = [
   './js/router.js',
   './js/data.js',
   './js/cards-state.js',
+  './js/image-utils.js',
+  './js/card-assets.js',
+  './js/card-render.js',
+  './js/card-viewer.js',
+  './js/print-sheets.js',
   './js/app.js',
   './pages/home.js',
   './pages/library.js',
   './pages/detail.js',
   './pages/favorites.js',
   './pages/cards.js',
+  './pages/card-creator.js',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
+  // Note: Power Card art lives embedded (as base64) inside
+  // js/card-assets.js, not as separate files here — a canvas built
+  // from cross-file images gets "tainted" under Safari's file://
+  // testing mode, blocking the save/export step. The raw files still
+  // sit in assets/cards/ for reference but aren't fetched by the app.
   // Game data
   './data/index.json',
   './data/games/adventure-quest.json',

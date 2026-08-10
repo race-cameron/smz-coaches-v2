@@ -121,7 +121,7 @@ function showLoadingScreen() {
     isDragging = true;
     startX = getClientX(e);
     startRotation = currentRotation;
-    card.classList.remove('floating');
+    card.classList.remove('floating', 'floating-back');
     card.classList.add('dragging');
 
     // Freeze whatever is currently showing (whether mid-reveal-animation
@@ -184,7 +184,11 @@ function showLoadingScreen() {
       card.style.transition = '';
       frontFace.style.transition = '';
       backFace.style.transition = '';
-      card.classList.add('floating');
+      // .floating is centered on the front-facing angle, .floating-back
+      // on the back-facing one — using the wrong one yanks the
+      // rotation toward the other face's angle while its image is
+      // still the one showing, rendering it mirrored.
+      card.classList.add(snapToFront ? 'floating' : 'floating-back');
     }, 420);
   }
 
