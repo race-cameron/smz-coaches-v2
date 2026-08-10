@@ -85,7 +85,7 @@ function renderCardCreatorView() {
               ? `<img src="${s.photo}" alt="" />`
               : `<div class="creator-photo-placeholder"><span>📸</span>Click to upload</div>`}
           </div>
-          <input type="file" id="creator-photo-input" accept="image/*" capture="environment" style="display:none;" />
+          <input type="file" id="creator-photo-input" accept="image/*" style="display:none;" />
           ${s.photo ? `
             <div class="creator-bg-row">
               <button class="creator-bg-btn ${!s.usingBgRemoved ? 'active' : ''}"

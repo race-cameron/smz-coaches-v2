@@ -471,7 +471,7 @@ function showAddPlayerModal(schoolId, classId) {
         <div class="photo-upload-preview" id="photo-preview">📷</div>
         <label class="btn-secondary photo-upload-label">
           Choose Photo
-          <input type="file" accept="image/*" capture="environment" id="modal-photo-input" style="display:none;" />
+          <input type="file" accept="image/*" id="modal-photo-input" style="display:none;" />
         </label>
       </div>
       <input class="modal-input" id="modal-input" type="text"
