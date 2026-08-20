@@ -185,7 +185,7 @@ const CardRender = (() => {
   // Renders a card to a full-resolution offscreen canvas and returns a
   // JPEG data URL — used both to save the permanent "renderedFront"
   // snapshot and to build print sheets.
-  async function renderToDataURL(card, quality = 0.93) {
+  async function renderToDataURL(card, quality = 0.78) {
     const oc = document.createElement('canvas');
     oc.width = CW;
     oc.height = CH;

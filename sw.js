@@ -11,8 +11,8 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v4';
-const DATA_CACHE     = 'smz-v2-data-v4';
+const CACHE_VERSION  = 'smz-v2-v8';
+const DATA_CACHE     = 'smz-v2-data-v8';
 
 // ── App shell — cached on install ─────────────────────────────────
 const SHELL_ASSETS = [
@@ -28,12 +28,14 @@ const SHELL_ASSETS = [
   './js/state.js',
   './js/router.js',
   './js/data.js',
+  './js/card-image-store.js',
   './js/cards-state.js',
   './js/image-utils.js',
   './js/card-assets.js',
   './js/card-render.js',
   './js/card-viewer.js',
   './js/print-sheets.js',
+  './js/scoring-guide.js',
   './js/app.js',
   './pages/home.js',
   './pages/library.js',

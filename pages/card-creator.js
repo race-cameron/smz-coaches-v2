@@ -133,7 +133,10 @@ function renderCardCreatorView() {
         </div>
 
         <div class="creator-field">
-          <div class="fl">Power Scores — tap to fill</div>
+          <div class="fl-row">
+            <div class="fl">Power Scores — tap to fill</div>
+            <button class="scoring-guide-btn" data-cards-action="open-scoring-guide" title="How scoring works" type="button">?</button>
+          </div>
           <div class="creator-score-grid">
             ${CardRender.CAT_NAMES.map((name, ci) => `
               <div class="creator-score-col">
@@ -190,7 +193,7 @@ function attachCardCreatorEvents() {
     fileInput.onchange = (e) => {
       const file = e.target.files[0];
       if (!file) return;
-      ImageUtils.fileToDataURL(file, 1000, 0.85).then(dataUrl => {
+      ImageUtils.fileToDataURL(file, 640, 0.78).then(dataUrl => {
         _creatorState.photo = dataUrl;
         _creatorState.photoOriginal = dataUrl;
         _creatorState.photoBgRemoved = null;
@@ -363,7 +366,7 @@ async function saveCreatorCard() {
   try {
     const renderedFront = await CardRender.renderToDataURL(_creatorState);
     const s = _creatorState;
-    CardsState.addCard(s.schoolId, s.classId, s.playerId, {
+    await CardsState.addCard(s.schoolId, s.classId, s.playerId, {
       renderedFront,
       photo: s.photo,
       ageGroupIndex: s.ageGroupIndex,

@@ -40,9 +40,28 @@ function drawCropMarks(pdf) {
     });
 }
 
+// Sync — just checks whether each player's latest card HAS an image
+// (either inline, for older cards, or in IndexedDB, for newer ones)
+// without actually fetching the image bytes. Keeps this safe to call
+// for quick counts (e.g. the print modal's "N ready" label).
 function getPrintableEntries(schoolId, classId) {
   return CardsState.getPrintableCardsForClass(schoolId, classId)
-    .filter(entry => !!entry.card.renderedFront);
+    .filter(entry => !!entry.card && (entry.card.renderedFront || entry.card.hasImage));
+}
+
+// Resolves the actual image bytes for one card — inline if it's an
+// older-format card, otherwise fetched from IndexedDB.
+async function resolveFrontImage(card) {
+  if (card.renderedFront) return card.renderedFront;
+  if (card.hasImage) {
+    try {
+      const rec = await CardImageStore.get(card.id);
+      return rec && rec.renderedFront;
+    } catch {
+      return null;
+    }
+  }
+  return null;
 }
 
 async function printClassFrontSheet(schoolId, classId) {
@@ -57,15 +76,27 @@ async function printClassFrontSheet(schoolId, classId) {
     return;
   }
 
+  // Resolve every image up front so the layout loop below can stay a
+  // simple, synchronous pass over already-known data.
+  const images = await Promise.all(entries.map(entry => resolveFrontImage(entry.card)));
+  const printable = entries
+    .map((entry, i) => images[i])
+    .filter(img => !!img);
+
+  if (!printable.length) {
+    alert('Could not load any card images to print. Try again.');
+    return;
+  }
+
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'in', format: [8.5, 11] });
-  const pages = chunkArray(entries, 9);
+  const pages = chunkArray(printable, 9);
 
-  pages.forEach((pageEntries, pageIndex) => {
+  pages.forEach((pageImages, pageIndex) => {
     if (pageIndex > 0) pdf.addPage();
-    pageEntries.forEach((entry, i) => {
+    pageImages.forEach((img, i) => {
       const row = Math.floor(i / 3), col = i % 3;
-      pdf.addImage(entry.card.renderedFront, 'JPEG', 0.5 + col * 2.5, 0.25 + row * 3.5, 2.5, 3.5);
+      pdf.addImage(img, 'JPEG', 0.5 + col * 2.5, 0.25 + row * 3.5, 2.5, 3.5);
     });
     drawCropMarks(pdf);
   });

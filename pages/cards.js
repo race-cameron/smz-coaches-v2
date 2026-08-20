@@ -214,9 +214,16 @@ function renderRosterView() {
         ${cls.archived ? '<span class="archived-badge">Archived</span>' : ''}
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-secondary" data-cards-action="open-scoring-guide">
+          📖 Scoring Guide
+        </button>
         <button class="btn-secondary" data-cards-action="print-class"
           data-school-id="${school.id}" data-class-id="${cls.id}">
           🖨 Print Class
+        </button>
+        <button class="btn-secondary" data-cards-action="clear-class-cards"
+          data-school-id="${school.id}" data-class-id="${cls.id}" title="Frees up storage space — only use after you've downloaded the print sheet">
+          🗑 Clear Saved Cards
         </button>
         <button class="btn-primary" data-cards-action="add-player"
           data-school-id="${school.id}" data-class-id="${cls.id}">
@@ -361,12 +368,18 @@ function renderProfileView() {
              </div>`
           : `<div class="records-grid">
                ${cards.map((card, i) => {
+                 // Older cards still carry their image inline in
+                 // localStorage; newer ones only have `hasImage` and
+                 // fetch the picture from IndexedDB after this HTML
+                 // is in the DOM (see hydrateCardThumbnails below).
                  const img = card.renderedFront || card.photo;
+                 const needsFetch = !img && card.hasImage;
                  const groupName = CardRender.GRP_NAMES[card.ageGroupIndex] || '';
                  return `
                    <div class="record-card" data-cards-action="view-card"
                      data-school-id="${school.id}" data-class-id="${cls.id}" data-player-id="${player.id}" data-card-id="${card.id}">
-                     <div class="record-card-photo" ${img ? `style="background-image:url('${img}')"` : ''}></div>
+                     <div class="record-card-photo" ${needsFetch ? `data-needs-image="1" data-card-id="${card.id}"` : ''}
+                       ${img ? `style="background-image:url('${img}')"` : ''}></div>
                      <div class="record-card-body">
                        <div class="record-card-title">${i === 0 ? 'Latest' : formatDate(card.createdAt)}</div>
                        <div class="record-card-meta">${escHtml(groupName)} &nbsp;·&nbsp; ${card.shields} shield${card.shields !== 1 ? 's' : ''}</div>
@@ -663,6 +676,59 @@ function renderCardsInPlace() {
   const main = document.getElementById('main-content');
   if (main) main.innerHTML = renderCards();
   attachCardsEvents();
+  hydrateCardThumbnails();
+}
+
+// Fills in record-card thumbnails whose image lives in IndexedDB
+// (newer cards) instead of directly in the rendered HTML (older
+// cards, which already have it inline and don't need this). Runs
+// after every render; each fetch is independent so one slow/failed
+// image never blocks the others.
+function hydrateCardThumbnails() {
+  const main = document.getElementById('main-content');
+  if (!main) return;
+  main.querySelectorAll('.record-card-photo[data-needs-image="1"]').forEach(async (el) => {
+    const cardId = el.dataset.cardId;
+    if (!cardId) return;
+    try {
+      const rec = await CardImageStore.get(cardId);
+      const img = rec && (rec.renderedFront || rec.photo);
+      if (img) {
+        el.style.backgroundImage = `url('${img}')`;
+        el.removeAttribute('data-needs-image');
+      }
+    } catch {
+      // Leave the placeholder as-is — a failed fetch here shouldn't
+      // break the rest of the page.
+    }
+  });
+}
+
+// Opens the 3D viewer for a record-card element, resolving the image
+// from IndexedDB first if it isn't already inline on the card object
+// (older cards have it inline; newer ones don't).
+async function openCardViewerForCardEl(el) {
+  const player = CardsState.getPlayer(el.dataset.schoolId, el.dataset.classId, el.dataset.playerId);
+  const card = player ? player.cards.find(c => c.id === el.dataset.cardId) : null;
+  if (!card) return;
+
+  let img = card.renderedFront || card.photo;
+  if (!img && card.hasImage) {
+    try {
+      const rec = await CardImageStore.get(card.id);
+      img = rec && (rec.renderedFront || rec.photo);
+    } catch {
+      img = null;
+    }
+  }
+  if (img) openCardViewer(img, CARD_ASSETS.back);
+  else alert('Could not load this card\'s image.');
+}
+
+async function clearClassCardsAndRefresh(schoolId, classId) {
+  const count = await CardsState.clearClassCards(schoolId, classId);
+  alert(count > 0 ? `Cleared ${count} card${count === 1 ? '' : 's'}. You're good to make more.` : 'No saved cards to clear.');
+  renderCardsInPlace();
 }
 
 // ── Cards event handling ───────────────────────────────────────────
@@ -832,16 +898,29 @@ function handleCardsAction(e) {
       removeBgFromPhoto();
       break;
 
-    case 'view-card': {
-      const player = CardsState.getPlayer(el.dataset.schoolId, el.dataset.classId, el.dataset.playerId);
-      const card = player ? player.cards.find(c => c.id === el.dataset.cardId) : null;
-      const img = card && (card.renderedFront || card.photo);
-      if (img) openCardViewer(img, CARD_ASSETS.back);
+    case 'view-card':
+      openCardViewerForCardEl(el);
       break;
-    }
 
     case 'print-class':
       showPrintClassModal(el.dataset.schoolId, el.dataset.classId);
+      break;
+
+    case 'clear-class-cards': {
+      const schoolId = el.dataset.schoolId, classId = el.dataset.classId;
+      const ok = confirm(
+        "This deletes the saved card images for every player in this class to free up storage space. " +
+        "Names, rosters, and participation history are NOT affected.\n\n" +
+        "Only do this AFTER you've downloaded the print sheet — this cannot be undone.\n\n" +
+        "Clear saved cards now?"
+      );
+      if (!ok) break;
+      clearClassCardsAndRefresh(schoolId, classId);
+      break;
+    }
+
+    case 'open-scoring-guide':
+      openScoringGuide();
       break;
   }
 }

@@ -99,11 +99,17 @@ const CardsState = (() => {
     }
   }
 
+  // Returns true on success, false if the write failed (most commonly
+  // because localStorage is full — card images are stored as base64
+  // and add up fast). Callers that are about to lose real data (like
+  // addCard) should check this and throw so the UI can tell the coach
+  // instead of silently pretending it worked.
   function save(data) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      return true;
     } catch {
-      // Fail silently
+      return false;
     }
   }
 
@@ -407,7 +413,7 @@ const CardsState = (() => {
   // scores is a flat array of 5 counts (0-3 each), in the fixed order
   // [Safety, Unity, WillPower, Energy, Reaction] — matches the card
   // renderer's category order exactly.
-  function addCard(schoolId, classId, playerId, {
+  async function addCard(schoolId, classId, playerId, {
     renderedFront,     // flattened composite card image (front face) — used for records/print/3D viewer
     photo,             // source student photo (post-resize), kept so the card can be re-edited later
     ageGroupIndex,     // 0-4, index into the 5 age-group tiers
@@ -423,11 +429,22 @@ const CardsState = (() => {
     if (!player) return null;
 
     const finalScores = Array.isArray(scores) && scores.length === 5 ? scores : [0, 0, 0, 0, 0];
+    const cardId = uid('card');
+
+    // The actual image bytes go to IndexedDB — it has a MUCH bigger
+    // quota than localStorage, which is what let a card generator
+    // used all day fill up localStorage after only a handful of
+    // cards. Only a lightweight `hasImage` flag stays in the
+    // localStorage-backed record below.
+    try {
+      await CardImageStore.put(cardId, { renderedFront: renderedFront || null, photo: photo || null });
+    } catch (err) {
+      throw new Error('Could not save this card\'s image: ' + ((err && err.message) || 'storage error'));
+    }
 
     const card = {
-      id: uid('card'),
-      renderedFront: renderedFront || null,
-      photo: photo || null,
+      id: cardId,
+      hasImage: true,
       ageGroupIndex: typeof ageGroupIndex === 'number' ? ageGroupIndex : 0,
       scores: finalScores,
       px, py, pz,
@@ -436,11 +453,21 @@ const CardsState = (() => {
     };
 
     player.cards.push(card);
-    save(data);
+    const ok = save(data);
+    if (!ok) {
+      // Roll back the in-memory push AND the image write so this
+      // function never returns a "successful" card that isn't fully
+      // on disk — the old behavior (save() failing silently) let the
+      // wizard think it had saved, navigate away, and lose the card
+      // with no warning.
+      player.cards.pop();
+      CardImageStore.remove(cardId).catch(() => {});
+      throw new Error('Your device is out of storage space for this app. Delete a few old cards (or ask for help clearing space), then try again.');
+    }
     return card;
   }
 
-  function deleteCard(schoolId, classId, playerId, cardId) {
+  async function deleteCard(schoolId, classId, playerId, cardId) {
     const data = load();
     const school = data.schools.find(s => s.id === schoolId);
     if (!school) return;
@@ -450,6 +477,30 @@ const CardsState = (() => {
     if (!player) return;
     player.cards = player.cards.filter(c => c.id !== cardId);
     save(data);
+    await CardImageStore.remove(cardId).catch(() => {});
+  }
+
+  // Wipes the generated card IMAGES for every player in a class (active
+  // and archived) while leaving the roster, names, and participation
+  // history untouched. Kept as a manual "free up space right now"
+  // escape hatch — with images in IndexedDB this shouldn't be needed
+  // for normal use, but it's cheap insurance during a live event.
+  async function clearClassCards(schoolId, classId) {
+    const data = load();
+    const school = data.schools.find(s => s.id === schoolId);
+    if (!school) return 0;
+    const cls = school.classes.find(c => c.id === classId);
+    if (!cls) return 0;
+    let count = 0;
+    const cardIds = [];
+    cls.players.forEach(p => {
+      count += p.cards.length;
+      p.cards.forEach(c => cardIds.push(c.id));
+      p.cards = [];
+    });
+    save(data);
+    await CardImageStore.removeMany(cardIds).catch(() => {});
+    return count;
   }
 
   // ── Computed helpers ───────────────────────────────────────────
@@ -512,6 +563,7 @@ const CardsState = (() => {
     getLatestCard,
     addCard,
     deleteCard,
+    clearClassCards,
     // Helpers
     totalShields,
     totalPlayers,
