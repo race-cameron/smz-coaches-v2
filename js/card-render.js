@@ -9,7 +9,8 @@
  *
  * A card is drawn on an offscreen canvas at full print resolution
  * (750x1050px = 2.5"x3.5" at 300dpi) by compositing, in order:
- *   1. The card frame/background (front.jpg)
+ *   1. The card frame/background — one of 5 selectable "skin" tiers
+ *      (Apprentice/Ranger/Hero/Mystic/Master), per card.tierIndex
  *   2. The student photo, clipped to the photo window, positioned/
  *      zoomed per the card's px/py/pz values
  *   3. The age-group nameplate graphic (one of 5 tiers)
@@ -18,7 +19,12 @@
  *   5. The earned power shields (0-5)
  *
  * Card data shape expected by drawCard():
- *   { photo, ageGroupIndex, scores: [n,n,n,n,n], px, py, pz }
+ *   { photo, ageGroupIndex, tierIndex, scores: [n,n,n,n,n], px, py, pz }
+ *
+ * tierIndex (0-4) selects the card skin — see TIER_NAMES below. Only the
+ * frame/border and background "stage" art differ between tiers; the
+ * photo window, nameplate, score icons, and shield layout (L, below)
+ * are identical across all 5 and must never change per-tier.
  *
  * Art assets come from CARD_ASSETS (js/card-assets.js), embedded as
  * base64 rather than loaded as separate files — a canvas becomes
@@ -36,6 +42,12 @@ const CardRender = (() => {
 
   const GRP_NAMES = ['Micro Moverz', 'Mini Moverz', 'Mega Moverz', 'Mighty Moverz', 'Master Moverz'];
   const CAT_NAMES = ['SAFETY', 'UNITY', 'WILL\nPOWER', 'ENERGY', 'REACTION'];
+
+  // Card "skin" tiers — selectable per-card, swap only the frame/border
+  // and background stage art (ASSET_PATHS.fronts[i]). Everything else
+  // (photo window, nameplate, score icons, shields) is drawn identically
+  // on top, per the layout in L below, regardless of tier.
+  const TIER_NAMES = ['Apprentice', 'Ranger', 'Hero', 'Mystic', 'Master'];
 
   // Card canvas size: 750x1050px = 2.5in x 3.5in at 300dpi (print quality).
   const CW = 750, CH = 1050;
@@ -68,19 +80,27 @@ const CardRender = (() => {
         img.src = src;
       });
     }
+    const nFronts = ASSET_PATHS.fronts.length; // 5 tier skins
     return Promise.all([
-      loadImg(ASSET_PATHS.front),
+      ...ASSET_PATHS.fronts.map(loadImg),
       loadImg(ASSET_PATHS.back),
       loadImg(ASSET_PATHS.logo),
       ...ASSET_PATHS.icons.map(loadImg),
       ...ASSET_PATHS.grps.map(loadImg),
     ]).then(imgs => {
+      let i = 0;
+      const fronts = imgs.slice(i, i += nFronts);
+      const back   = imgs[i++];
+      const logo   = imgs[i++];
+      const icons  = imgs.slice(i, i += 5);
+      const grps   = imgs.slice(i, i += 5);
       IMG = {
-        front: imgs[0],
-        back:  imgs[1],
-        logo:  imgs[2],
-        icons: imgs.slice(3, 8),
-        grps:  imgs.slice(8, 13),
+        fronts,
+        front: fronts[0], // back-compat alias: Apprentice skin
+        back,
+        logo,
+        icons,
+        grps,
       };
       ready = true;
       return IMG;
@@ -125,7 +145,9 @@ const CardRender = (() => {
   async function drawCard(ctx, card) {
     if (!ready) await readyPromise;
     ctx.clearRect(0, 0, CW, CH);
-    ctx.drawImage(IMG.front, 0, 0, CW, CH);
+    const ti = (typeof card.tierIndex === 'number' && card.tierIndex >= 0 && card.tierIndex < IMG.fronts.length)
+      ? card.tierIndex : 0;
+    ctx.drawImage(IMG.fronts[ti], 0, 0, CW, CH);
 
     // Student photo
     const pImg = await getPhotoImg(card.photo);
@@ -198,6 +220,7 @@ const CardRender = (() => {
     isReady: () => ready,
     GRP_NAMES,
     CAT_NAMES,
+    TIER_NAMES,
     CW, CH,
     L,
     ASSET_PATHS,
