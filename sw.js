@@ -11,8 +11,8 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v11';
-const DATA_CACHE     = 'smz-v2-data-v11';
+const CACHE_VERSION  = 'smz-v2-v13';
+const DATA_CACHE     = 'smz-v2-data-v13';
 
 // ── App shell — cached on install ─────────────────────────────────
 const SHELL_ASSETS = [
