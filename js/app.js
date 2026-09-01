@@ -88,6 +88,19 @@ function showLoadingScreen() {
   const backFace = card.querySelector('.loader-card-back');
   const sheen = card.querySelector('.loader-card-sheen');
 
+  // Cycle the front face through the 5 tier cards so the loading screen
+  // shows off the collection instead of one static design. This only
+  // ever touches backgroundImage -- never the opacity/rotation that
+  // drag-to-flip owns -- so it can run continuously (even mid-drag, or
+  // while the back is the one showing) without fighting interaction.
+  const LOADER_FRONTS = (typeof CARD_ASSETS !== 'undefined' && CARD_ASSETS.loaderShowcase) || [];
+  let frontCycleIndex = 0;
+  function applyFrontImage(i) {
+    if (!LOADER_FRONTS.length) return;
+    frontFace.style.backgroundImage = 'url("' + LOADER_FRONTS[i % LOADER_FRONTS.length] + '")';
+  }
+  applyFrontImage(frontCycleIndex);
+
   // currentRotation is a REAL rotateY angle applied straight to the
   // card, so dragging gets true perspective foreshortening for free.
   // Which face is opaque is driven separately (by angle), never by
@@ -104,13 +117,109 @@ function showLoadingScreen() {
     return mod > 90 && mod < 270;
   }
 
-  // After reveal animation completes, switch to float mode
-  floatTimeout = setTimeout(() => {
-    currentRotation = -180; // front is showing after animation
-    if (!isDragging) {
-      card.classList.add('floating');
+  // Keeps face opacity in sync with whatever angle the card is
+  // currently at (auto-spin or manual drag -- both funnel through
+  // here), and advances to the next showcase card at the exact
+  // instant the front swings back into view, never mid-turn.
+  let wasFrontShowing = true;
+  function syncFacesToRotation() {
+    const showFront = isFrontShowing(currentRotation);
+    frontFace.style.opacity = showFront ? '1' : '0';
+    backFace.style.opacity = showFront ? '0' : '1';
+    if (showFront && !wasFrontShowing) {
+      frontCycleIndex++;
+      applyFrontImage(frontCycleIndex);
     }
-  }, 12500);
+    wasFrontShowing = showFront;
+  }
+
+  // Auto-spin (rAF-driven, same direct-transform approach dragging
+  // already uses): hold still on the front for a beat, then spin on to
+  // the next front-facing rest angle at a constant rate, then hold
+  // again -- runs forever once started; simply no-ops while a drag is
+  // in progress rather than stopping/restarting, so handing control
+  // back after a release is instant.
+  const HOLD_MS = 2200;             // how long each card lingers front-and-center
+  const SPIN_MS_PER_REV = 4200;     // unchanged spin speed: one full 360 at this rate
+  let autoSpinHandle = null;
+  let spinPhase = 'hold';           // 'hold' | 'spin'
+  let phaseStartTime = null;
+  let spinStartRotation = 0;
+  let spinTargetRotation = 0;
+
+  // Front rest angles are every 360deg starting at -180 (i.e. R = 180 -
+  // 360n). Returns the next one strictly below `current`, since
+  // rotation only ever decreases here.
+  function nextFrontRestAngle(current) {
+    // Must be STRICTLY less than current -- Math.ceil alone returns
+    // `current` right back when it's already exactly on a rest angle
+    // (true every time this runs, since spins only ever start there),
+    // which collapsed the spin to a zero-length no-op.
+    const n = Math.floor((180 - current) / 360) + 1;
+    return 180 - 360 * n;
+  }
+
+  function beginHold() {
+    spinPhase = 'hold';
+    phaseStartTime = null;
+  }
+  function beginSpin() {
+    spinPhase = 'spin';
+    phaseStartTime = null;
+    spinStartRotation = currentRotation;
+    spinTargetRotation = nextFrontRestAngle(currentRotation);
+  }
+
+  function autoSpinTick(now) {
+    if (isDragging) {
+      phaseStartTime = null; // avoid a time-delta jump once dragging ends
+      autoSpinHandle = requestAnimationFrame(autoSpinTick);
+      return;
+    }
+    if (phaseStartTime == null) phaseStartTime = now;
+    const elapsed = now - phaseStartTime;
+
+    if (spinPhase === 'hold') {
+      if (elapsed >= HOLD_MS) beginSpin();
+    } else {
+      const totalDeg = spinStartRotation - spinTargetRotation; // always positive
+      const durationMs = (totalDeg / 360) * SPIN_MS_PER_REV;
+      const progress = Math.min(elapsed / durationMs, 1);
+      currentRotation = spinStartRotation - totalDeg * progress;
+      card.style.transform = `rotateY(${currentRotation}deg)`;
+      syncFacesToRotation();
+      if (progress >= 1) {
+        currentRotation = spinTargetRotation; // land exactly, no float drift
+        card.style.transform = `rotateY(${currentRotation}deg)`;
+        syncFacesToRotation();
+        beginHold();
+      }
+    }
+    autoSpinHandle = requestAnimationFrame(autoSpinTick);
+  }
+  function startAutoSpin() {
+    if (autoSpinHandle == null) autoSpinHandle = requestAnimationFrame(autoSpinTick);
+  }
+  function stopAutoSpin() {
+    if (autoSpinHandle != null) { cancelAnimationFrame(autoSpinHandle); autoSpinHandle = null; }
+  }
+
+  // After the reveal animation completes, hand off from the one-shot
+  // CSS reveal to the continuous auto-spin loop.
+  floatTimeout = setTimeout(() => {
+    if (!isDragging) {
+      currentRotation = -180; // front is showing after the reveal
+      card.style.animation = 'none';
+      frontFace.style.animation = 'none';
+      backFace.style.animation = 'none';
+      card.style.transform = `rotateY(${currentRotation}deg)`;
+      frontFace.style.opacity = '1';
+      backFace.style.opacity = '0';
+      wasFrontShowing = true;
+      beginHold();
+    }
+    startAutoSpin();
+  }, 9500);
 
   // ── Drag to rotate ──────────────────────────────────────────────
   function getClientX(e) {
@@ -147,9 +256,7 @@ function showLoadingScreen() {
     currentRotation = startRotation - deltaX * 0.5;
     card.style.transform = `rotateY(${currentRotation}deg)`;
 
-    const showFront = isFrontShowing(currentRotation);
-    frontFace.style.opacity = showFront ? '1' : '0';
-    backFace.style.opacity = showFront ? '0' : '1';
+    syncFacesToRotation();
 
     e.preventDefault();
   }
@@ -180,15 +287,15 @@ function showLoadingScreen() {
     backFace.style.opacity = snapToFront ? '0' : '1';
     currentRotation = targetRotation;
 
+    wasFrontShowing = snapToFront;
+
     setTimeout(() => {
       card.style.transition = '';
       frontFace.style.transition = '';
       backFace.style.transition = '';
-      // .floating is centered on the front-facing angle, .floating-back
-      // on the back-facing one — using the wrong one yanks the
-      // rotation toward the other face's angle while its image is
-      // still the one showing, rendering it mirrored.
-      card.classList.add(snapToFront ? 'floating' : 'floating-back');
+      // Auto-spin kept running the whole time (it no-ops during a
+      // drag); once the release settles, pick the phase back up here.
+      if (snapToFront) beginHold(); else beginSpin();
     }, 420);
   }
 
@@ -205,6 +312,7 @@ function showLoadingScreen() {
   // ── Dismiss ─────────────────────────────────────────────────────
   function dismiss() {
     clearTimeout(floatTimeout);
+    stopAutoSpin();
     window.removeEventListener('mousemove', onDragMove);
     window.removeEventListener('mouseup', onDragEnd);
     window.removeEventListener('touchmove', onDragMove);
@@ -212,9 +320,6 @@ function showLoadingScreen() {
     loader.classList.add('fade-out');
     setTimeout(() => loader.remove(), 800);
   }
-
-  // Auto dismiss after 18 seconds (reveal + linger + float time)
-  setTimeout(dismiss, 18000);
 
   document.getElementById('loader-skip').addEventListener('click', e => {
     e.stopPropagation();
