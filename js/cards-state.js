@@ -495,6 +495,37 @@ const CardsState = (() => {
     return count;
   }
 
+  // ── Storage diagnostics ────────────────────────────────────────
+
+  // Read-only. Walks the saved data to report exactly how much of
+  // localStorage is spent on card images vs. everything else, so real
+  // device numbers can be gathered instead of estimating from asset
+  // sizes. Never modifies anything.
+  function getStorageStats() {
+    const raw = localStorage.getItem(STORAGE_KEY) || '';
+    const totalBytes = new Blob([raw]).size;
+
+    const data = load();
+    let cardCount = 0;
+    let cardImageBytes = 0;
+    data.schools.forEach(school => {
+      school.classes.forEach(cls => {
+        cls.players.forEach(player => {
+          player.cards.forEach(card => {
+            cardCount++;
+            // renderedFront/photo are base64 data URIs (pure ASCII
+            // strings), so .length is effectively a byte count.
+            if (card.renderedFront) cardImageBytes += card.renderedFront.length;
+            if (card.photo) cardImageBytes += card.photo.length;
+          });
+        });
+      });
+    });
+    const avgBytesPerCard = cardCount > 0 ? Math.round(cardImageBytes / cardCount) : 0;
+
+    return { totalBytes, cardCount, cardImageBytes, avgBytesPerCard };
+  }
+
   // ── Computed helpers ───────────────────────────────────────────
 
   function totalShields(scores) {
@@ -556,6 +587,7 @@ const CardsState = (() => {
     addCard,
     deleteCard,
     clearClassCards,
+    getStorageStats,
     // Helpers
     totalShields,
     totalPlayers,
