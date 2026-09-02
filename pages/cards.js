@@ -221,6 +221,10 @@ function renderRosterView() {
           data-school-id="${school.id}" data-class-id="${cls.id}">
           🖨 Print Class
         </button>
+        <button class="btn-secondary" data-cards-action="storage-info"
+          title="See how much storage space is used and how much is left on this device">
+          📊 Storage Info
+        </button>
         <button class="btn-secondary" data-cards-action="clear-class-cards"
           data-school-id="${school.id}" data-class-id="${cls.id}" title="Frees up storage space — only use after you've downloaded the print sheet">
           🗑 Clear Saved Cards
@@ -882,6 +886,10 @@ function handleCardsAction(e) {
       setCreatorGroup(+el.dataset.index);
       break;
 
+    case 'creator-set-tier':
+      setCreatorTier(+el.dataset.index);
+      break;
+
     case 'creator-set-score':
       setCreatorScore(+el.dataset.cat, +el.dataset.level);
       break;
@@ -922,5 +930,51 @@ function handleCardsAction(e) {
     case 'open-scoring-guide':
       openScoringGuide();
       break;
+
+    case 'storage-info':
+      showStorageInfo();
+      break;
   }
+}
+
+// ── Storage Info ───────────────────────────────────────────────────
+// Read-only diagnostic — shows real numbers (not estimates) for how
+// much storage this app is using on this specific device, so capacity
+// questions can be answered from data instead of guesswork.
+async function showStorageInfo() {
+  const stats = CardsState.getStorageStats();
+  const mb = n => (n / (1024 * 1024)).toFixed(2);
+  const kb = n => (n / 1024).toFixed(0);
+
+  const lines = [
+    `Cards saved right now (all classes, incl. archived): ${stats.cardCount}`,
+    `Space used by card images: ${mb(stats.cardImageBytes)} MB`,
+    `Average size per card: ~${kb(stats.avgBytesPerCard)} KB`,
+    `Total app data saved: ${mb(stats.totalBytes)} MB`,
+  ];
+
+  try {
+    if (navigator.storage && navigator.storage.estimate) {
+      const est = await navigator.storage.estimate();
+      if (typeof est.usage === 'number' && typeof est.quota === 'number' && est.quota > 0) {
+        const free = est.quota - est.usage;
+        lines.push('');
+        lines.push('Device storage for this app (shared with the offline app files):');
+        lines.push(`  Used: ${mb(est.usage)} MB of ${mb(est.quota)} MB (${((est.usage / est.quota) * 100).toFixed(1)}%)`);
+        lines.push(`  Free: ${mb(free)} MB`);
+        if (stats.avgBytesPerCard > 0) {
+          const moreCards = Math.max(0, Math.floor(free / stats.avgBytesPerCard));
+          lines.push(`  ≈ room for about ${moreCards} more cards at the current average size`);
+        }
+      }
+    } else {
+      lines.push('');
+      lines.push("(This browser doesn't report a device storage total — the numbers above still reflect what's actually saved.)");
+    }
+  } catch {
+    lines.push('');
+    lines.push("(Couldn't read the device storage total on this browser — the numbers above still reflect what's actually saved.)");
+  }
+
+  alert('📊 Storage Info\n\n' + lines.join('\n'));
 }

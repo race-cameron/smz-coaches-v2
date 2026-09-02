@@ -16,7 +16,7 @@
 const CREATOR_PREVIEW_SCALE = 420 / 1050;
 
 // { schoolId, classId, playerId, photo, photoOriginal, photoBgRemoved,
-//   usingBgRemoved, bgRemoving, bgStatus, ageGroupIndex, scores, px, py, pz }
+//   usingBgRemoved, bgRemoving, bgStatus, ageGroupIndex, tierIndex, scores, px, py, pz }
 let _creatorState = null;
 
 function openCardCreator(schoolId, classId, playerId) {
@@ -29,6 +29,7 @@ function openCardCreator(schoolId, classId, playerId) {
     bgRemoving: false,
     bgStatus: '',
     ageGroupIndex: null,
+    tierIndex: 0, // defaults to Apprentice
     scores: [0, 0, 0, 0, 0],
     px: 0, py: 0, pz: 100,
   };
@@ -117,6 +118,19 @@ function renderCardCreatorView() {
             <span class="creator-slider-label">Zoom</span>
             <input type="range" id="creator-slider-z" min="50" max="200" value="${s.pz}" ${s.photo ? '' : 'disabled'} />
             <span class="creator-slider-value" id="creator-slider-z-val">${s.pz}</span>
+          </div>
+        </div>
+
+        <div class="creator-field">
+          <div class="fl">Card Style</div>
+          <div class="creator-tier-grid">
+            ${CardRender.TIER_NAMES.map((name, i) => `
+              <button class="creator-tier-btn ${s.tierIndex === i ? 'selected' : ''}"
+                data-cards-action="creator-set-tier" data-index="${i}" title="${escHtml(name)}">
+                <img src="${CardRender.ASSET_PATHS.fronts[i]}" alt="${escHtml(name)}" />
+                <span>${escHtml(name)}</span>
+              </button>
+            `).join('')}
           </div>
         </div>
 
@@ -350,6 +364,15 @@ function setCreatorGroup(index) {
   renderCardsInPlace();
 }
 
+// Unlike Age Group, Card Style always has a selection (defaults to
+// Apprentice) — it's a "which skin" choice, not an optional tag, so
+// tapping the already-selected tier is a no-op rather than clearing it.
+function setCreatorTier(index) {
+  if (!_creatorState) return;
+  _creatorState.tierIndex = index;
+  renderCardsInPlace();
+}
+
 function setCreatorScore(cat, level) {
   if (!_creatorState) return;
   const current = _creatorState.scores[cat];
@@ -370,6 +393,7 @@ async function saveCreatorCard() {
       renderedFront,
       photo: s.photo,
       ageGroupIndex: s.ageGroupIndex,
+      tierIndex: s.tierIndex,
       scores: s.scores,
       px: s.px, py: s.py, pz: s.pz,
     });
