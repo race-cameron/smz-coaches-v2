@@ -11,8 +11,8 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v16';
-const DATA_CACHE     = 'smz-v2-data-v16';
+const CACHE_VERSION  = 'smz-v2-v18';
+const DATA_CACHE     = 'smz-v2-data-v18';
 
 // ── App shell — cached on install ─────────────────────────────────
 const SHELL_ASSETS = [
@@ -43,6 +43,8 @@ const SHELL_ASSETS = [
   './pages/favorites.js',
   './pages/cards.js',
   './pages/card-creator.js',
+  './pages/crystals.js',
+  './power-crystals.html',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   // Note: Power Card art lives embedded (as base64) inside
