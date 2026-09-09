@@ -163,3 +163,28 @@ body::before {
     padding: var(--space-4) var(--space-3) var(--space-10);
   }
 }
+
+/* ── Power Crystals page (full-bleed iframe embed) ── */
+.crystals-page-frame {
+  margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-5)) calc(-1 * var(--space-12));
+}
+
+.crystals-iframe {
+  display: block;
+  width: 100%;
+  height: calc(100vh - var(--nav-height));
+  border: 0;
+  background: var(--ink);
+}
+
+@media (max-width: 720px) {
+  .crystals-page-frame {
+    margin: calc(-1 * var(--space-5)) calc(-1 * var(--space-4)) calc(-1 * var(--space-10));
+  }
+}
+
+@media (max-width: 480px) {
+  .crystals-page-frame {
+    margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-3)) calc(-1 * var(--space-10));
+  }
+}
