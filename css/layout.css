@@ -1,22 +1,57 @@
 /* ── SMZ Coaches V2 — Layout ── */
 
-/* ── Body & Background ── */
+/* ── Body & Background — matches The Card Vault's painted blue/gold backdrop ── */
 body {
   font-family: var(--font-body);
-  background: var(--ink);
+  background: #080e1c;
   color: var(--text-primary);
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 40% at 20% -10%, rgba(121,183,44,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(59,130,246,0.08) 0%, transparent 60%),
-    linear-gradient(180deg, #0a1220 0%, #0e1a2d 40%, #0a1220 100%);
-  pointer-events: none;
-  z-index: 0;
+/* solid backdrop matching the art's own blue — fills the flanks on ultra-wide screens */
+.app-bg-fill {
+  position: fixed; inset: 0; z-index: -5; pointer-events: none;
+  background: linear-gradient(165deg, #0a2d78 0%, #062060 55%, #030f38 100%);
+}
+/* the real painted blue + gold-flame background art, used as-is — width-capped so
+   full-screen / ultra-wide windows don't blow the border art up huge */
+.app-bg-photo {
+  position: fixed; top: 0; bottom: 0; left: 50%; z-index: -4; pointer-events: none;
+  width: min(100vw, 1500px); transform: translateX(-50%);
+  background-image: url('../img/bg_photo.jpg');
+  background-size: cover; background-position: center center; background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+/* light scrim so the nav + content stay legible over the painted texture */
+.app-bg-top-shade {
+  position: fixed; top: 0; left: 0; right: 0; height: min(220px, 30vh); z-index: -3; pointer-events: none;
+  background: linear-gradient(180deg, rgba(4,10,26,0.55) 0%, rgba(4,10,26,0.28) 55%, transparent 100%);
+}
+.app-bg-vignette {
+  position: fixed; inset: 0; z-index: -3; pointer-events: none;
+  background: radial-gradient(ellipse 86% 70% at 50% 55%, transparent 58%, rgba(0,0,0,0.38) 100%);
+}
+.app-motes { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.app-mote {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,214,120,0.95), rgba(255,214,120,0) 70%);
+  box-shadow: 0 0 10px 2px rgba(255,196,90,0.55);
+  animation: app-mote-drift linear infinite;
+  opacity: 0.7;
+}
+.app-mote.blue {
+  background: radial-gradient(circle, rgba(93,161,255,0.95), rgba(93,161,255,0) 70%);
+  box-shadow: 0 0 10px 2px rgba(93,161,255,0.45);
+}
+.app-mote.big { box-shadow: 0 0 16px 4px rgba(255,196,90,0.6); }
+@keyframes app-mote-drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  8% { opacity: .85; }
+  92% { opacity: .55; }
+  100% { transform: translateY(-120vh) translateX(20px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-mote { animation: none; display: none; }
 }
 
 /* ── App Root ── */
