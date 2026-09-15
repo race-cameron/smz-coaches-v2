@@ -136,21 +136,34 @@
   }
   .legend-item{
     display:flex; flex-direction:column; align-items:center; gap:6px;
-    width:54px;
+    width:54px; cursor:pointer; user-select:none;
     font-size:9.5px; color:var(--text-dim); letter-spacing:0.05em;
     text-transform:uppercase; text-align:center;
+    transition:color .2s ease;
   }
+  .legend-item:focus-visible{ outline:1.5px solid var(--c); outline-offset:3px; border-radius:6px; }
   .legend-icon{
     width:42px; height:42px; flex:none;
     display:flex; align-items:center; justify-content:center;
     background:radial-gradient(circle, rgba(255,255,255,0.07), transparent 72%);
     filter:drop-shadow(0 3px 7px rgba(0,0,0,0.55));
-    transition:transform .2s ease, filter .2s ease;
+    transition:transform .2s ease, filter .2s ease, background .2s ease;
   }
   .legend-icon img{ width:100%; height:100%; object-fit:contain; }
   .legend-item:hover .legend-icon{
     transform:translateY(-2px) scale(1.08);
     filter:drop-shadow(0 5px 10px rgba(0,0,0,0.6));
+  }
+  .legend-item.is-selected{ color:#fff; }
+  .legend-item.is-selected .legend-icon{
+    transform:translateY(-2px) scale(1.12);
+    background:radial-gradient(circle, rgba(255,255,255,0.18), transparent 72%);
+    filter:drop-shadow(0 0 9px var(--c)) drop-shadow(0 5px 12px rgba(0,0,0,0.6));
+    animation:legendPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes legendPulse{
+    0%,100%{ filter:drop-shadow(0 0 7px var(--c)) drop-shadow(0 5px 12px rgba(0,0,0,0.6)); }
+    50%{ filter:drop-shadow(0 0 15px var(--c)) drop-shadow(0 5px 12px rgba(0,0,0,0.6)); }
   }
 
   /* ---------- the chest ---------- */
@@ -251,6 +264,28 @@
 
   /* ---------- card slot ---------- */
   .card-slot{ position:relative; }
+  .slot-frame{
+    position:absolute; top:0; left:0; width:100%; aspect-ratio:620/825;
+    transform:scale(1.07); transform-origin:center center;
+    border-radius:8px; z-index:1; pointer-events:none;
+    opacity:.8; transition:opacity .22s ease, box-shadow .22s ease;
+    box-shadow:inset 0 0 0 1px rgba(217,174,99,0.14);
+    background:
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) top left / 13px 2px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) top left / 2px 13px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) top right / 13px 2px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) top right / 2px 13px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) bottom left / 13px 2px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) bottom left / 2px 13px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) bottom right / 13px 2px no-repeat,
+      linear-gradient(rgba(217,174,99,0.85), rgba(217,174,99,0.85)) bottom right / 2px 13px no-repeat;
+  }
+  .card-slot:hover .slot-frame, .card-slot:focus-within .slot-frame{ opacity:1; }
+  .card-slot.power-glow .slot-frame{
+    opacity:1;
+    box-shadow:inset 0 0 0 1px var(--c), 0 0 14px -3px var(--c);
+  }
+  .card-slot.power-dim .slot-frame{ opacity:.35; }
   .card-slot .shadow{
     position:absolute; left:50%; bottom:5px; width:70%; height:7px;
     background:radial-gradient(ellipse, rgba(0,0,0,0.55), transparent 70%);
@@ -283,6 +318,27 @@
     opacity:0.35; transform:translateX(-50%) scale(0.7);
   }
   .card-slot:hover .name, .card-slot:focus-within .name, .card-slot.is-active .name{ color:#fff; }
+
+  /* ---------- power-legend glow filter ---------- */
+  .card-slot{ transition:opacity .25s ease; }
+  .card-slot.power-glow .card-face{
+    transform:translateY(-8px) scale(1.14);
+    border-color:var(--c);
+    box-shadow:0 20px 28px -14px rgba(0,0,0,0.8), 0 0 22px -2px var(--c), 0 0 40px -4px var(--c);
+    z-index:5;
+    animation:cardGlowPulse 1.8s ease-in-out infinite;
+  }
+  .card-slot.power-glow .shadow{ opacity:0.35; transform:translateX(-50%) scale(0.7); }
+  .card-slot.power-glow .name{ color:#fff; }
+  .card-slot.power-dim{ opacity:0.3; }
+  .card-slot.power-dim .card-face{ filter:saturate(0.55); }
+  @keyframes cardGlowPulse{
+    0%,100%{ box-shadow:0 20px 28px -14px rgba(0,0,0,0.8), 0 0 14px -2px var(--c), 0 0 30px -4px var(--c); }
+    50%{ box-shadow:0 20px 28px -14px rgba(0,0,0,0.8), 0 0 26px 0px var(--c), 0 0 48px -2px var(--c); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .legend-item.is-selected .legend-icon, .card-slot.power-glow .card-face{ animation:none !important; }
+  }
 
   /* ---------- tooltip (single, JS-positioned) ---------- */
   #tooltip{
@@ -317,15 +373,42 @@
 
   #modal-card{
     position:fixed; z-index:95; left:0; top:0; width:1px; height:1px;
-    border-radius:9px; overflow:hidden; visibility:hidden;
+    border-radius:9px; visibility:hidden;
     background:var(--bg-deep);
     box-shadow:0 30px 70px -20px rgba(0,0,0,0.9), 0 0 0 2px var(--c), 0 0 46px -6px var(--c);
     transition:left .38s cubic-bezier(.2,.8,.2,1), top .38s cubic-bezier(.2,.8,.2,1),
                width .38s cubic-bezier(.2,.8,.2,1), height .38s cubic-bezier(.2,.8,.2,1),
                box-shadow .38s ease;
-    cursor:zoom-out;
+    cursor:pointer;
+    perspective:1600px;
   }
+  .card-flip-inner{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .6s cubic-bezier(.3,.1,.2,1);
+    border-radius:9px;
+  }
+  #modal-card.flipped .card-flip-inner{ transform:rotateY(180deg); }
+  .card-face-front, .card-face-back{
+    position:absolute; inset:0; width:100%; height:100%;
+    backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    border-radius:9px; overflow:hidden;
+  }
+  .card-face-back{ transform:rotateY(180deg); }
   #modal-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .card-flip-hint{
+    position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+    z-index:3; pointer-events:none; white-space:nowrap;
+    padding:5px 14px; border-radius:999px;
+    font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:#f5e2ae; background:rgba(8,13,26,0.72);
+    border:1px solid rgba(217,174,99,0.5);
+    opacity:0; transition:opacity .3s ease .3s;
+  }
+  #modal-card.hint-show .card-flip-hint{ opacity:.95; }
+  @media (prefers-reduced-motion: reduce){
+    .card-flip-inner{ transition-duration:.01ms; }
+  }
 
   #modal-info{
     position:fixed; z-index:95; left:0; top:0;
@@ -401,25 +484,29 @@
     transition:transform 1.5s cubic-bezier(.5,0,.16,1), opacity 1.35s ease .1s, filter 1.35s ease .1s;
     backface-visibility:hidden;
   }
-  .book-cover::before{
-    /* brass frame */
-    content:''; position:absolute; inset:16px; pointer-events:none;
-    box-shadow:inset 0 0 0 2px rgba(217,174,99,0.55), inset 0 0 0 3px rgba(0,0,0,0.4), inset 0 0 22px rgba(0,0,0,0.35);
-  }
-  .book-cover::after{
-    /* fine inner scrollwork line */
-    content:''; position:absolute; inset:28px; pointer-events:none;
-    border:1px solid rgba(217,174,99,0.22); border-radius:2px;
+  .book-cover::before, .book-cover::after{
+    /* superseded by the photographic door art, which bakes its own frame in */
+    display:none;
   }
   /* hinged at the outer frame edge, like a real double door swinging open on its hinges */
-  .book-cover-left{ left:0; transform-origin:0% 50%; border-right:2px solid rgba(0,0,0,0.5); }
-  .book-cover-right{ right:0; transform-origin:100% 50%; border-left:2px solid rgba(0,0,0,0.5); }
+  .book-cover-left{
+    left:0; transform-origin:0% 50%; border-right:2px solid rgba(0,0,0,0.5);
+    background:
+      url('img/vault-door-left-top.jpg') top center / 100% auto no-repeat,
+      url('img/vault-door-left-bottom.jpg') bottom center / 100% auto no-repeat,
+      url('img/vault-door-left-mid.jpg') center center / 100% 100% no-repeat;
+  }
+  .book-cover-right{
+    right:0; transform-origin:100% 50%; border-left:2px solid rgba(0,0,0,0.5);
+    background:
+      url('img/vault-door-right-top.jpg') top center / 100% auto no-repeat,
+      url('img/vault-door-right-bottom.jpg') bottom center / 100% auto no-repeat,
+      url('img/vault-door-right-mid.jpg') center center / 100% 100% no-repeat;
+  }
 
   .book-corner{
-    position:absolute; width:clamp(34px,6vw,58px); height:clamp(34px,6vw,58px); pointer-events:none;
-    background:linear-gradient(160deg, #e9c47c 0%, #a9793a 20%, #5c3f18 55%, #d4a559 85%, #8a672c 100%);
-    box-shadow:0 2px 5px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.3);
-    opacity:.92;
+    /* superseded by the photographic door art, which bakes its own corner motif in */
+    display:none;
   }
   .book-corner::after{
     content:''; position:absolute; inset:0;
@@ -587,8 +674,12 @@
     color:var(--text-dim);
   }
   .intro-hint{
-    margin:10px 0 0; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
-    color:#f5e2ae; opacity:.8;
+    margin:14px 0 0; padding:9px 22px; border-radius:999px;
+    font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:#f5e2ae; opacity:.9;
+    background:linear-gradient(160deg, rgba(22,35,61,0.6) 0%, rgba(10,18,32,0.6) 100%);
+    border:1.5px solid rgba(217,174,99,0.55);
+    box-shadow:0 8px 18px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
     animation:hintPulse 2.2s ease-in-out infinite;
   }
   @keyframes hintPulse{ 0%,100%{ opacity:.45; } 50%{ opacity:.95; } }
@@ -728,7 +819,6 @@
     </div>
     <h2>THE CARD VAULT</h2>
     <div class="title-rule"><span class="line"></span><span class="gem"></span><span class="line"></span></div>
-    <p class="intro-tagline">Guardians &amp; Games of Super Moverz</p>
     <p class="intro-hint">Tap to open</p>
   </div>
 </div>
@@ -786,7 +876,13 @@
 </div>
 
 <div id="modal-backdrop"></div>
-<div id="modal-card"><img alt=""></div>
+<div id="modal-card">
+  <div class="card-flip-inner">
+    <div class="card-face-front"><img alt=""></div>
+    <div class="card-face-back"><img src="img/power-card-back.jpg" alt="Power Card back"></div>
+  </div>
+  <span class="card-flip-hint">Tap to flip</span>
+</div>
 <div id="modal-info">
   <div class="kicker"></div>
   <h3></h3>
@@ -859,7 +955,7 @@ const GAMES = [
   { name:'Charge',            img:'img/Charge.jpg',            power:'energy',     focus:'Full send, full smile.' },
   { name:'Meteor Shower',     img:'img/Meteor_Shower.jpg',     power:'energy',     focus:'Full send, full smile.' },
   { name:'Troopers vs. Jedi', img:'img/Troopers_vs_Jedi.jpg',  power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
-  { name:'Super Seeker',      img:'img/Super_Seeker.jpg',      power:'unassigned', focus:'New card — Core Power not yet assigned.' },
+  { name:'Super Seeker',      img:'img/Super_Seeker.jpg',      power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
 ];
 
 function buildLegend(){
@@ -868,8 +964,40 @@ function buildLegend(){
     const p = POWER_META[k];
     const li = document.createElement('div');
     li.className = 'legend-item';
+    li.dataset.power = k;
+    li.style.setProperty('--c', p.color);
+    li.setAttribute('role', 'button');
+    li.setAttribute('tabindex', '0');
+    li.setAttribute('aria-pressed', 'false');
     li.innerHTML = `<span class="legend-icon"><img src="img/icon-${k}.png" alt="${p.name}"></span><span>${p.name}</span>`;
+    li.addEventListener('click', () => togglePowerFilter(k));
+    li.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); togglePowerFilter(k); }
+    });
     root.appendChild(li);
+  });
+}
+
+/* ---------- power-legend click-to-glow filter ---------- */
+let activePower = null;
+function togglePowerFilter(k){
+  activePower = (activePower === k) ? null : k;
+  applyPowerFilter();
+}
+function applyPowerFilter(){
+  document.querySelectorAll('.legend-item').forEach(li => {
+    const on = li.dataset.power === activePower;
+    li.classList.toggle('is-selected', on);
+    li.setAttribute('aria-pressed', String(on));
+  });
+  document.querySelectorAll('.card-slot').forEach(slot => {
+    if(!activePower){
+      slot.classList.remove('power-glow', 'power-dim');
+      return;
+    }
+    const match = slot.dataset.power === activePower;
+    slot.classList.toggle('power-glow', match);
+    slot.classList.toggle('power-dim', !match);
   });
 }
 
@@ -877,9 +1005,11 @@ function makeCardSlot(item, kind){
   const meta = POWER_META[item.power];
   const slot = document.createElement('div');
   slot.className = 'card-slot';
+  slot.dataset.power = item.power;
   slot.style.setProperty('--c', meta.color);
   slot.innerHTML = `
     <div class="shadow"></div>
+    <div class="slot-frame"></div>
     <button class="card-face" type="button">
       <img src="${item.img}" alt="${item.name}" loading="lazy">
     </button>
@@ -979,7 +1109,7 @@ if(isTouch){
 /* ---------- click-to-enlarge card viewer (FLIP animation) ---------- */
 const modalBackdrop = document.getElementById('modal-backdrop');
 const modalCard     = document.getElementById('modal-card');
-const modalCardImg  = modalCard.querySelector('img');
+const modalCardImg  = modalCard.querySelector('.card-face-front img');
 const modalInfo     = document.getElementById('modal-info');
 const miKicker = modalInfo.querySelector('.kicker');
 const miTitle  = modalInfo.querySelector('h3');
@@ -1056,6 +1186,7 @@ function openCardModal(slot, item, meta, kind){
 
   modalCard.style.setProperty('--c', meta.color);
   modalInfo.style.setProperty('--c', meta.color);
+  modalCard.classList.remove('flipped', 'hint-show');
   modalCardImg.src = item.img;
   modalCardImg.alt = item.name;
 
@@ -1103,7 +1234,14 @@ function openCardModal(slot, item, meta, kind){
   modalCloseTimer = setTimeout(() => {
     modalInfo.classList.add('show');
     modalClose.classList.add('show');
+    modalCard.classList.add('hint-show');
   }, 170);
+}
+
+function flipModalCard(){
+  if(!modalSlot) return;
+  modalCard.classList.toggle('flipped');
+  modalCard.classList.remove('hint-show');
 }
 
 function closeCardModal(){
@@ -1125,13 +1263,14 @@ function closeCardModal(){
   document.body.style.overflow = '';
   slot.classList.remove('is-active');
   modalSlot = null;
+  modalCard.classList.remove('hint-show');
 
-  modalCloseTimer = setTimeout(() => { modalCard.style.visibility = 'hidden'; }, 400);
+  modalCloseTimer = setTimeout(() => { modalCard.style.visibility = 'hidden'; modalCard.classList.remove('flipped'); }, 400);
 }
 
 modalBackdrop.addEventListener('click', closeCardModal);
-modalCard.addEventListener('click', closeCardModal);
-modalClose.addEventListener('click', closeCardModal);
+modalCard.addEventListener('click', flipModalCard);
+modalClose.addEventListener('click', (e) => { e.stopPropagation(); closeCardModal(); });
 modalInfo.addEventListener('click', (e) => e.stopPropagation());
 document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modalSlot) closeCardModal(); });
 window.addEventListener('resize', () => {
@@ -1266,13 +1405,15 @@ buildFlatCase('game-case', GAMES, 'game');
   intro.addEventListener('keydown', (e) => {
     if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBook(); }
   });
-  if(!reduceMotion){ setTimeout(openBook, 2600); } else { openBook(); }
+  // Wait for the user to actually tap/click/press before opening -- no auto-play.
+  // Reduced-motion visitors skip the theatrics entirely and land straight on the content.
+  if(reduceMotion){ openBook(); }
 
   if(replayBtn){
     replayBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       resetIntro();
-      setTimeout(openBook, 550);
+      // Just reset the doors closed and wait for a tap again -- no auto-open.
     });
   }
 })();
