@@ -64,7 +64,7 @@
   .bg-photo{
     position:fixed; top:0; bottom:0; left:50%; z-index:-4;
     width:min(100vw, 1500px); transform:translateX(-50%);
-    background-image:url('assets/card-vault/bg_photo.jpg');
+    background-image:url('img/bg_photo.jpg');
     background-size:cover; background-position:center center; background-repeat:no-repeat;
     -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
     mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
@@ -81,15 +81,20 @@
   .motes{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
   .mote{
     position:absolute; border-radius:50%;
-    background:radial-gradient(circle, rgba(232,184,75,0.9), rgba(232,184,75,0) 70%);
+    background:radial-gradient(circle, rgba(255,214,120,0.95), rgba(255,214,120,0) 70%);
+    box-shadow:0 0 10px 2px rgba(255,196,90,0.55);
     animation:drift linear infinite;
-    opacity:0.5;
+    opacity:0.7;
   }
-  .mote.blue{ background:radial-gradient(circle, rgba(93,161,255,0.95), rgba(93,161,255,0) 70%); }
+  .mote.blue{
+    background:radial-gradient(circle, rgba(93,161,255,0.95), rgba(93,161,255,0) 70%);
+    box-shadow:0 0 10px 2px rgba(93,161,255,0.45);
+  }
+  .mote.big{ box-shadow:0 0 16px 4px rgba(255,196,90,0.6); }
   @keyframes drift{
     0%{ transform:translateY(0) translateX(0); opacity:0; }
-    10%{ opacity:.55; }
-    90%{ opacity:.4; }
+    8%{ opacity:.85; }
+    92%{ opacity:.55; }
     100%{ transform:translateY(-120vh) translateX(20px); opacity:0; }
   }
   @media (prefers-reduced-motion: reduce){
@@ -126,14 +131,27 @@
     color:var(--text-dim); font-size:12.5px; line-height:1.5;
   }
   .legend{
-    display:flex; flex-wrap:wrap; gap:6px 12px; justify-content:center;
-    margin-top:10px;
+    display:flex; flex-wrap:wrap; gap:14px 22px; justify-content:center;
+    margin-top:14px;
   }
   .legend-item{
-    display:flex; align-items:center; gap:5px;
-    font-size:10.5px; color:var(--text-dim); letter-spacing:0.03em;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    width:54px;
+    font-size:9.5px; color:var(--text-dim); letter-spacing:0.05em;
+    text-transform:uppercase; text-align:center;
   }
-  .legend-dot{ width:6px; height:6px; border-radius:50%; flex:none; }
+  .legend-icon{
+    width:42px; height:42px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle, rgba(255,255,255,0.07), transparent 72%);
+    filter:drop-shadow(0 3px 7px rgba(0,0,0,0.55));
+    transition:transform .2s ease, filter .2s ease;
+  }
+  .legend-icon img{ width:100%; height:100%; object-fit:contain; }
+  .legend-item:hover .legend-icon{
+    transform:translateY(-2px) scale(1.08);
+    filter:drop-shadow(0 5px 10px rgba(0,0,0,0.6));
+  }
 
   /* ---------- the chest ---------- */
   .chest{
@@ -359,7 +377,366 @@
     .case-banner .txt{ font-size:12.5px; }
     #tooltip{ width:min(260px, calc(100vw - 28px)); }
   }
+
+  /* ---------- book-opening intro ---------- */
+  #intro{
+    position:fixed; inset:0; z-index:500; overflow:hidden;
+    perspective:2600px; cursor:pointer;
+    background:linear-gradient(180deg, #0d1730 0%, var(--bg-deep) 100%);
+  }
+  #intro:focus{ outline:none; }
+  #intro.no-anim, #intro.no-anim *{ transition:none !important; animation:none !important; }
+  /* a small camera punch the instant the vault answers */
+  @keyframes introPunch{ 0%{ transform:scale(1); } 32%{ transform:scale(1.018); } 100%{ transform:scale(1); } }
+  #intro.opening{ animation:introPunch .4s ease-out; }
+
+  .book-cover{
+    position:absolute; top:0; bottom:0; width:50%;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 2px, transparent 2px, transparent 52px),
+      repeating-linear-gradient(4deg, rgba(255,255,255,0.03) 0px, transparent 1px, transparent 8px, rgba(0,0,0,0.07) 9px, transparent 10px),
+      radial-gradient(ellipse 70% 50% at 50% 50%, rgba(255,255,255,0.03), transparent 70%),
+      linear-gradient(160deg, var(--wood-3) 0%, var(--wood-2) 45%, var(--wood-1) 100%);
+    box-shadow:inset 0 0 130px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(0,0,0,0.5);
+    transition:transform 1.5s cubic-bezier(.5,0,.16,1), opacity 1.35s ease .1s, filter 1.35s ease .1s;
+    backface-visibility:hidden;
+  }
+  .book-cover::before{
+    /* brass frame */
+    content:''; position:absolute; inset:16px; pointer-events:none;
+    box-shadow:inset 0 0 0 2px rgba(217,174,99,0.55), inset 0 0 0 3px rgba(0,0,0,0.4), inset 0 0 22px rgba(0,0,0,0.35);
+  }
+  .book-cover::after{
+    /* fine inner scrollwork line */
+    content:''; position:absolute; inset:28px; pointer-events:none;
+    border:1px solid rgba(217,174,99,0.22); border-radius:2px;
+  }
+  /* hinged at the outer frame edge, like a real double door swinging open on its hinges */
+  .book-cover-left{ left:0; transform-origin:0% 50%; border-right:2px solid rgba(0,0,0,0.5); }
+  .book-cover-right{ right:0; transform-origin:100% 50%; border-left:2px solid rgba(0,0,0,0.5); }
+
+  .book-corner{
+    position:absolute; width:clamp(34px,6vw,58px); height:clamp(34px,6vw,58px); pointer-events:none;
+    background:linear-gradient(160deg, #e9c47c 0%, #a9793a 20%, #5c3f18 55%, #d4a559 85%, #8a672c 100%);
+    box-shadow:0 2px 5px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.3);
+    opacity:.92;
+  }
+  .book-corner::after{
+    content:''; position:absolute; inset:0;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.35);
+  }
+  .book-corner.tl{ top:16px; left:16px; clip-path:polygon(0 0, 100% 0, 0 100%); }
+  .book-corner.bl{ bottom:16px; left:16px; clip-path:polygon(0 0, 100% 100%, 0 100%); }
+  .book-corner.tr{ top:16px; right:16px; clip-path:polygon(100% 0, 100% 100%, 0 0); }
+  .book-corner.br{ bottom:16px; right:16px; clip-path:polygon(100% 100%, 0 100%, 100% 0); }
+
+  .intro-light-burst{
+    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, rgba(255,244,210,0.95), rgba(255,208,110,0.45) 32%, transparent 64%);
+  }
+  #intro.opening .intro-light-burst{ animation:lightBurst 1.5s ease-out forwards; }
+  @keyframes lightBurst{
+    0%{ opacity:0; transform:scale(.4); }
+    38%{ opacity:1; transform:scale(1); }
+    100%{ opacity:0; transform:scale(1.7); }
+  }
+
+  /* fan of light streaming out through the widening door gap */
+  .intro-god-rays{
+    position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0;
+    mix-blend-mode:screen;
+    background:repeating-conic-gradient(from 0deg at 50% 50%,
+      rgba(255,224,150,0) 0deg, rgba(255,224,150,.55) 3deg, rgba(255,224,150,0) 9deg, rgba(255,224,150,0) 24deg);
+    -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 0%, #000 45%, transparent 82%);
+    mask-image:radial-gradient(circle at 50% 50%, #000 0%, #000 45%, transparent 82%);
+  }
+  #intro.opening .intro-god-rays{ animation:godRays 1.5s ease-out forwards; }
+  @keyframes godRays{
+    0%{ opacity:0; transform:scale(.5) rotate(0deg); }
+    35%{ opacity:.85; transform:scale(1) rotate(8deg); }
+    100%{ opacity:0; transform:scale(1.6) rotate(15deg); }
+  }
+
+  /* sparks that gather inward while the vault charges, then scatter outward when it unlocks */
+  .intro-sparks{ position:absolute; top:50%; left:50%; z-index:2; pointer-events:none; }
+  .intro-spark{
+    position:absolute; top:0; left:0; width:4px; height:4px; margin:-2px 0 0 -2px; border-radius:50%;
+    background:radial-gradient(circle, rgba(255,232,180,0.95), rgba(255,232,180,0) 70%);
+    opacity:0;
+    transform:translate(var(--sx), var(--sy)) scale(1);
+    transition:transform 1s ease, opacity .5s ease;
+  }
+  #intro.anticipate .intro-spark{
+    opacity:1; transform:translate(0,0) scale(.5);
+    transition:transform .85s cubic-bezier(.3,.6,.2,1), opacity .4s ease;
+  }
+  #intro.opening .intro-spark{
+    opacity:0; transform:translate(calc(var(--sx) * 2.4), calc(var(--sy) * 2.4)) scale(1.3);
+    transition:transform 1.1s cubic-bezier(.15,.7,.3,1), opacity 1s ease .25s;
+  }
+
+  .intro-spine-glow{
+    position:absolute; top:5%; bottom:5%; left:50%; width:11px; z-index:2;
+    transform:translateX(-50%); pointer-events:none;
+    background:linear-gradient(180deg, transparent, var(--gold) 12%, #fff6da 50%, var(--gold) 88%, transparent);
+    filter:blur(3px);
+    box-shadow:0 0 30px 7px rgba(232,184,75,0.7);
+    animation:spinePulse 3.2s ease-in-out infinite;
+    transition:opacity .5s ease;
+  }
+  @keyframes spinePulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
+
+  .intro-cover-face{
+    position:absolute; inset:0; z-index:3;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    text-align:center; pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  /* the five Core Powers, ringed around the logo, dormant until the vault recognizes them */
+  .intro-emblem{
+    position:relative;
+    width:clamp(250px,46vw,340px); height:clamp(250px,46vw,340px);
+    margin-bottom:10px;
+    display:flex; align-items:center; justify-content:center;
+    --ring-r:clamp(94px,18vw,132px);
+  }
+  /* a summoning circle idling behind the sigils, spinning up as the vault wakes */
+  .intro-rune-ring{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    opacity:.32;
+    animation:runeSpin 40s linear infinite;
+  }
+  .intro-rune-ring circle{ fill:none; stroke:rgba(232,184,75,.65); }
+  .intro-rune-ring .ring-outer{ stroke-width:1; stroke-dasharray:1.5 7; }
+  .intro-rune-ring .ring-inner{ stroke-width:1.2; stroke-dasharray:16 11; opacity:.55; }
+  @keyframes runeSpin{ to{ transform:rotate(360deg); } }
+  #intro.anticipate .intro-rune-ring{ animation:runeSpin 2.1s linear infinite; opacity:.8; transition:opacity .3s ease; }
+  #intro.charged .intro-rune-ring, #intro.opening .intro-rune-ring{ opacity:0; transition:opacity .35s ease; }
+
+  .intro-sigils{ position:absolute; inset:0; z-index:1; }
+  .sigil{
+    position:absolute; top:50%; left:50%;
+    width:clamp(46px,8.6vw,60px); height:clamp(46px,8.6vw,60px); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle, rgba(10,15,30,0.55), rgba(10,15,30,0.15) 70%);
+    opacity:.32;
+  }
+  .sigil img{ width:68%; height:68%; object-fit:contain; filter:grayscale(.5) brightness(.65); transition:filter .3s ease; }
+  /* five evenly-spaced points around the ring, Will Power at 12 o'clock */
+  .sigil.s-willpower{ transform:translate(-50%,-50%) translate(0, calc(var(--ring-r) * -1)); }
+  .sigil.s-safety{ transform:translate(-50%,-50%) translate(calc(var(--ring-r) * 0.951), calc(var(--ring-r) * -0.309)); }
+  .sigil.s-unity{ transform:translate(-50%,-50%) translate(calc(var(--ring-r) * 0.588), calc(var(--ring-r) * 0.809)); }
+  .sigil.s-energy{ transform:translate(-50%,-50%) translate(calc(var(--ring-r) * -0.588), calc(var(--ring-r) * 0.809)); }
+  .sigil.s-reaction{ transform:translate(-50%,-50%) translate(calc(var(--ring-r) * -0.951), calc(var(--ring-r) * -0.309)); }
+  /* each sigil's own color, always available so the glow survives the anticipate -> charged handoff */
+  .sigil.s-safety{ --sg:rgba(239,68,68,0.85); }
+  .sigil.s-unity{ --sg:rgba(34,197,94,0.85); }
+  .sigil.s-willpower{ --sg:rgba(59,130,246,0.85); }
+  .sigil.s-energy{ --sg:rgba(234,179,8,0.85); }
+  .sigil.s-reaction{ --sg:rgba(168,85,247,0.85); }
+  @keyframes sigilIgnite{
+    0%{ opacity:.32; box-shadow:none; }
+    45%{ opacity:1; box-shadow:0 0 18px 5px var(--sg); }
+    100%{ opacity:1; box-shadow:0 0 11px 3px var(--sg); }
+  }
+  #intro.anticipate .sigil{ animation:sigilIgnite .65s ease-out forwards; }
+  #intro.anticipate .sigil img{ filter:none; }
+  #intro.anticipate .sigil.s-safety{ animation-delay:0s; }
+  #intro.anticipate .sigil.s-unity{ animation-delay:.5s; }
+  #intro.anticipate .sigil.s-willpower{ animation-delay:1s; }
+  #intro.anticipate .sigil.s-energy{ animation-delay:1.5s; }
+  #intro.anticipate .sigil.s-reaction{ animation-delay:2s; }
+  /* hold the lit state through the charged bloom instead of snapping dark when 'anticipate' ends */
+  #intro.charged .sigil{ opacity:1; box-shadow:0 0 11px 3px var(--sg); }
+  #intro.charged .sigil img{ filter:none; }
+
+  /* beams of color that carry each sigil's power to the seal */
+  .intro-beams{ position:absolute; inset:0; z-index:2; pointer-events:none; }
+  .intro-beam{
+    position:absolute; height:3px; margin-top:-1.5px; border-radius:2px;
+    background:linear-gradient(90deg, rgba(255,224,150,0) 0%, var(--bc, rgba(255,240,210,.95)) 55%, #fff 100%);
+    transform-origin:0% 50%;
+    transform:rotate(var(--rot,0deg)) scaleX(0);
+    opacity:0;
+    filter:drop-shadow(0 0 6px rgba(255,224,150,0.9));
+  }
+  #intro.anticipate .intro-beam{ animation:beamFly .55s ease-in forwards; }
+  @keyframes beamFly{
+    0%{ opacity:0; transform:rotate(var(--rot,0deg)) scaleX(0); }
+    18%{ opacity:1; }
+    82%{ opacity:1; }
+    100%{ opacity:0; transform:rotate(var(--rot,0deg)) scaleX(1); }
+  }
+
+  /* the logo stands completely alone at rest — no ring, no halo, nothing added */
+  .intro-seal{
+    position:relative; z-index:2; width:clamp(100px,19vw,150px); height:clamp(100px,19vw,150px);
+    display:flex; align-items:center; justify-content:center; border-radius:50%;
+    background:transparent;
+    box-shadow:0 0 0 0 rgba(232,184,75,0);
+  }
+  .intro-seal img{ width:100%; height:100%; object-fit:contain; position:relative; z-index:1; filter:drop-shadow(0 5px 16px rgba(0,0,0,0.55)); transition:filter .7s ease; }
+  .intro-cover-face h2{
+    margin:0; font-size:clamp(26px,4.4vw,44px); letter-spacing:.05em; line-height:1;
+    background:linear-gradient(180deg,#fff 8%, #f0d9a0 45%, var(--gold) 80%, var(--gold-dim) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 3px 10px rgba(0,0,0,0.5));
+  }
+  .intro-tagline{
+    margin:2px 0 0; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--text-dim);
+  }
+  .intro-hint{
+    margin:10px 0 0; font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:#f5e2ae; opacity:.8;
+    animation:hintPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes hintPulse{ 0%,100%{ opacity:.45; } 50%{ opacity:.95; } }
+
+  /* mystical charge-up — the logo gradually gathers light as each power arrives, over the whole build.
+     The glow lives entirely in the img's own drop-shadow (which follows the shield's alpha silhouette),
+     never in a box-shadow on the wrapper — a box-shadow paints a flat circular disc that flattens the
+     wood-grain texture underneath it and reads as an unwanted "shaded circle". */
+  @keyframes sealCharge{
+    0%{ transform:scale(1); }
+    100%{ transform:scale(1.05); }
+  }
+  #intro.anticipate .intro-seal{ animation:sealCharge var(--anticipate-dur, 2.8s) ease-in forwards; }
+  #intro.anticipate .intro-seal img{ filter:drop-shadow(0 5px 16px rgba(0,0,0,0.55)) drop-shadow(0 0 22px rgba(255,230,170,0.95)) drop-shadow(0 0 42px rgba(255,210,120,0.6)); transition:filter var(--anticipate-dur, 2.8s) ease-in; }
+
+  /* all five powers have landed — the logo swells and blazes before the vault answers */
+  @keyframes sealBloom{
+    0%{ transform:scale(1.05); }
+    100%{ transform:scale(1.9); }
+  }
+  #intro.charged .intro-seal{ animation:sealBloom .5s cubic-bezier(.2,.7,.2,1) forwards; }
+  /* the emblem's own holographic foil catches the surge — a shimmer of color across it */
+  @keyframes sealShimmer{
+    0%{ filter:drop-shadow(0 5px 16px rgba(0,0,0,0.55)) drop-shadow(0 0 30px rgba(255,247,224,1)) drop-shadow(0 0 56px rgba(255,224,150,0.7)) hue-rotate(0deg) saturate(1); }
+    50%{ filter:drop-shadow(0 5px 16px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(255,247,224,1)) drop-shadow(0 0 72px rgba(255,224,150,0.8)) hue-rotate(35deg) saturate(1.4); }
+    100%{ filter:drop-shadow(0 5px 16px rgba(0,0,0,0.55)) drop-shadow(0 0 34px rgba(255,247,224,1)) drop-shadow(0 0 62px rgba(255,238,198,0.75)) hue-rotate(0deg) saturate(1); }
+  }
+  #intro.charged .intro-seal img{ animation:sealShimmer .5s ease-in-out forwards; }
+
+  .intro-charge-flash{
+    position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, rgba(255,250,232,1), rgba(255,224,150,.6) 24%, transparent 52%);
+  }
+  #intro.charged .intro-charge-flash{ animation:chargeFlash .55s ease-out forwards; }
+  @keyframes chargeFlash{
+    0%{ opacity:0; transform:scale(.3); }
+    45%{ opacity:1; transform:scale(1); }
+    100%{ opacity:0; transform:scale(1.35); }
+  }
+
+  @keyframes spineCharge{
+    0%{ opacity:.6; filter:blur(3px); }
+    100%{ opacity:1; filter:blur(1px); box-shadow:0 0 52px 16px rgba(255,222,150,0.95); }
+  }
+  #intro.anticipate .intro-spine-glow{ animation:spineCharge var(--anticipate-dur, 2.8s) ease-in-out forwards; }
+  /* hold the fully-charged glow through the bloom instead of relaxing back to idle pulsing */
+  #intro.charged .intro-spine-glow{ opacity:1; filter:blur(1px); box-shadow:0 0 52px 16px rgba(255,222,150,0.95); animation:none; }
+  #intro.charged .intro-spark{ opacity:1; transform:translate(0,0) scale(.5); transition:none; }
+
+  /* a soft ring of light expands outward as the vault answers */
+  .intro-shock-ring{
+    position:absolute; top:50%; left:50%; width:8px; height:8px; z-index:1; border-radius:50%;
+    transform:translate(-50%,-50%); pointer-events:none; opacity:0;
+  }
+  #intro.opening .intro-shock-ring{ animation:shockRing 1.3s cubic-bezier(.15,.7,.3,1) forwards; }
+  @keyframes shockRing{
+    0%{ opacity:.85; box-shadow:0 0 0 0 rgba(255,224,150,0.85), 0 0 40px 10px rgba(255,224,150,0.5); }
+    100%{ opacity:0; box-shadow:0 0 0 460px rgba(255,224,150,0), 0 0 40px 10px rgba(255,224,150,0); }
+  }
+
+  #intro.opening .book-cover-left{ transform:rotateY(112deg); opacity:0; filter:brightness(1.5) blur(2px); }
+  #intro.opening .book-cover-right{ transform:rotateY(-112deg); opacity:0; filter:brightness(1.5) blur(2px); transition-delay:.06s; }
+  #intro.opening .intro-spine-glow,
+  #intro.opening .intro-cover-face{ opacity:0; }
+
+  /* ---------- replay button ---------- */
+  #replay-intro{
+    all:unset; position:fixed; z-index:40;
+    top:calc(14px + env(safe-area-inset-top, 0px)); right:14px;
+    display:flex; align-items:center; gap:6px;
+    padding:8px 14px 8px 11px; border-radius:999px; cursor:pointer;
+    background:linear-gradient(160deg, #16233d 0%, #0a1220 100%);
+    border:1.5px solid #d9ae63; color:#f5e2ae;
+    font-family:'DM Sans', system-ui, sans-serif; font-size:11px; font-weight:500; letter-spacing:.04em;
+    box-shadow:0 8px 18px -8px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08);
+    transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  #replay-intro svg{ flex:none; display:block; }
+  #replay-intro:hover{
+    transform:translateY(-1px);
+    background:linear-gradient(160deg, #1c2c4a 0%, #0d1626 100%);
+    box-shadow:0 10px 22px -8px rgba(0,0,0,0.8), 0 0 16px -2px rgba(232,184,75,0.45), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .intro-spine-glow, .intro-hint, .intro-rune-ring{ animation:none; }
+    #intro.opening{ animation:none; }
+    .book-cover, .intro-spine-glow, .intro-cover-face, .intro-light-burst,
+    .intro-seal, .intro-seal img, .intro-shock-ring, .intro-god-rays,
+    .intro-spark, .sigil, .sigil img, .intro-rune-ring,
+    .intro-beam, .intro-charge-flash{ transition:none !important; animation:none !important; }
+    #replay-intro{ transition:none; }
+  }
+
+  @media (max-width:600px){
+    .intro-cover-face h2{ font-size:clamp(22px,7vw,32px); }
+    .intro-emblem{ --ring-r:clamp(70px,20vw,92px); width:clamp(190px,58vw,250px); height:clamp(190px,58vw,250px); }
+    .intro-seal{ width:clamp(78px,22vw,104px); height:clamp(78px,22vw,104px); }
+    .sigil{ width:clamp(38px,10vw,48px); height:clamp(38px,10vw,48px); }
+    #replay-intro span{ display:none; }
+    #replay-intro{ padding:9px; }
+  }
 </style>
+
+<div id="intro" role="button" tabindex="0" aria-label="Open the Card Vault">
+  <div class="intro-god-rays"></div>
+  <div class="intro-light-burst"></div>
+  <div class="intro-charge-flash"></div>
+  <div class="intro-shock-ring"></div>
+  <div class="intro-sparks" id="introSparks"></div>
+  <div class="intro-beams" id="introBeams"></div>
+  <div class="book-cover book-cover-left">
+    <span class="book-corner tl"></span>
+    <span class="book-corner bl"></span>
+  </div>
+  <div class="book-cover book-cover-right">
+    <span class="book-corner tr"></span>
+    <span class="book-corner br"></span>
+  </div>
+  <div class="intro-spine-glow"></div>
+  <div class="intro-cover-face">
+    <div class="intro-emblem">
+      <svg class="intro-rune-ring" viewBox="0 0 200 200" aria-hidden="true">
+        <circle class="ring-outer" cx="100" cy="100" r="94"/>
+        <circle class="ring-inner" cx="100" cy="100" r="80"/>
+      </svg>
+      <div class="intro-sigils">
+        <span class="sigil s-safety"><img src="img/icon-safety.png" alt=""></span>
+        <span class="sigil s-unity"><img src="img/icon-unity.png" alt=""></span>
+        <span class="sigil s-willpower"><img src="img/icon-willpower.png" alt=""></span>
+        <span class="sigil s-energy"><img src="img/icon-energy.png" alt=""></span>
+        <span class="sigil s-reaction"><img src="img/icon-reaction.png" alt=""></span>
+      </div>
+      <div class="intro-seal">
+        <img src="img/smz_emblem.png" alt="Super Moverz">
+      </div>
+    </div>
+    <h2>THE CARD VAULT</h2>
+    <div class="title-rule"><span class="line"></span><span class="gem"></span><span class="line"></span></div>
+    <p class="intro-tagline">Guardians &amp; Games of Super Moverz</p>
+    <p class="intro-hint">Tap to open</p>
+  </div>
+</div>
+
+<button id="replay-intro" type="button" aria-label="Replay the opening animation">
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.4"/><path d="M3 4v5h5"/></svg>
+  <span>Replay Intro</span>
+</button>
 
 <div class="bg-fill"></div>
 <div class="bg-photo"></div>
@@ -370,7 +747,7 @@
 <div class="wrap">
 
   <header>
-    <div class="brand"><img src="assets/card-vault/smz_logo.png" alt="Super Moverz"></div>
+    <div class="brand"><img src="img/smz_logo.png" alt="Super Moverz"></div>
     <h1 class="title">THE CARD VAULT</h1>
     <div class="title-rule"><span class="line"></span><span class="gem"></span><span class="line"></span></div>
     <p class="subtitle">Hover a card for a quick peek — click it to pull it out of the case for a closer look.</p>
@@ -440,49 +817,49 @@ const POWER_META = {
 const POWER_ORDER = ['safety','unity','willpower','energy','reaction','unassigned'];
 
 const GUARDIANS = [
-  { name:'Hiro',               variant:1, img:'assets/card-vault/Hiro_3v.jpg',            power:'safety',
+  { name:'Hiro',               variant:1, img:'img/Hiro_3v.jpg',            power:'safety',
     history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Hiro',               variant:2, img:'assets/card-vault/Hiro_1.jpg',             power:'safety',
+  { name:'Hiro',               variant:2, img:'img/Hiro_1.jpg',             power:'safety',
     history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Hiro',               variant:3, img:'assets/card-vault/Hiro_3.jpg',             power:'safety',
+  { name:'Hiro',               variant:3, img:'img/Hiro_3.jpg',             power:'safety',
     history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Mrs. Picklefrog',    variant:1, img:'assets/card-vault/Picklefrog_3v.jpg',      power:'unity',
+  { name:'Mrs. Picklefrog',    variant:1, img:'img/Picklefrog_3v.jpg',      power:'unity',
     history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Mrs. Picklefrog',    variant:2, img:'assets/card-vault/Picklefrog_1.jpg',       power:'unity',
+  { name:'Mrs. Picklefrog',    variant:2, img:'img/Picklefrog_1.jpg',       power:'unity',
     history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Mrs. Picklefrog',    variant:3, img:'assets/card-vault/Picklefrog_3.jpg',       power:'unity',
+  { name:'Mrs. Picklefrog',    variant:3, img:'img/Picklefrog_3.jpg',       power:'unity',
     history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Master Commander',   variant:1, img:'assets/card-vault/Master_Commander_3v.jpg',power:'willpower',
+  { name:'Master Commander',   variant:1, img:'img/Master_Commander_3v.jpg',power:'willpower',
     history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Master Commander',   variant:2, img:'assets/card-vault/Master_Commander_2.jpg', power:'willpower',
+  { name:'Master Commander',   variant:2, img:'img/Master_Commander_2.jpg', power:'willpower',
     history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Master Commander',   variant:3, img:'assets/card-vault/Master_Commander_3.jpg', power:'willpower',
+  { name:'Master Commander',   variant:3, img:'img/Master_Commander_3.jpg', power:'willpower',
     history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Woodsy the Wizard',  variant:1, img:'assets/card-vault/Woodsy_3v.jpg',          power:'energy',
+  { name:'Woodsy the Wizard',  variant:1, img:'img/Woodsy_3v.jpg',          power:'energy',
     history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Woodsy the Wizard',  variant:2, img:'assets/card-vault/Woodsy_2.jpg',           power:'energy',
+  { name:'Woodsy the Wizard',  variant:2, img:'img/Woodsy_2.jpg',           power:'energy',
     history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Woodsy the Wizard',  variant:3, img:'assets/card-vault/Woodsy_3.jpg',           power:'energy',
+  { name:'Woodsy the Wizard',  variant:3, img:'img/Woodsy_3.jpg',           power:'energy',
     history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Serenity',           variant:1, img:'assets/card-vault/Serenity_3v.jpg',        power:'reaction',
+  { name:'Serenity',           variant:1, img:'img/Serenity_3v.jpg',        power:'reaction',
     history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Serenity',           variant:2, img:'assets/card-vault/Serenity_2.jpg',         power:'reaction',
+  { name:'Serenity',           variant:2, img:'img/Serenity_2.jpg',         power:'reaction',
     history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
-  { name:'Serenity',           variant:3, img:'assets/card-vault/Serenity_3.jpg',         power:'reaction',
+  { name:'Serenity',           variant:3, img:'img/Serenity_3.jpg',         power:'reaction',
     history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
 ];
 
 const GAMES = [
-  { name:'Robo Shark',        img:'assets/card-vault/Robo_Shark.jpg',        power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
-  { name:'Crystal Capture',   img:'assets/card-vault/Crystal_Capture.jpg',   power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
-  { name:'Adventure Quest',   img:'assets/card-vault/Adventure_Quest.jpg',   power:'unity',      focus:'Win together, or don’t win at all.' },
-  { name:'Pirate Ship',       img:'assets/card-vault/Pirate_Ship.jpg',       power:'unity',      focus:'Win together, or don’t win at all.' },
-  { name:'Survivor',          img:'assets/card-vault/Survivor.jpg',          power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
-  { name:'Royal Rescue',      img:'assets/card-vault/Royal_Rescue.jpg',      power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
-  { name:'Charge',            img:'assets/card-vault/Charge.jpg',            power:'energy',     focus:'Full send, full smile.' },
-  { name:'Meteor Shower',     img:'assets/card-vault/Meteor_Shower.jpg',     power:'energy',     focus:'Full send, full smile.' },
-  { name:'Troopers vs. Jedi', img:'assets/card-vault/Troopers_vs_Jedi.jpg',  power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
-  { name:'Super Seeker',      img:'assets/card-vault/Super_Seeker.jpg',      power:'unassigned', focus:'New card — Core Power not yet assigned.' },
+  { name:'Robo Shark',        img:'img/Robo_Shark.jpg',        power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
+  { name:'Crystal Capture',   img:'img/Crystal_Capture.jpg',   power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
+  { name:'Adventure Quest',   img:'img/Adventure_Quest.jpg',   power:'unity',      focus:'Win together, or don’t win at all.' },
+  { name:'Pirate Ship',       img:'img/Pirate_Ship.jpg',       power:'unity',      focus:'Win together, or don’t win at all.' },
+  { name:'Survivor',          img:'img/Survivor.jpg',          power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
+  { name:'Royal Rescue',      img:'img/Royal_Rescue.jpg',      power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
+  { name:'Charge',            img:'img/Charge.jpg',            power:'energy',     focus:'Full send, full smile.' },
+  { name:'Meteor Shower',     img:'img/Meteor_Shower.jpg',     power:'energy',     focus:'Full send, full smile.' },
+  { name:'Troopers vs. Jedi', img:'img/Troopers_vs_Jedi.jpg',  power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
+  { name:'Super Seeker',      img:'img/Super_Seeker.jpg',      power:'unassigned', focus:'New card — Core Power not yet assigned.' },
 ];
 
 function buildLegend(){
@@ -491,7 +868,7 @@ function buildLegend(){
     const p = POWER_META[k];
     const li = document.createElement('div');
     li.className = 'legend-item';
-    li.innerHTML = `<span class="legend-dot" style="background:${p.color}"></span>${p.name}`;
+    li.innerHTML = `<span class="legend-icon"><img src="img/icon-${k}.png" alt="${p.name}"></span><span>${p.name}</span>`;
     root.appendChild(li);
   });
 }
@@ -768,22 +1145,135 @@ window.addEventListener('resize', () => {
   modalInfo.style.top = targets.info.top+'px';
 });
 
-/* ---------- ambient motes ---------- */
+/* ---------- ambient gold flecks ---------- */
 const motesRoot = document.getElementById('motes');
-for(let i=0;i<20;i++){
+for(let i=0;i<85;i++){
   const m = document.createElement('div');
-  m.className = 'mote' + (Math.random() < 0.45 ? ' blue' : '');
-  const size = 2 + Math.random()*3;
+  const isBig = Math.random() < 0.22;
+  m.className = 'mote' + (Math.random() < 0.18 ? ' blue' : '') + (isBig ? ' big' : '');
+  const size = isBig ? 5 + Math.random()*4 : 2 + Math.random()*3;
   m.style.width = size+'px';
   m.style.height = size+'px';
   m.style.left = Math.random()*100+'vw';
   m.style.bottom = '-10px';
-  m.style.animationDuration = (14 + Math.random()*16)+'s';
-  m.style.animationDelay = (Math.random()*20)+'s';
+  m.style.animationDuration = (18 + Math.random()*22)+'s';
+  m.style.animationDelay = (Math.random()*18)+'s';
   motesRoot.appendChild(m);
 }
 
 buildLegend();
 buildFlatCase('guardian-case', GUARDIANS, 'guardian');
 buildFlatCase('game-case', GAMES, 'game');
+
+/* ---------- book-opening intro ---------- */
+(function(){
+  const intro = document.getElementById('intro');
+  const replayBtn = document.getElementById('replay-intro');
+  if(!intro) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let opened = false;
+
+  /* sparks that gather toward the seal while the vault charges, then scatter outward on opening */
+  const sparksRoot = document.getElementById('introSparks');
+  if(sparksRoot && !reduceMotion){
+    const SPARK_COUNT = 14;
+    for(let i=0;i<SPARK_COUNT;i++){
+      const ang = (Math.PI*2/SPARK_COUNT)*i + (Math.random()*0.4-0.2);
+      const radius = 90 + Math.random()*80;
+      const x = Math.cos(ang)*radius, y = Math.sin(ang)*radius;
+      const s = document.createElement('div');
+      s.className = 'intro-spark';
+      s.style.setProperty('--sx', x.toFixed(1)+'px');
+      s.style.setProperty('--sy', y.toFixed(1)+'px');
+      sparksRoot.appendChild(s);
+    }
+  }
+
+  /* fire one beam of colored light from each sigil to the seal, timed to its ignite delay */
+  const beamsRoot = document.getElementById('introBeams');
+  const BEAM_COLORS = ['rgba(239,68,68,.95)','rgba(34,197,94,.95)','rgba(59,130,246,.95)','rgba(234,179,8,.95)','rgba(168,85,247,.95)'];
+  const SIGIL_DELAYS_MS = [0, 500, 1000, 1500, 2000]; // matches each .sigil.s-* animation-delay in CSS
+  const BEAM_LEAD_MS = 250;   // let each sigil visibly glow on its own before it sends its beam
+  const BEAM_TRAVEL_MS = 550; // matches the .55s beamFly animation
+  const LAST_BEAM_ARRIVAL_MS = SIGIL_DELAYS_MS[SIGIL_DELAYS_MS.length-1] + BEAM_LEAD_MS + BEAM_TRAVEL_MS;
+
+  function launchBeams(){
+    if(!beamsRoot) return;
+    beamsRoot.innerHTML = '';
+    const sigilEls = intro.querySelectorAll('.sigil');
+    const sealEl = intro.querySelector('.intro-seal');
+    if(!sealEl || !sigilEls.length) return;
+    const introRect = intro.getBoundingClientRect();
+    const sealRect = sealEl.getBoundingClientRect();
+    const ex = sealRect.left + sealRect.width/2 - introRect.left;
+    const ey = sealRect.top + sealRect.height/2 - introRect.top;
+    sigilEls.forEach((sigilEl, i) => {
+      const r = sigilEl.getBoundingClientRect();
+      const sx = r.left + r.width/2 - introRect.left;
+      const sy = r.top + r.height/2 - introRect.top;
+      const dx = ex - sx, dy = ey - sy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const angle = Math.atan2(dy, dx) * 180/Math.PI;
+      const beam = document.createElement('div');
+      beam.className = 'intro-beam';
+      beam.style.left = sx+'px';
+      beam.style.top = sy+'px';
+      beam.style.width = dist+'px';
+      beam.style.setProperty('--rot', angle+'deg');
+      beam.style.setProperty('--bc', BEAM_COLORS[i % BEAM_COLORS.length]);
+      beam.style.animationDelay = (SIGIL_DELAYS_MS[i % SIGIL_DELAYS_MS.length] + BEAM_LEAD_MS) + 'ms';
+      beamsRoot.appendChild(beam);
+    });
+  }
+
+  function openBook(){
+    if(opened) return;
+    opened = true;
+    if(reduceMotion){ intro.style.display = 'none'; return; }
+
+    const CHARGE_AT = LAST_BEAM_ARRIVAL_MS + 400; // a real beat of suspense after the last power lands
+    const OPEN_AT = CHARGE_AT + 850;               // hold the bloom before the vault answers
+    const HIDE_AT = OPEN_AT + 1750;
+
+    intro.style.setProperty('--anticipate-dur', CHARGE_AT + 'ms');
+    intro.classList.add('anticipate');
+    launchBeams();
+
+    setTimeout(() => {
+      intro.classList.remove('anticipate');
+      intro.classList.add('charged');
+    }, CHARGE_AT);
+
+    setTimeout(() => {
+      intro.classList.remove('charged');
+      intro.classList.add('opening');
+    }, OPEN_AT);
+
+    setTimeout(() => { intro.style.display = 'none'; }, HIDE_AT);
+  }
+
+  function resetIntro(){
+    intro.classList.add('no-anim');
+    intro.classList.remove('opening', 'anticipate', 'charged');
+    intro.style.display = 'flex';
+    if(beamsRoot) beamsRoot.innerHTML = '';
+    void intro.offsetWidth; /* force reflow before re-enabling transitions */
+    intro.classList.remove('no-anim');
+    opened = false;
+  }
+
+  intro.addEventListener('click', openBook);
+  intro.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBook(); }
+  });
+  if(!reduceMotion){ setTimeout(openBook, 2600); } else { openBook(); }
+
+  if(replayBtn){
+    replayBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      resetIntro();
+      setTimeout(openBook, 550);
+    });
+  }
+})();
 </script>
