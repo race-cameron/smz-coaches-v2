@@ -64,6 +64,11 @@ function renderSchoolsView() {
   const schools = CardsState.getSchools();
 
   return `
+    <button class="replay-cards-intro" type="button" data-cards-action="replay-intro" aria-label="Replay the Power Cards opening animation">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.4"/><path d="M3 4v5h5"/></svg>
+      <span>Replay Intro</span>
+    </button>
+
     <div class="cards-hero">
       <div class="cards-hero-title">
         POWER <span class="accent">CARDS</span>
@@ -756,6 +761,10 @@ function handleCardsAction(e) {
   const action = el.dataset.cardsAction;
 
   switch (action) {
+    case 'replay-intro':
+      showLoadingScreen();
+      break;
+
     case 'add-school':
       showAddSchoolModal();
       break;
