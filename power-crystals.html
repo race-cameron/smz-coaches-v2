@@ -229,17 +229,17 @@
 
   /* ================= UPGRADED ================= */
   #stage-upgraded{
-    /* matches The Card Vault's painted blue/gold backdrop, kept behind the
-       existing gold ambient glow so the 3D crystals still pop against it.
-       Zoomed in past "cover" so the photo's two gold-flame border strips
-       fall outside the frame — just the soft blue grain shows. */
+    /* This box is now the one place that shows the real painted SMZ art —
+       the site-wide chrome elsewhere stays flat blue (see .app-bg-photo in
+       layout.css), so the photo reads as a special backdrop reserved for
+       the Power Crystals experience instead of repeating everywhere. */
     background:
       radial-gradient(ellipse 620px 440px at 50% 66%, rgba(214,164,88,.14) 0%, transparent 66%),
       linear-gradient(180deg, rgba(4,10,26,0.5) 0%, rgba(4,10,26,0.18) 34%, transparent 62%),
       radial-gradient(ellipse 86% 70% at 50% 55%, transparent 55%, rgba(0,0,0,0.4) 100%),
       url('img/bg_photo.jpg'),
       linear-gradient(165deg, #0a2d78 0%, #062060 55%, #030f38 100%);
-    background-size: auto, auto, auto, 320% auto, cover;
+    background-size: auto, auto, auto, cover, cover;
     background-position: center, center, center, center, center;
     background-repeat: no-repeat;
   }
@@ -782,7 +782,7 @@
       <div class="corner bl mp-chrome-fx"><svg viewBox="0 0 34 34"><path d="M2 22 L2 2 L22 2" fill="none" stroke="#d4af5a" stroke-width="2"/></svg></div>
       <div class="corner br mp-chrome-fx"><svg viewBox="0 0 34 34"><path d="M2 22 L2 2 L22 2" fill="none" stroke="#d4af5a" stroke-width="2"/></svg></div>
       <div class="mp-header">
-        <div class="dt-back">
+        <div class="dt-back" id="mapBackBtn" role="button" tabindex="0">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
           Back
         </div>
@@ -988,6 +988,16 @@ dtBackBtn.addEventListener("click", ()=>{
 });
 dtBackBtn.addEventListener("keydown", (e)=>{
   if(e.key === "Enter" || e.key === " "){ e.preventDefault(); dtBackBtn.click(); }
+});
+
+// "Back" on the Journey map also returns to the Hub -- was missing an id/listener entirely.
+const mapBackBtn = document.getElementById("mapBackBtn");
+mapBackBtn.addEventListener("click", ()=>{
+  state.screen = "hub";
+  applyState();
+});
+mapBackBtn.addEventListener("keydown", (e)=>{
+  if(e.key === "Enter" || e.key === " "){ e.preventDefault(); mapBackBtn.click(); }
 });
 
 // ============ GUARDIAN DETAIL PAGE ============
