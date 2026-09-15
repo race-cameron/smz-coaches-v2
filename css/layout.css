@@ -15,11 +15,12 @@ body {
 /* the real painted blue + gold-flame background art, used as-is — width-capped so
    full-screen / ultra-wide windows don't blow the border art up huge */
 .app-bg-photo {
-  /* Site-wide chrome now stays a flat "standard blue" (see .app-bg-fill) --
-     the real painted SMZ photo art is reserved for inside the Power Crystals
-     box itself, where it reads as a special backdrop rather than repeating
-     behind every page's nav/flanks. */
-  display: none;
+  position: fixed; top: 0; bottom: 0; left: 50%; z-index: -4;
+  width: min(100vw, 1500px); transform: translateX(-50%);
+  background-image: url('../img/bg_photo.jpg');
+  background-size: cover; background-position: center center; background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 }
 /* light scrim so the nav + content stay legible over the painted texture */
 .app-bg-top-shade {
