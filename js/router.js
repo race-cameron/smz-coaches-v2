@@ -41,6 +41,10 @@ const Router = (() => {
       return { screen: 'crystals', id: null };
     }
 
+    if (clean === 'cardvault') {
+      return { screen: 'cardvault', id: null };
+    }
+
     if (clean.startsWith('game/')) {
       const id = clean.slice(5);
       return { screen: 'detail', id: id || null };

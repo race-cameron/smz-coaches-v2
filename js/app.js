@@ -23,6 +23,7 @@ function renderNav(route) {
     { hash: '#games',     label: 'Games',                     screen: 'games'     },
     { hash: '#cards',     label: 'Power Cards',               screen: 'cards'     },
     { hash: '#crystals',  label: 'Power Crystals',             screen: 'crystals' },
+    { hash: '#cardvault', label: 'Card Vault',                 screen: 'cardvault' },
     { hash: '#favorites', label: `★ Favorites (${favCount})`, screen: 'favorites' },
   ];
 
@@ -56,6 +57,7 @@ function renderPage(route) {
     case 'favorites': return renderFavorites();
     case 'cards':     return renderCards();
     case 'crystals':  return renderCrystals();
+    case 'cardvault': return renderCardVault();
     case 'detail':    return ''; // async — renderDetail writes directly to #main-content
     default:          return renderHome();
   }
