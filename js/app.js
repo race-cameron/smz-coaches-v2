@@ -336,6 +336,12 @@ function render(route) {
   const app = document.getElementById('app');
   if (!app) return;
 
+  // Power Crystals paints this same backdrop itself inside its own
+  // full-bleed iframe, so the shell's copy is switched off there to avoid
+  // showing it twice. Card Vault keeps the shell's copy showing too — the
+  // doubled-up look there was requested on purpose.
+  document.body.classList.toggle('app-bg-off', route.screen === 'crystals');
+
   app.innerHTML = `
     ${renderNav(route)}
     <main class="page" id="main-content">
