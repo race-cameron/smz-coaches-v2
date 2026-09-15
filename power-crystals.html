@@ -229,9 +229,17 @@
 
   /* ================= UPGRADED ================= */
   #stage-upgraded{
+    /* matches The Card Vault's painted blue/gold backdrop, kept behind the
+       existing gold ambient glow so the 3D crystals still pop against it */
     background:
-      radial-gradient(ellipse 620px 440px at 50% 66%, rgba(214,164,88,.11) 0%, transparent 66%),
-      radial-gradient(ellipse 900px 640px at 50% -8%, var(--ink-hi) 0%, var(--ink-core) 52%, var(--ink-deep) 100%);
+      radial-gradient(ellipse 620px 440px at 50% 66%, rgba(214,164,88,.14) 0%, transparent 66%),
+      linear-gradient(180deg, rgba(4,10,26,0.5) 0%, rgba(4,10,26,0.18) 34%, transparent 62%),
+      radial-gradient(ellipse 86% 70% at 50% 55%, transparent 55%, rgba(0,0,0,0.4) 100%),
+      url('img/bg_photo.jpg'),
+      linear-gradient(165deg, #0a2d78 0%, #062060 55%, #030f38 100%);
+    background-size: auto, auto, auto, cover, cover;
+    background-position: center, center, center, center, center;
+    background-repeat: no-repeat;
   }
 
   .vignette{ position:absolute; inset:0; z-index:6; pointer-events:none;
