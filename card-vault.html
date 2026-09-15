@@ -1,0 +1,789 @@
+<title>The Card Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080e1c;
+    --bg-deep:#040810;
+    --case:#0d1730;
+    --case-2:#0a1326;
+    --shelf:#101d3a;
+    --line:#28365a;
+    --line-soft:rgba(255,255,255,0.07);
+    --text:#eef2f9;
+    --text-dim:#93a1bd;
+    --text-faint:#5c6a8a;
+    --gold:#e8b84b;
+    --gold-dim:#a9843a;
+
+    --wood-1:#241309;
+    --wood-2:#3c2413;
+    --wood-3:#59391a;
+    --wood-4:#170c05;
+
+    --safety:#ef4444;
+    --unity:#22c55e;
+    --willpower:#3b82f6;
+    --energy:#eab308;
+    --reaction:#a855f7;
+    --neutral:#8391b3;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --bg:#080e1c; --bg-deep:#040810; --case:#0d1730; --case-2:#0a1326; --shelf:#101d3a;
+      --line:#28365a; --text:#eef2f9; --text-dim:#93a1bd; --text-faint:#5c6a8a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#080e1c; --bg-deep:#040810; --case:#0d1730; --case-2:#0a1326; --shelf:#101d3a;
+    --line:#28365a; --text:#eef2f9; --text-dim:#93a1bd; --text-faint:#5c6a8a;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'DM Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue', 'Arial Narrow', sans-serif;
+    letter-spacing:0.03em;
+    font-weight:400;
+  }
+  button{ font-family:inherit; }
+
+  /* solid backdrop matching the art's own blue — fills the flanks on ultra-wide screens */
+  .bg-fill{
+    position:fixed; inset:0; z-index:-5;
+    background:linear-gradient(165deg, #0a2d78 0%, #062060 55%, #030f38 100%);
+  }
+  /* the real painted blue + gold-flame background art, used as-is — width-capped so
+     full-screen / ultra-wide windows don't blow the border art up huge */
+  .bg-photo{
+    position:fixed; top:0; bottom:0; left:50%; z-index:-4;
+    width:min(100vw, 1500px); transform:translateX(-50%);
+    background-image:url('assets/card-vault/bg_photo.jpg');
+    background-size:cover; background-position:center center; background-repeat:no-repeat;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+  /* light scrim so the logo + title stay crisp over the painted texture */
+  .bg-top-shade{
+    position:fixed; top:0; left:0; right:0; height:min(220px, 30vh); z-index:-3; pointer-events:none;
+    background:linear-gradient(180deg, rgba(4,10,26,0.55) 0%, rgba(4,10,26,0.28) 55%, transparent 100%);
+  }
+  .bg-vignette{
+    position:fixed; inset:0; z-index:-3; pointer-events:none;
+    background:radial-gradient(ellipse 86% 70% at 50% 55%, transparent 58%, rgba(0,0,0,0.38) 100%);
+  }
+  .motes{ position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+  .mote{
+    position:absolute; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,184,75,0.9), rgba(232,184,75,0) 70%);
+    animation:drift linear infinite;
+    opacity:0.5;
+  }
+  .mote.blue{ background:radial-gradient(circle, rgba(93,161,255,0.95), rgba(93,161,255,0) 70%); }
+  @keyframes drift{
+    0%{ transform:translateY(0) translateX(0); opacity:0; }
+    10%{ opacity:.55; }
+    90%{ opacity:.4; }
+    100%{ transform:translateY(-120vh) translateX(20px); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .mote{ animation:none; display:none; }
+    .chest-glow{ animation:none; }
+  }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:22px 18px 26px; }
+
+  /* ---------- Header ---------- */
+  header{ text-align:center; margin-bottom:16px; }
+  .brand{
+    display:block; margin:0 auto 6px;
+    width:min(200px, 46vw);
+    filter:drop-shadow(0 4px 14px rgba(0,0,0,0.45));
+  }
+  .brand img{ display:block; width:100%; height:auto; }
+  h1.title{
+    font-size:clamp(24px,3.6vw,38px);
+    margin:0; line-height:1;
+    background:linear-gradient(180deg,#ffffff 8%, #d6e0f5 42%, #8fa3d6 75%, #5f76ab 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 2px 0 rgba(59,130,246,0.35)) drop-shadow(0 6px 16px rgba(59,130,246,0.25));
+    text-wrap:balance;
+  }
+  .title-rule{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin:8px auto 0; max-width:260px;
+  }
+  .title-rule .line{ flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--gold-dim), transparent); }
+  .title-rule .gem{ width:6px; height:6px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 8px var(--gold); }
+  .subtitle{
+    margin:8px auto 0; max-width:520px;
+    color:var(--text-dim); font-size:12.5px; line-height:1.5;
+  }
+  .legend{
+    display:flex; flex-wrap:wrap; gap:6px 12px; justify-content:center;
+    margin-top:10px;
+  }
+  .legend-item{
+    display:flex; align-items:center; gap:5px;
+    font-size:10.5px; color:var(--text-dim); letter-spacing:0.03em;
+  }
+  .legend-dot{ width:6px; height:6px; border-radius:50%; flex:none; }
+
+  /* ---------- the chest ---------- */
+  .chest{
+    position:relative;
+    padding:26px 22px 20px;
+    border-radius:26px;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.14) 0px, rgba(0,0,0,0.14) 2px, transparent 2px, transparent 46px),
+      repeating-linear-gradient(3deg, rgba(255,255,255,0.035) 0px, transparent 1px, transparent 7px, rgba(0,0,0,0.06) 8px, transparent 9px),
+      linear-gradient(160deg, var(--wood-3) 0%, var(--wood-2) 45%, var(--wood-1) 100%);
+    box-shadow:
+      0 40px 80px -34px rgba(0,0,0,0.9),
+      inset 0 0 0 1px rgba(0,0,0,0.5),
+      inset 0 0 70px rgba(0,0,0,0.55),
+      inset 0 2px 0 rgba(255,255,255,0.06);
+  }
+  .chest::before{
+    /* brass trim */
+    content:''; position:absolute; inset:8px; border-radius:19px; pointer-events:none;
+    box-shadow:inset 0 0 0 2px rgba(217,174,99,0.55), inset 0 0 0 3px rgba(0,0,0,0.4);
+  }
+  .chest::after{
+    /* rivet strip along the top edge */
+    content:''; position:absolute; top:13px; left:34px; right:34px; height:4px; pointer-events:none;
+    background-image: repeating-radial-gradient(circle at 9px 2px, rgba(255,224,153,0.85) 0 1.6px, transparent 2px 42px);
+    opacity:.7;
+  }
+  .chest-glow{
+    position:absolute; inset:0; border-radius:26px; pointer-events:none;
+    background:radial-gradient(ellipse 70% 55% at 50% 15%, rgba(232,184,75,0.14), transparent 65%);
+    animation:chestPulse 6s ease-in-out infinite;
+  }
+  @keyframes chestPulse{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+
+  .compartments{
+    position:relative;
+    display:grid; grid-template-columns:1fr 1fr; gap:18px;
+    align-items:stretch;
+  }
+  #guardians, #games{ height:100%; }
+
+  /* ---------- gilded frame ---------- */
+  .case-frame{
+    position:relative;
+    height:100%;
+    display:flex; flex-direction:column;
+    padding:8px;
+    border-radius:20px;
+    background:linear-gradient(160deg, #e9c47c 0%, #a9793a 16%, #5c3f18 42%, #7a541f 60%, #d4a559 82%, #8a672c 100%);
+    box-shadow:
+      0 20px 40px -22px rgba(0,0,0,0.85),
+      inset 0 1px 0 rgba(255,255,255,0.35),
+      inset 0 -2px 5px rgba(0,0,0,0.45);
+  }
+  .case-frame::before{
+    content:''; position:absolute; inset:4px; border-radius:15px; pointer-events:none;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,0.55), inset 0 0 0 2px rgba(255,228,168,0.3);
+  }
+
+  .case-banner{
+    position:absolute; top:-15px; left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:8px; white-space:nowrap;
+    padding:6px 18px; border-radius:999px; z-index:8;
+    background:linear-gradient(160deg, #16233d 0%, #0a1220 100%);
+    border:2px solid #d9ae63;
+    box-shadow:0 8px 18px -8px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .case-banner .gem{ width:6px; height:6px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 7px var(--gold); flex:none; }
+  .case-banner .txt{
+    font-family:'Bebas Neue',sans-serif; font-size:13.5px; letter-spacing:0.12em;
+    text-transform:uppercase; color:#f5e2ae; text-shadow:0 0 8px rgba(232,184,75,0.5);
+  }
+
+  /* ---------- the case interior ---------- */
+  .case{
+    position:relative;
+    flex:1 1 auto;
+    background:linear-gradient(165deg, var(--case) 0%, var(--case-2) 65%, #070c18 100%);
+    border-radius:13px;
+    padding:22px 14px 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.05),
+      inset 0 0 40px rgba(0,0,0,0.4);
+  }
+  .case-glass{
+    position:absolute; inset:0; border-radius:13px; pointer-events:none;
+    background:linear-gradient(115deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 26%);
+  }
+
+  /* fixed 3-column page grid — used identically for both Guardian and Game cards */
+  .page-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px 8px;
+  }
+
+  /* ---------- card slot ---------- */
+  .card-slot{ position:relative; }
+  .card-slot .shadow{
+    position:absolute; left:50%; bottom:5px; width:70%; height:7px;
+    background:radial-gradient(ellipse, rgba(0,0,0,0.55), transparent 70%);
+    transform:translateX(-50%); border-radius:50%;
+    transition:opacity .22s ease, transform .22s ease;
+  }
+  .card-face{
+    all:unset; cursor:pointer; display:block; position:relative; z-index:2;
+    width:100%; aspect-ratio:620/825; border-radius:6px; overflow:hidden;
+    border:1.5px solid rgba(255,255,255,0.07);
+    background:var(--bg-deep);
+    transform:translateY(0) scale(1);
+    transition:transform .22s cubic-bezier(.2,.8,.3,1), border-color .2s ease, box-shadow .22s ease;
+    box-shadow:0 6px 10px -6px rgba(0,0,0,0.7);
+  }
+  .card-face img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .card-slot .name{
+    display:block; margin-top:4px; text-align:center;
+    font-family:'Bebas Neue',sans-serif; font-size:9.5px; letter-spacing:0.02em;
+    color:var(--text-faint); transition:color .2s ease;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .card-slot:hover .card-face, .card-slot:focus-within .card-face, .card-slot.is-active .card-face{
+    transform:translateY(-8px) scale(1.14);
+    border-color:var(--c);
+    box-shadow:0 20px 26px -14px rgba(0,0,0,0.8), 0 0 20px -4px var(--c);
+    z-index:6;
+  }
+  .card-slot:hover .shadow, .card-slot:focus-within .shadow, .card-slot.is-active .shadow{
+    opacity:0.35; transform:translateX(-50%) scale(0.7);
+  }
+  .card-slot:hover .name, .card-slot:focus-within .name, .card-slot.is-active .name{ color:#fff; }
+
+  /* ---------- tooltip (single, JS-positioned) ---------- */
+  #tooltip{
+    position:fixed; z-index:60; width:236px;
+    background:linear-gradient(165deg, #10193a 0%, #070c18 100%);
+    border:1px solid var(--line); border-top:3px solid var(--c);
+    border-radius:11px; padding:13px 15px 15px;
+    box-shadow:0 26px 50px -18px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .14s ease, visibility .14s ease;
+  }
+  #tooltip.show{ opacity:1; visibility:visible; }
+  #tooltip .kicker{
+    font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--c); font-weight:700; margin-bottom:5px;
+  }
+  #tooltip h4{ margin:0 0 7px; font-size:20px; font-family:'Bebas Neue',sans-serif; color:#fff; }
+  #tooltip p{ margin:0; font-size:12.5px; line-height:1.55; color:var(--text-dim); }
+  #tooltip p.placeholder{ color:var(--text-faint); font-style:italic; }
+  #tooltip .sub{ margin-top:10px; padding-top:10px; border-top:1px solid var(--line); font-size:11.5px; color:var(--text-faint); font-style:italic; line-height:1.5; }
+  #tooltip .sub b{ display:block; font-style:normal; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-faint); margin-bottom:3px; }
+
+  /* ---------- click-to-enlarge card viewer ---------- */
+  #modal-backdrop{
+    position:fixed; inset:0; z-index:90;
+    background:rgba(4,6,14,0.82);
+    backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+    opacity:0; visibility:hidden;
+    transition:opacity .28s ease, visibility .28s ease;
+  }
+  #modal-backdrop.show{ opacity:1; visibility:visible; }
+
+  #modal-card{
+    position:fixed; z-index:95; left:0; top:0; width:1px; height:1px;
+    border-radius:9px; overflow:hidden; visibility:hidden;
+    background:var(--bg-deep);
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.9), 0 0 0 2px var(--c), 0 0 46px -6px var(--c);
+    transition:left .38s cubic-bezier(.2,.8,.2,1), top .38s cubic-bezier(.2,.8,.2,1),
+               width .38s cubic-bezier(.2,.8,.2,1), height .38s cubic-bezier(.2,.8,.2,1),
+               box-shadow .38s ease;
+    cursor:zoom-out;
+  }
+  #modal-card img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  #modal-info{
+    position:fixed; z-index:95; left:0; top:0;
+    background:linear-gradient(165deg, #10193a 0%, #070c18 100%);
+    border:1px solid var(--line); border-top:3px solid var(--c);
+    border-radius:12px; padding:18px 20px 20px;
+    box-shadow:0 26px 60px -18px rgba(0,0,0,0.85);
+    opacity:0; transform:translateY(10px); pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  #modal-info.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+  #modal-info .kicker{ font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--c); font-weight:700; margin-bottom:6px; }
+  #modal-info h3{ margin:0 0 9px; font-size:27px; font-family:'Bebas Neue',sans-serif; color:#fff; }
+  #modal-info p{ margin:0; font-size:13.5px; line-height:1.6; color:var(--text-dim); }
+  #modal-info p.placeholder{ color:var(--text-faint); font-style:italic; }
+  #modal-info .sub{ margin-top:12px; padding-top:12px; border-top:1px solid var(--line); font-size:12.5px; color:var(--text-faint); font-style:italic; line-height:1.55; }
+  #modal-info .sub b{ display:block; font-style:normal; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-faint); margin-bottom:4px; }
+
+  #modal-close{
+    position:fixed; z-index:96; top:18px; right:18px; width:36px; height:36px; border-radius:50%;
+    background:rgba(10,15,30,0.85); border:1px solid var(--line); color:#fff;
+    font-size:18px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity .2s ease, background .2s ease;
+  }
+  #modal-close.show{ opacity:1; pointer-events:auto; }
+  #modal-close:hover{ background:rgba(20,28,50,0.95); }
+
+  @media (prefers-reduced-motion: reduce){
+    #modal-card, #modal-info, #modal-backdrop, #modal-close{ transition-duration:.01ms !important; }
+  }
+
+  footer{
+    text-align:center; color:var(--text-faint); font-size:10.5px;
+    line-height:1.6; margin-top:14px; max-width:680px; margin-left:auto; margin-right:auto;
+  }
+  footer b{ color:var(--text-dim); }
+
+  @media (max-width:820px){
+    .compartments{ grid-template-columns:1fr; gap:22px; }
+  }
+  @media (max-width:720px){
+    .wrap{ padding:20px 12px 24px; }
+    .chest{ padding:22px 12px 16px; }
+    .case{ padding:20px 10px 10px; }
+    .page-grid{ grid-template-columns:repeat(3,1fr); gap:12px 8px; }
+    .case-banner{ padding:6px 14px; }
+    .case-banner .txt{ font-size:12.5px; }
+    #tooltip{ width:min(260px, calc(100vw - 28px)); }
+  }
+</style>
+
+<div class="bg-fill"></div>
+<div class="bg-photo"></div>
+<div class="bg-vignette"></div>
+<div class="bg-top-shade"></div>
+<div class="motes" id="motes"></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="brand"><img src="assets/card-vault/smz_logo.png" alt="Super Moverz"></div>
+    <h1 class="title">THE CARD VAULT</h1>
+    <div class="title-rule"><span class="line"></span><span class="gem"></span><span class="line"></span></div>
+    <p class="subtitle">Hover a card for a quick peek — click it to pull it out of the case for a closer look.</p>
+    <div class="legend" id="legend"></div>
+  </header>
+
+  <div class="chest">
+    <div class="chest-glow"></div>
+    <div class="compartments">
+      <div id="guardians">
+        <div class="case-frame">
+          <div class="case-banner"><span class="gem"></span><span class="txt">Guardian Cards</span><span class="gem"></span></div>
+          <div class="case" id="guardian-case"><div class="case-glass"></div></div>
+        </div>
+      </div>
+      <div id="games">
+        <div class="case-frame">
+          <div class="case-banner"><span class="gem"></span><span class="txt">Game Cards</span><span class="gem"></span></div>
+          <div class="case" id="game-case"><div class="case-glass"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Guardian History and per-game "why it matters" text are placeholders — send over your real copy and I'll drop it straight in.
+  </footer>
+
+</div>
+
+<div id="tooltip">
+  <div class="kicker"></div>
+  <h4></h4>
+  <p></p>
+  <div class="sub" hidden></div>
+</div>
+
+<div id="modal-backdrop"></div>
+<div id="modal-card"><img alt=""></div>
+<div id="modal-info">
+  <div class="kicker"></div>
+  <h3></h3>
+  <p></p>
+  <div class="sub" hidden></div>
+</div>
+<button id="modal-close" type="button" aria-label="Close">&times;</button>
+
+<script>
+const POWER_META = {
+  safety:    { name:'Safety',     color:'var(--safety)',
+    desc:'Awareness & body control — spotting danger before it happens, reading your surroundings, predicting outcomes, and watching out for your teammates.',
+    call:'"Be aware, be aware, be aware of the danger. Looking over there — be aware!"' },
+  unity:     { name:'Unity',      color:'var(--unity)',
+    desc:'Teamwork & compassion — helping each other, resolving conflict with respect through the Justice Council, and celebrating the team’s wins as your own.',
+    call:null },
+  willpower: { name:'Will Power', color:'var(--willpower)',
+    desc:'Focus & self-control — know yourself, anticipate distractions, control your environment, control your actions.',
+    call:'"By Contact! — FOCUS! Willpower! — SELF-CONTROL!"' },
+  energy:    { name:'Energy',     color:'var(--energy)',
+    desc:'Movement, enthusiasm & joy — bringing positive energy to the team. It’s not just about moving, it’s about how you make everyone else feel while you do it.',
+    call:null },
+  reaction:  { name:'Reaction',   color:'var(--reaction)',
+    desc:'Emotional regulation & decision-making — pause, breathe, recognize the emotion, respond instead of react. You can’t control what others do, only how you answer it.',
+    call:null },
+  unassigned:{ name:'Unassigned', color:'var(--neutral)', desc:null, call:null },
+};
+const POWER_ORDER = ['safety','unity','willpower','energy','reaction','unassigned'];
+
+const GUARDIANS = [
+  { name:'Hiro',               variant:1, img:'assets/card-vault/Hiro_3v.jpg',            power:'safety',
+    history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Hiro',               variant:2, img:'assets/card-vault/Hiro_1.jpg',             power:'safety',
+    history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Hiro',               variant:3, img:'assets/card-vault/Hiro_3.jpg',             power:'safety',
+    history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Mrs. Picklefrog',    variant:1, img:'assets/card-vault/Picklefrog_3v.jpg',      power:'unity',
+    history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Mrs. Picklefrog',    variant:2, img:'assets/card-vault/Picklefrog_1.jpg',       power:'unity',
+    history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Mrs. Picklefrog',    variant:3, img:'assets/card-vault/Picklefrog_3.jpg',       power:'unity',
+    history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Master Commander',   variant:1, img:'assets/card-vault/Master_Commander_3v.jpg',power:'willpower',
+    history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Master Commander',   variant:2, img:'assets/card-vault/Master_Commander_2.jpg', power:'willpower',
+    history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Master Commander',   variant:3, img:'assets/card-vault/Master_Commander_3.jpg', power:'willpower',
+    history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Woodsy the Wizard',  variant:1, img:'assets/card-vault/Woodsy_3v.jpg',          power:'energy',
+    history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Woodsy the Wizard',  variant:2, img:'assets/card-vault/Woodsy_2.jpg',           power:'energy',
+    history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Woodsy the Wizard',  variant:3, img:'assets/card-vault/Woodsy_3.jpg',           power:'energy',
+    history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Serenity',           variant:1, img:'assets/card-vault/Serenity_3v.jpg',        power:'reaction',
+    history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Serenity',           variant:2, img:'assets/card-vault/Serenity_2.jpg',         power:'reaction',
+    history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Serenity',           variant:3, img:'assets/card-vault/Serenity_3.jpg',         power:'reaction',
+    history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+];
+
+const GAMES = [
+  { name:'Robo Shark',        img:'assets/card-vault/Robo_Shark.jpg',        power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
+  { name:'Crystal Capture',   img:'assets/card-vault/Crystal_Capture.jpg',   power:'safety',     focus:'Eyes up, plan your path, protect the team.' },
+  { name:'Adventure Quest',   img:'assets/card-vault/Adventure_Quest.jpg',   power:'unity',      focus:'Win together, or don’t win at all.' },
+  { name:'Pirate Ship',       img:'assets/card-vault/Pirate_Ship.jpg',       power:'unity',      focus:'Win together, or don’t win at all.' },
+  { name:'Survivor',          img:'assets/card-vault/Survivor.jpg',          power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
+  { name:'Royal Rescue',      img:'assets/card-vault/Royal_Rescue.jpg',      power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
+  { name:'Charge',            img:'assets/card-vault/Charge.jpg',            power:'energy',     focus:'Full send, full smile.' },
+  { name:'Meteor Shower',     img:'assets/card-vault/Meteor_Shower.jpg',     power:'energy',     focus:'Full send, full smile.' },
+  { name:'Troopers vs. Jedi', img:'assets/card-vault/Troopers_vs_Jedi.jpg',  power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
+  { name:'Super Seeker',      img:'assets/card-vault/Super_Seeker.jpg',      power:'unassigned', focus:'New card — Core Power not yet assigned.' },
+];
+
+function buildLegend(){
+  const root = document.getElementById('legend');
+  POWER_ORDER.filter(k => k !== 'unassigned').forEach(k => {
+    const p = POWER_META[k];
+    const li = document.createElement('div');
+    li.className = 'legend-item';
+    li.innerHTML = `<span class="legend-dot" style="background:${p.color}"></span>${p.name}`;
+    root.appendChild(li);
+  });
+}
+
+function makeCardSlot(item, kind){
+  const meta = POWER_META[item.power];
+  const slot = document.createElement('div');
+  slot.className = 'card-slot';
+  slot.style.setProperty('--c', meta.color);
+  slot.innerHTML = `
+    <div class="shadow"></div>
+    <button class="card-face" type="button">
+      <img src="${item.img}" alt="${item.name}" loading="lazy">
+    </button>
+    <span class="name">${item.variant ? `${item.name} · ${item.variant}` : item.name}</span>
+  `;
+  const btn = slot.querySelector('.card-face');
+  const activate = () => showTooltip(slot, item, meta, kind);
+  btn.addEventListener('mouseenter', activate);
+  btn.addEventListener('focus', activate);
+  btn.addEventListener('click', () => openCardModal(slot, item, meta, kind));
+  slot.addEventListener('mouseleave', hideTooltipSoon);
+  return slot;
+}
+
+// Fixed 3-column page grid, in list order — used identically for both sections
+function buildFlatCase(mountId, items, kind){
+  const mount = document.getElementById(mountId);
+  const grid = document.createElement('div');
+  grid.className = 'page-grid';
+  items.forEach(item => grid.appendChild(makeCardSlot(item, kind)));
+  mount.appendChild(grid);
+}
+
+/* ---------- tooltip logic (single fixed element, JS-positioned) ---------- */
+const tooltip = document.getElementById('tooltip');
+const ttKicker = tooltip.querySelector('.kicker');
+const ttTitle  = tooltip.querySelector('h4');
+const ttText   = tooltip.querySelector('p');
+const ttSub    = tooltip.querySelector('.sub');
+let hideTimer = null;
+let activeSlot = null;
+
+function showTooltip(slot, item, meta, kind){
+  clearTimeout(hideTimer);
+  if(activeSlot) activeSlot.classList.remove('is-active');
+  activeSlot = slot;
+  slot.classList.add('is-active');
+
+  tooltip.style.setProperty('--c', meta.color);
+  ttTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.name;
+
+  if(kind === 'guardian'){
+    ttKicker.textContent = `${meta.name} Guardian`;
+    ttText.textContent = meta.desc;
+    ttText.classList.remove('placeholder');
+    ttSub.hidden = false;
+    ttSub.innerHTML = `<b>History</b>${item.history}`;
+  } else {
+    ttKicker.textContent = `${meta.name} · Game Card`;
+    ttText.textContent = item.focus;
+    ttText.classList.toggle('placeholder', item.power === 'unassigned');
+    if(meta.call){ ttSub.hidden = false; ttSub.innerHTML = meta.call; }
+    else { ttSub.hidden = true; }
+  }
+
+  tooltip.classList.add('show');
+  positionTooltip(slot);
+}
+
+function positionTooltip(slot){
+  const r = slot.getBoundingClientRect();
+  const tw = tooltip.offsetWidth || 236;
+  const th = tooltip.offsetHeight || 160;
+  const margin = 12;
+
+  let left = r.left + r.width/2 - tw/2;
+  left = Math.max(margin, Math.min(left, window.innerWidth - tw - margin));
+
+  let top = r.top - th - 14;
+  if(top < margin){ top = r.bottom + 14; }
+  top = Math.min(top, window.innerHeight - th - margin);
+
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+
+function hideTooltipSoon(){
+  hideTimer = setTimeout(() => {
+    tooltip.classList.remove('show');
+    if(activeSlot){ activeSlot.classList.remove('is-active'); activeSlot = null; }
+  }, 60);
+}
+
+window.addEventListener('scroll', () => { tooltip.classList.remove('show'); if(activeSlot){activeSlot.classList.remove('is-active'); activeSlot=null;} }, {passive:true});
+
+// touch: tap toggles, tap elsewhere dismisses
+const isTouch = matchMedia('(hover: none)').matches;
+if(isTouch){
+  document.addEventListener('click', (e) => {
+    if(!e.target.closest('.card-slot')){
+      tooltip.classList.remove('show');
+      if(activeSlot){ activeSlot.classList.remove('is-active'); activeSlot = null; }
+    }
+  });
+}
+
+/* ---------- click-to-enlarge card viewer (FLIP animation) ---------- */
+const modalBackdrop = document.getElementById('modal-backdrop');
+const modalCard     = document.getElementById('modal-card');
+const modalCardImg  = modalCard.querySelector('img');
+const modalInfo     = document.getElementById('modal-info');
+const miKicker = modalInfo.querySelector('.kicker');
+const miTitle  = modalInfo.querySelector('h3');
+const miText   = modalInfo.querySelector('p');
+const miSub    = modalInfo.querySelector('.sub');
+const modalClose = document.getElementById('modal-close');
+const CARD_RATIO = 620/825;
+let modalSlot = null;
+let modalCloseTimer = null;
+
+function layoutModalTargets(){
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const gap = 22;
+  const wide = vw >= 700;
+
+  if(wide){
+    let cardH = Math.min(vh*0.74, 560);
+    let cardW = cardH * CARD_RATIO;
+    let infoW = Math.min(320, vw - cardW - gap*3);
+    if(infoW >= 200){
+      modalInfo.style.width = infoW+'px';
+      const infoH = modalInfo.offsetHeight;
+      const totalW = cardW + gap + infoW;
+      const cardLeft = (vw - totalW)/2;
+      const cardTop = (vh - cardH)/2;
+      const infoLeft = cardLeft + cardW + gap;
+      let infoTop = cardTop + (cardH - infoH)/2;
+      infoTop = Math.max(16, Math.min(infoTop, vh - infoH - 16));
+      modalInfo.style.maxHeight = ''; modalInfo.style.overflowY = '';
+      return {
+        card:{ left:cardLeft, top:cardTop, width:cardW, height:cardH },
+        info:{ left:infoLeft, top:infoTop, width:infoW }
+      };
+    }
+  }
+
+  // narrow / stacked layout
+  const margin = 18;
+  let cardH = Math.min(vh*0.46, 380);
+  let cardW = Math.min(cardH*CARD_RATIO, vw - margin*2);
+  cardH = cardW / CARD_RATIO;
+  const infoW = Math.min(vw - margin*2, 380);
+  modalInfo.style.width = infoW+'px';
+  const infoH = modalInfo.offsetHeight;
+  const totalH = cardH + 16 + infoH;
+  const top = Math.max(margin, (vh - totalH)/2);
+  const cardTop = top;
+  const cardLeft = (vw - cardW)/2;
+  const infoLeft = (vw - infoW)/2;
+  let infoTop = cardTop + cardH + 16;
+  if(infoTop + infoH > vh - margin){
+    modalInfo.style.maxHeight = (vh - infoTop - margin)+'px';
+    modalInfo.style.overflowY = 'auto';
+  } else {
+    modalInfo.style.maxHeight = ''; modalInfo.style.overflowY = '';
+  }
+  return {
+    card:{ left:cardLeft, top:cardTop, width:cardW, height:cardH },
+    info:{ left:infoLeft, top:infoTop, width:infoW }
+  };
+}
+
+function openCardModal(slot, item, meta, kind){
+  clearTimeout(hideTimer);
+  clearTimeout(modalCloseTimer);
+  tooltip.classList.remove('show');
+  if(activeSlot){ activeSlot.classList.remove('is-active'); activeSlot = null; }
+
+  modalSlot = slot;
+  slot.classList.add('is-active');
+
+  const face = slot.querySelector('.card-face');
+  const startRect = face.getBoundingClientRect();
+
+  modalCard.style.setProperty('--c', meta.color);
+  modalInfo.style.setProperty('--c', meta.color);
+  modalCardImg.src = item.img;
+  modalCardImg.alt = item.name;
+
+  miTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.name;
+  if(kind === 'guardian'){
+    miKicker.textContent = `${meta.name} Guardian`;
+    miText.textContent = meta.desc;
+    miText.classList.remove('placeholder');
+    miSub.hidden = false;
+    miSub.innerHTML = `<b>History</b>${item.history}`;
+  } else {
+    miKicker.textContent = `${meta.name} · Game Card`;
+    miText.textContent = item.focus;
+    miText.classList.toggle('placeholder', item.power === 'unassigned');
+    if(meta.call){ miSub.hidden = false; miSub.innerHTML = meta.call; }
+    else { miSub.hidden = true; }
+  }
+
+  // snap the enlarged card to the clicked card's exact on-screen slot, no transition
+  modalCard.style.transition = 'none';
+  modalCard.style.left = startRect.left+'px';
+  modalCard.style.top = startRect.top+'px';
+  modalCard.style.width = startRect.width+'px';
+  modalCard.style.height = startRect.height+'px';
+  modalCard.style.visibility = 'visible';
+  modalCard.offsetHeight; // force reflow so the snap above isn't itself animated
+
+  modalBackdrop.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  const targets = layoutModalTargets();
+
+  requestAnimationFrame(() => {
+    modalCard.style.transition = '';
+    requestAnimationFrame(() => {
+      modalCard.style.left = targets.card.left+'px';
+      modalCard.style.top = targets.card.top+'px';
+      modalCard.style.width = targets.card.width+'px';
+      modalCard.style.height = targets.card.height+'px';
+      modalInfo.style.left = targets.info.left+'px';
+      modalInfo.style.top = targets.info.top+'px';
+    });
+  });
+
+  modalCloseTimer = setTimeout(() => {
+    modalInfo.classList.add('show');
+    modalClose.classList.add('show');
+  }, 170);
+}
+
+function closeCardModal(){
+  if(!modalSlot) return;
+  clearTimeout(modalCloseTimer);
+  const slot = modalSlot;
+  const face = slot.querySelector('.card-face');
+  const endRect = face.getBoundingClientRect();
+
+  modalInfo.classList.remove('show');
+  modalClose.classList.remove('show');
+  modalBackdrop.classList.remove('show');
+
+  modalCard.style.left = endRect.left+'px';
+  modalCard.style.top = endRect.top+'px';
+  modalCard.style.width = endRect.width+'px';
+  modalCard.style.height = endRect.height+'px';
+
+  document.body.style.overflow = '';
+  slot.classList.remove('is-active');
+  modalSlot = null;
+
+  modalCloseTimer = setTimeout(() => { modalCard.style.visibility = 'hidden'; }, 400);
+}
+
+modalBackdrop.addEventListener('click', closeCardModal);
+modalCard.addEventListener('click', closeCardModal);
+modalClose.addEventListener('click', closeCardModal);
+modalInfo.addEventListener('click', (e) => e.stopPropagation());
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modalSlot) closeCardModal(); });
+window.addEventListener('resize', () => {
+  if(!modalSlot) return;
+  const targets = layoutModalTargets();
+  modalCard.style.left = targets.card.left+'px';
+  modalCard.style.top = targets.card.top+'px';
+  modalCard.style.width = targets.card.width+'px';
+  modalCard.style.height = targets.card.height+'px';
+  modalInfo.style.left = targets.info.left+'px';
+  modalInfo.style.top = targets.info.top+'px';
+});
+
+/* ---------- ambient motes ---------- */
+const motesRoot = document.getElementById('motes');
+for(let i=0;i<20;i++){
+  const m = document.createElement('div');
+  m.className = 'mote' + (Math.random() < 0.45 ? ' blue' : '');
+  const size = 2 + Math.random()*3;
+  m.style.width = size+'px';
+  m.style.height = size+'px';
+  m.style.left = Math.random()*100+'vw';
+  m.style.bottom = '-10px';
+  m.style.animationDuration = (14 + Math.random()*16)+'s';
+  m.style.animationDelay = (Math.random()*20)+'s';
+  motesRoot.appendChild(m);
+}
+
+buildLegend();
+buildFlatCase('guardian-case', GUARDIANS, 'guardian');
+buildFlatCase('game-case', GAMES, 'game');
+</script>
