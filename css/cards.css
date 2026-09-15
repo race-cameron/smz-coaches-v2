@@ -313,6 +313,8 @@
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-radius: var(--radius-lg);
   padding: var(--space-8) var(--space-8) var(--space-6);
   margin-bottom: var(--space-6);
@@ -361,6 +363,8 @@
 
 .school-card {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -370,6 +374,8 @@
 
 .school-card:hover {
   background: var(--surface-card-hover);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-color: var(--border-strong);
   transform: translateY(-3px);
   box-shadow: var(--shadow-card-hover);
@@ -449,6 +455,8 @@
   align-items: center;
   gap: var(--space-4);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
@@ -458,6 +466,8 @@
 
 .roster-row:hover {
   background: var(--surface-card-hover);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-color: var(--border-strong);
   transform: translateX(2px);
 }
@@ -525,6 +535,8 @@
   gap: var(--space-4);
   flex-wrap: wrap;
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
@@ -589,6 +601,8 @@
 /* ── Participation sidebar ── */
 .participation-sidebar {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
@@ -669,6 +683,8 @@
 /* ── Records panel (Super Moverz Records) ── */
 .records-panel {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-4);
@@ -871,6 +887,8 @@
 
 .creator-field {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-4);

@@ -23,13 +23,17 @@
   --ink-mid:            #1c2a3a;
   --ink-light:          #2e3f55;
   --surface:            #0f1e30;
-  --surface-card:       rgba(255, 255, 255, 0.055);
-  --surface-card-hover: rgba(255, 255, 255, 0.09);
+  /* "Frosted Deep" -- picked from the Box Style Picker comparison so the
+     Home / Games / Power Cards boxes actually read as boxes against the
+     painted blue backdrop, instead of nearly disappearing into it. */
+  --surface-card:       rgba(10, 17, 30, 0.82);
+  --surface-card-hover: rgba(18, 28, 46, 0.88);
+  --surface-blur:       blur(10px);
   --surface-nav:        rgba(10, 18, 32, 0.88);
 
   /* ── Borders ── */
-  --border:             rgba(255, 255, 255, 0.10);
-  --border-strong:      rgba(255, 255, 255, 0.18);
+  --border:             rgba(255, 255, 255, 0.16);
+  --border-strong:      rgba(255, 255, 255, 0.26);
 
   /* ── Text ── */
   --text-primary:       #f0f4f8;

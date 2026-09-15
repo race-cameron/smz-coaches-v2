@@ -36,6 +36,8 @@
 /* ── Card ── */
 .card {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -44,6 +46,8 @@
 
 .card:hover {
   background: var(--surface-card-hover);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-color: var(--border-strong);
 }
 
@@ -58,9 +62,13 @@
 /* ── Game Card ── */
 .game-card {
   cursor: pointer;
+  /* solid card face — the painted backdrop behind it is busy enough that
+     the old, mostly-see-through card tint let it bleed through too much */
+  background: rgba(22, 34, 56, 0.94);
 }
 
 .game-card:hover {
+  background: rgba(28, 42, 68, 0.97);
   transform: translateY(-3px);
   box-shadow: var(--shadow-card-hover);
 }
@@ -170,6 +178,8 @@
 /* ── Section Card ── */
 .section-card {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
@@ -309,6 +319,8 @@
 /* ── Search Input ── */
 .search-input {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border-strong);
   color: var(--text-primary);
   border-radius: var(--radius-md);
@@ -351,6 +363,8 @@
 /* ── Stat Card ── */
 .stat-card {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
@@ -362,6 +376,8 @@
 
 .stat-card:hover {
   background: var(--surface-card-hover);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-color: var(--border-strong);
   transform: translateY(-2px);
 }
@@ -417,6 +433,8 @@
 .detail-header {
   border: 1px solid var(--border);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-radius: var(--radius-lg);
   padding: var(--space-8) var(--space-8) var(--space-6);
   margin-bottom: var(--space-6);
@@ -465,6 +483,8 @@
 .home-hero {
   border: 1px solid var(--border);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border-radius: var(--radius-lg);
   padding: var(--space-8) var(--space-8) var(--space-6);
   margin-bottom: var(--space-6);
@@ -572,6 +592,8 @@
   color: var(--text-primary);
   border-color: var(--border-strong);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
 }
 
 /* ── Inline accent text (gold gradient) ── */
@@ -617,6 +639,8 @@
 .modal-input {
   width: 100%;
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border-strong);
   color: var(--text-primary);
   border-radius: var(--radius-md);
@@ -652,6 +676,8 @@
 
 .filter-btn {
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
   border: 1px solid var(--border);
   color: var(--text-muted);
   border-radius: var(--radius-pill);

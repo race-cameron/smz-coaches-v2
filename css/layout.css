@@ -143,6 +143,8 @@ body.app-bg-off .app-motes {
 .nav-tab:hover {
   color: var(--text-primary);
   background: var(--surface-card);
+  backdrop-filter: var(--surface-blur);
+  -webkit-backdrop-filter: var(--surface-blur);
 }
 
 .nav-tab.active {
