@@ -15,12 +15,11 @@ body {
 /* the real painted blue + gold-flame background art, used as-is — width-capped so
    full-screen / ultra-wide windows don't blow the border art up huge */
 .app-bg-photo {
-  position: fixed; top: 0; bottom: 0; left: 50%; z-index: -4; pointer-events: none;
-  width: min(100vw, 1500px); transform: translateX(-50%);
-  background-image: url('../img/bg_photo.jpg');
-  background-size: cover; background-position: center center; background-repeat: no-repeat;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  /* Site-wide chrome now stays a flat "standard blue" (see .app-bg-fill) --
+     the real painted SMZ photo art is reserved for inside the Power Crystals
+     box itself, where it reads as a special backdrop rather than repeating
+     behind every page's nav/flanks. */
+  display: none;
 }
 /* light scrim so the nav + content stay legible over the painted texture */
 .app-bg-top-shade {
@@ -52,6 +51,32 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .app-mote { animation: none; display: none; }
+}
+
+/* Card Vault and Power Crystals are full-bleed iframes that already paint
+   this exact same backdrop themselves — showing it here too doubled it up
+   behind/around their box. On those two routes, drop back to a plain shell
+   background and let the iframe's own art be the only copy on screen. */
+body.app-bg-off {
+  background: var(--ink);
+}
+body.app-bg-off::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 40% at 20% -10%, rgba(121,183,44,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 110%, rgba(59,130,246,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #0a1220 0%, #0e1a2d 40%, #0a1220 100%);
+}
+body.app-bg-off .app-bg-fill,
+body.app-bg-off .app-bg-photo,
+body.app-bg-off .app-bg-vignette,
+body.app-bg-off .app-bg-top-shade,
+body.app-bg-off .app-motes {
+  display: none;
 }
 
 /* ── App Root ── */
