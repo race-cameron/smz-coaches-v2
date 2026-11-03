@@ -11,7 +11,7 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v22';
+const CACHE_VERSION  = 'smz-v2-v23';
 const DATA_CACHE     = 'smz-v2-data-v19';
 
 // ── App shell — cached on install ─────────────────────────────────
@@ -25,6 +25,7 @@ const SHELL_ASSETS = [
   './css/layout.css',
   './css/components.css',
   './css/cards.css',
+  './css/home.css',
   './js/state.js',
   './js/router.js',
   './js/data.js',
@@ -38,6 +39,21 @@ const SHELL_ASSETS = [
   './js/scoring-guide.js',
   './js/app.js',
   './pages/home.js',
+  // Home page art
+  './img/smz_logo.png',
+  './img/icon-safety.png',
+  './img/icon-unity.png',
+  './img/icon-willpower.png',
+  './img/icon-energy.png',
+  './img/icon-reaction.png',
+  './img/home/guardian-hiro.jpg',
+  './img/home/guardian-picklefrog.jpg',
+  './img/home/guardian-master-commander.jpg',
+  './img/home/guardian-woodsy.jpg',
+  './img/home/guardian-serenity.jpg',
+  './img/home/game-royal-rescue.jpg',
+  './img/home/game-survivor.jpg',
+  './img/home/game-pirate-ship.jpg',
   './pages/library.js',
   './pages/detail.js',
   './pages/favorites.js',
