@@ -1,0 +1,46 @@
+{
+  "id": "river-crosser",
+  "name": "River Crosser",
+  "guardian": "Woodsy the Wizard",
+  "crystal": "Unity",
+  "phase": "Team-Building / Cooperative Strategy",
+  "focus": "Team coordination, communication, problem-solving, and battlefield progression",
+  "space": "Any",
+  "summary": "Teams work together to build pathways across dangerous lava fields using limited equipment, battling for control of islands to complete the crossing mission.",
+  "diagramReady": false,
+  "diagram": "diagrams/river-crosser.png",
+  "videoUrl": null,
+  "equipment": [
+    "Zabers",
+    "Zields",
+    "Rocks / Rock Hoppers",
+    "Soft Dodge Balls",
+    "Cones"
+  ],
+  "overview": "River Crosser challenges teams to work together to build pathways across dangerous lava fields using limited equipment. Players must coordinate movement, pass equipment forward, battle for control of islands, and outmaneuver opposing teams to complete the crossing mission.",
+  "setup": "Create a large lava field between the starting side, center islands, and final destination zones. Divide players into 2, 3, or 4 teams. Each team receives 1 Zaber, 2–3 Rocks, and 2–3 Zields. Place Battle Island cone circles in the center areas during advanced levels. Scatter soft dodge balls throughout the lava field during Level 2 and beyond.",
+  "steps": [
+    "Level 1 — Island Building: Teams work together to build a crossing path using Rocks, Zields, and Zabers.",
+    "Players may only step on equipment while crossing. Equipment must constantly be passed forward to continue building the bridge.",
+    "There should be exactly one more stepping item than players on the team, forcing cooperation and movement coordination.",
+    "If a player touches the lava/swamp, their team freezes for 5 seconds.",
+    "The first team to get all players and all equipment onto the island wins.",
+    "Level 2 — River Warfare: Scatter balls throughout the lava field. Teams may collect balls and throw them at opposing teams.",
+    "If a player is hit by a ball, their team freezes for 5–10 seconds while the attacking team continues moving. Teams continue building pathways while battling opponents.",
+    "Level 3 — Battle Island: Teams now build pathways toward Battle Island. Once players arrive on Battle Island, they battle opposing players for control.",
+    "If a player wins their battle, they hand their Zaber to the next teammate in line and continue building toward the finish line. Teams that clear Battle Island quickly gain a major advantage.",
+    "If one team remains alone on Battle Island, they may all leave together but may still trail teams already advancing toward the finish zone."
+  ],
+  "powerDown": "Lava Rule: Players may only step on approved crossing equipment. Touching the lava/swamp causes a temporary team freeze penalty. Freeze Rule: Frozen teams may not move, pass equipment, or attack during their freeze countdown.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — Basic crossing challenge",
+    "Level 2 — Add battlefield freezing attacks",
+    "Level 3 — Add Battle Island combat",
+    "Level 4 — Increase crossing distance",
+    "Level 5 — Add moving hazards or shrinking pathways"
+  ],
+  "coachingObjective": "Teach teamwork, communication, equipment management, planning ahead, and adapting strategy under pressure.",
+  "guardianConnection": "Woodsy the Wizard teaches that every great adventure requires teamwork and creativity. Super Moverz learn that success comes from helping each other move forward together.",
+  "quickReset": "Reset all crossing equipment to starting positions, revive all teams, reposition balls, and restart the crossing mission immediately."
+}

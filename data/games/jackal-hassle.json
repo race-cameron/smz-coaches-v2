@@ -1,0 +1,43 @@
+{
+  "id": "jackal-hassle",
+  "name": "Jackal Hassle",
+  "guardian": "The Jackal",
+  "crystal": "Reaction",
+  "phase": "High-Energy Crossing / Team Chase",
+  "focus": "Timing, movement awareness, evasive running, and pressure decision-making",
+  "space": "Field",
+  "summary": "Super Moverz sprint between safe zones while avoiding hidden Jackals in the crossing lanes. Each tagged player joins the Jackal pack, so the danger grows every round.",
+  "diagramReady": false,
+  "diagram": "diagrams/jackal-hassle.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Blockers",
+    "Inflatables",
+    "Rocks or Obstacles",
+    "Zabers (optional advanced variation)"
+  ],
+  "overview": "Jackal Hassle turns the battlefield into a dangerous gauntlet where Super Moverz must sprint between safe zones while avoiding hidden Jackals hunting inside the crossing lanes. Each tagged player joins the Jackal pack, causing the danger to grow every round.",
+  "setup": "Create two long parallel boundary lines approximately 30–40 yards apart depending on group size and age. Place blockers, rocks, inflatables, and obstacles throughout the gauntlet zone. Create safe bases on each side using cone circles or safe-zone lines. Jackals begin hidden throughout the gauntlet area before the round starts. Super Moverz begin together inside one safe base.",
+  "steps": [
+    "When the music begins, Super Moverz leave their base and attempt to cross the gauntlet safely.",
+    "Jackals hide throughout the crossing area and attempt to tag runners.",
+    "Players who successfully reach the opposite base are safe.",
+    "If a player is tagged by a Jackal, they immediately become a Jackal and join the hunting team next round.",
+    "Continue playing rounds back and forth across the gauntlet.",
+    "The Jackal team grows larger each round until only one Super Mover remains. The final surviving player wins the round.",
+    "Optional Team Variation: Divide players into one Jackal Team and one Runner Team. Count how many runners successfully cross, or how many total crossings teams complete before all runners are tagged. Then switch team roles."
+  ],
+  "powerDown": "Tagged players immediately switch teams and become Jackals.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — Few Jackals, wide crossing lanes",
+    "Level 2 — Add more Jackals and more obstacles",
+    "Level 3 — Narrow the gauntlet pathways",
+    "Level 4 — Add Zabers for Jackals",
+    "Level 5 — Add moving safe zones or timed crossings"
+  ],
+  "coachingObjective": "Teach players movement timing, awareness under pressure, evasive running, and strategic use of obstacles and pathways.",
+  "guardianConnection": "The Jackal teaches that awareness and patience are just as important as speed. Super Moverz learn how to read danger, react quickly, and move intelligently under pressure.",
+  "quickReset": "Reset all players to the starting base, reposition Jackals inside the gauntlet, and restart the crossing round immediately."
+}

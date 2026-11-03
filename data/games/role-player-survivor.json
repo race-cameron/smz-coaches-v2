@@ -1,0 +1,48 @@
+{
+  "id": "role-player-survivor",
+  "name": "Role Player Survivor",
+  "guardian": "Master Commander",
+  "crystal": "Will Power",
+  "phase": "Mid-to-Late Team Competition",
+  "focus": "Role awareness, team coordination, controlled elimination play",
+  "space": "Field",
+  "summary": "Teams compete in rotating battles using assigned equipment roles before progressing into full-team elimination rounds where rescue strategy decides who survives.",
+  "diagramReady": false,
+  "diagram": "diagrams/role-player-survivor.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "1 Large Inflatable",
+    "1 Small Inflatable",
+    "3 Blockers"
+  ],
+  "overview": "Players compete in rotating team battles using assigned equipment roles before progressing into full-team elimination rounds where rescue strategy and teamwork determine which team survives the arena longest.",
+  "setup": "Create a large circular arena using cones. Divide players into three teams and assign each team a base position outside the circle spaced evenly around the boundary. Assign each team one equipment role — Zaber Team, Ball Team, or Zield Team. Each team begins with one matching Zeapon.",
+  "steps": [
+    "Level 1 — Rotation Battles: Teams line up at their assigned base outside the arena.",
+    "One player from each team enters the circle for a 1v1v1 battle, attempting to tag opponents using their team's assigned equipment.",
+    "Tagged players immediately return to their base, and the next teammate in line enters the arena.",
+    "Continue rotating players so all teammates participate in battle rounds.",
+    "Level 2 — Elimination Rotation Mode: Continue rotation battles as before, but each player now receives one attempt only per round.",
+    "Tagged players remain out until the round ends. Play continues until only one team has active players remaining.",
+    "Level 3 — Team Role Player Survivor: Each player now receives their team's assigned Zeapon. Two teams enter the arena while one team waits outside.",
+    "Teams attempt to power down all members of the opposing team. Tagged teammates may be rescued during play.",
+    "When an entire team is powered down, the remaining team wins the round. Rotate the waiting team into the arena for the next matchup.",
+    "Encourage teams to switch equipment roles between rounds so all players experience each role type."
+  ],
+  "powerDown": "Tagged players immediately stop play and return to their team base during rotation rounds. During team elimination rounds, tagged players remain powered down in place until rescued by teammates or until the round ends.",
+  "rescue": "Active during Team Role Player Survivor rounds only: teammates may rescue powered-down players by touching hands, touching Zabers, or escorting players back toward team space (advanced variation).",
+  "levelUp": [
+    "Level 1 — Single-player rotation battles (1v1v1 entry system)",
+    "Level 2 — Limited-attempt elimination rotation rounds",
+    "Level 3 — Full-team role matches with rescue enabled",
+    "Level 4 — Introduce blockers and inflatables as arena cover zones",
+    "Level 5 — Rotate team equipment roles between every round"
+  ],
+  "coachingObjective": "Teach players to understand equipment-specific roles while coordinating entry timing, rescue decisions, and team positioning during structured arena competition.",
+  "guardianConnection": "Master Commander trains Super Moverz to master different arena roles by adapting to changing equipment responsibilities and supporting teammates during coordinated battle rotations.",
+  "quickReset": "Return players to team base lines, rotate the next matchup teams into the arena, and restart immediately with new role assignments if needed."
+}

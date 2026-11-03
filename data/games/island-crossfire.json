@@ -1,0 +1,45 @@
+{
+  "id": "island-crossfire",
+  "name": "Island Crossfire",
+  "guardian": "Mrs. Picklefrog",
+  "crystal": "Unity",
+  "phase": "Movement Challenge / Obstacle Course",
+  "focus": "Balance, jumping coordination, and movement under pressure",
+  "space": "Field",
+  "summary": "Super Moverz navigate a dangerous obstacle course while avoiding incoming attacks from Space Monkeys stationed around the island pathways.",
+  "diagramReady": false,
+  "diagram": "diagrams/island-crossfire.png",
+  "videoUrl": null,
+  "equipment": [
+    "Rocks / Rock Hoppers",
+    "Pop-Up Obstacles or Blockers",
+    "Cones",
+    "Soft Dodge Balls",
+    "Inflatables or Tunnels (optional)",
+    "Zabers (optional for advanced versions)"
+  ],
+  "overview": "Island Crossfire challenges Super Moverz to navigate a dangerous obstacle course while avoiding incoming attacks from Space Monkeys stationed around the island pathways. Players must move carefully, maintain balance, and react quickly while crossing safely from one island base to another.",
+  "setup": "Create a sneaking obstacle course using rocks, blockers, inflatables, and movement pathways. Obstacle examples include jumping between rocks, stepping across close platforms, landing inside cone circles, balance pathways, and low and high jump stations. Place throwing zones on both sides of the obstacle course approximately 5, 10, or 15 yards away depending on difficulty level. Super Moverz begin inside a safe circle at one end of the obstacle course. Ball throwers stay behind the throwing lines during gameplay.",
+  "steps": [
+    "Super Moverz leave the starting circle and attempt to cross the obstacle course safely.",
+    "Players must remain on the rocks and obstacles while moving through the course.",
+    "If a player touches the ground or gets hit by a ball, they immediately become a ball thrower.",
+    "New ball throwers move behind one of the throwing lines and begin attacking active players.",
+    "Throwers must remain completely behind their cone line while throwing. If any part of a thrower's body crosses the line, the throw does not count.",
+    "Players who successfully cross the obstacle course reach the safe circle on the opposite side.",
+    "Once all players finish the crossing, players may attempt to cross back again or restart from the original side depending on the variation being used.",
+    "Continue playing rounds until all players eventually become throwers."
+  ],
+  "powerDown": "Players who touch the ground or are hit by a ball immediately switch roles and become throwers.",
+  "rescue": "Optional variation: players may rescue teammates by allowing them to restart from the beginning of the obstacle course instead of becoming permanent throwers.",
+  "levelUp": [
+    "Level 1 — Short obstacle course with few throwers",
+    "Level 2 — Add more difficult jumps and spacing",
+    "Level 3 — Add more throwers around the course",
+    "Level 4 — Add moving through tunnels or narrow pathways",
+    "Level 5 — Require players to carry objects or crystals while crossing"
+  ],
+  "coachingObjective": "Teach players to move with body control, awareness, patience, and balance while reacting to multiple moving threats.",
+  "guardianConnection": "Mrs. Picklefrog teaches Super Moverz that calm movement and focus under pressure lead to success. Players learn to trust their movement skills while supporting each other through difficult challenges.",
+  "quickReset": "Reset all players to the starting safe circle, reload throwers with balls, and restart the crossing challenge immediately."
+}

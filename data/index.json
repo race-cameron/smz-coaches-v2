@@ -1,5 +1,15 @@
 [
   {
+    "id": "3-way-gauntlet",
+    "name": "3-Way Gauntlet",
+    "guardian": "Master Commander",
+    "crystal": "Will Power",
+    "phase": "Mid-Session Crossing Challenge",
+    "space": "Field",
+    "summary": "Players cross the field through three defender lanes to reach a protected safe zone, timing their movement to avoid being tagged.",
+    "diagramReady": false
+  },
+  {
     "id": "adventure-quest",
     "name": "Adventure Quest",
     "guardian": "Woodsy the Wizard",
@@ -8,6 +18,46 @@
     "space": "Field",
     "summary": "Multiple teams compete to collect and control every crystal in the valley — battle, rescue teammates, protect crystal carriers, and eliminate opposing teams to become quest champions.",
     "diagramReady": true
+  },
+  {
+    "id": "bizzerk",
+    "name": "Bizzerk",
+    "guardian": "Coming soon",
+    "crystal": "Coming soon",
+    "phase": "Main Game",
+    "space": "Field",
+    "summary": "A multi-stage survival gauntlet where Super Moverz navigate a changing forest maze, avoid Space Monkey ambush zones, and defend a central fortress from explosive attacks.",
+    "diagramReady": false
+  },
+  {
+    "id": "castle-crush",
+    "name": "Castle Crush",
+    "guardian": "Woodsy the Wizard",
+    "crystal": "Energy",
+    "phase": "Mid-to-Late Strategy / Escort Finale",
+    "space": "Field",
+    "summary": "Teams race across the arena to enter the opposing castle, take on structured roles, and finally escort the Royal safely across the field.",
+    "diagramReady": false
+  },
+  {
+    "id": "charge",
+    "name": "Charge",
+    "guardian": "Master Commander",
+    "crystal": "Energy",
+    "phase": "High-Energy Team Battle / Finale",
+    "space": "Field",
+    "summary": "Two opposing armies race across enemy territory while battling for control of scattered Zeapons and battlefield resources.",
+    "diagramReady": false
+  },
+  {
+    "id": "coco-nuts",
+    "name": "Coco Nuts",
+    "guardian": "Hareto the Monkey King",
+    "crystal": "Energy",
+    "phase": "Warm-Up / Ball Control",
+    "space": "Field",
+    "summary": "Trapped on Monkey Island, Super Moverz dribble coconuts with their Zabers while avoiding Gaby the Gorilla, protecting coconuts and rescuing teammates.",
+    "diagramReady": false
   },
   {
     "id": "crystal-capture",
@@ -20,6 +70,56 @@
     "diagramReady": true
   },
   {
+    "id": "dragon-slayer",
+    "name": "Dragon Slayer",
+    "guardian": "Woodsy the Wizard",
+    "crystal": "Energy",
+    "phase": "Adventure Mission / Team Rescue",
+    "space": "Field",
+    "summary": "In Woodsy the Wizard's magical valley, Dragons work together to recover their stolen eggs from Dragon Slayers and return safely to the nest before time expires.",
+    "diagramReady": false
+  },
+  {
+    "id": "gator-gamble",
+    "name": "Gator Gamble",
+    "guardian": "Mrs. Picklefrog",
+    "crystal": "Unity",
+    "phase": "Team Rescue / Cooperative Strategy",
+    "space": "Field",
+    "summary": "Super Moverz work together to retrieve Unity Crystals from a guarded island while avoiding roaming Gators protecting the riverways.",
+    "diagramReady": false
+  },
+  {
+    "id": "hunting-party",
+    "name": "Hunting Party",
+    "guardian": "The Condor",
+    "crystal": "Reaction",
+    "phase": "Stealth Strategy / End-of-Session",
+    "space": "Field",
+    "summary": "A giant hide-and-seek survival mission where Hunters search for hidden Super Moverz and grow their team by recruiting tagged players into the Hunting Party.",
+    "diagramReady": false
+  },
+  {
+    "id": "island-crossfire",
+    "name": "Island Crossfire",
+    "guardian": "Mrs. Picklefrog",
+    "crystal": "Unity",
+    "phase": "Movement Challenge / Obstacle Course",
+    "space": "Field",
+    "summary": "Super Moverz navigate a dangerous obstacle course while avoiding incoming attacks from Space Monkeys stationed around the island pathways.",
+    "diagramReady": false
+  },
+  {
+    "id": "jackal-hassle",
+    "name": "Jackal Hassle",
+    "guardian": "The Jackal",
+    "crystal": "Reaction",
+    "phase": "High-Energy Crossing / Team Chase",
+    "space": "Field",
+    "summary": "Super Moverz sprint between safe zones while avoiding hidden Jackals in the crossing lanes. Each tagged player joins the Jackal pack, so the danger grows every round.",
+    "diagramReady": false
+  },
+  {
     "id": "meteor-shower",
     "name": "Meteor Shower",
     "guardian": "Hero",
@@ -28,6 +128,16 @@
     "space": "Field",
     "summary": "Players travel across a rectangular movement zone while avoiding flying meteors thrown by Space Monkeys. Tagged players join the Space Monkeys until only one runner remains.",
     "diagramReady": true
+  },
+  {
+    "id": "pickle-frog-rescue",
+    "name": "Pickle Frog Rescue",
+    "guardian": "Mrs. Picklefrog",
+    "crystal": "Unity",
+    "phase": "Cooperative Rescue / Teamwork Builder",
+    "space": "Field",
+    "summary": "Players leave their base to cross guarded territory, rescue the captured Pickle Frog, and return safely before time expires while avoiding Void Jail Guards.",
+    "diagramReady": false
   },
   {
     "id": "pirate-ship",
@@ -40,6 +150,26 @@
     "diagramReady": true
   },
   {
+    "id": "raiders",
+    "name": "Raiders",
+    "guardian": "Master Commander",
+    "crystal": "Reaction",
+    "phase": "Fast-Paced Team Battle / Intro Strategy",
+    "space": "Any",
+    "summary": "A fast-action team battle where a Zaber team and a dodge ball team coordinate rescues and use battlefield cover to overpower each other.",
+    "diagramReady": false
+  },
+  {
+    "id": "river-crosser",
+    "name": "River Crosser",
+    "guardian": "Woodsy the Wizard",
+    "crystal": "Unity",
+    "phase": "Team-Building / Cooperative Strategy",
+    "space": "Any",
+    "summary": "Teams work together to build pathways across dangerous lava fields using limited equipment, battling for control of islands to complete the crossing mission.",
+    "diagramReady": false
+  },
+  {
     "id": "robo-shark",
     "name": "Robo Shark",
     "guardian": "Hero",
@@ -50,6 +180,16 @@
     "diagramReady": true
   },
   {
+    "id": "role-player-survivor",
+    "name": "Role Player Survivor",
+    "guardian": "Master Commander",
+    "crystal": "Will Power",
+    "phase": "Mid-to-Late Team Competition",
+    "space": "Field",
+    "summary": "Teams compete in rotating battles using assigned equipment roles before progressing into full-team elimination rounds where rescue strategy decides who survives.",
+    "diagramReady": false
+  },
+  {
     "id": "royal-rescue",
     "name": "Royal Rescue",
     "guardian": "Master Commander",
@@ -58,6 +198,16 @@
     "space": "Field",
     "summary": "Two Royal Families battle to escort their Royal safely across the battlefield and into the opposing castle, progressing through multiple rounds of increasing strategy and equipment.",
     "diagramReady": true
+  },
+  {
+    "id": "space-base",
+    "name": "Space Base",
+    "guardian": "Coming soon",
+    "crystal": "Coming soon",
+    "phase": "Warmup",
+    "space": "Any",
+    "summary": "Super Moverz leave their protected base to recover scattered Power Crystals while avoiding roaming villains, coordinating rescues and returning safely before time expires.",
+    "diagramReady": false
   },
   {
     "id": "sportnite",
@@ -90,6 +240,16 @@
     "diagramReady": true
   },
   {
+    "id": "swamp-trap",
+    "name": "Swamp Trap",
+    "guardian": "Coming soon",
+    "crystal": "Coming soon",
+    "phase": "Skill Builder",
+    "space": "Field",
+    "summary": "Super Moverz hop between Lily Pads and Rocks while avoiding swamp creatures, staying active on safe surfaces as villains increase pressure each level.",
+    "diagramReady": false
+  },
+  {
     "id": "troopers-vs-jedi",
     "name": "Troopers Vs. Jedi",
     "guardian": "Serenity",
@@ -98,5 +258,15 @@
     "space": "Any",
     "summary": "Players start as Jedi in a zone avoiding balls by blocking projectiles from Troopers. If a Jedi is hit, they drop their Zaber and become a Trooper.",
     "diagramReady": true
+  },
+  {
+    "id": "zorb-lord",
+    "name": "Zorb Lord",
+    "guardian": "Coming soon",
+    "crystal": "Coming soon",
+    "phase": "Advanced Game",
+    "space": "Field",
+    "summary": "A boss-battle mission where Super Moverz work together to defeat powerful multi-life villains before time expires.",
+    "diagramReady": false
   }
 ]

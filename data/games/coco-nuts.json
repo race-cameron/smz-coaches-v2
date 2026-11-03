@@ -1,0 +1,40 @@
+{
+  "id": "coco-nuts",
+  "name": "Coco Nuts",
+  "guardian": "Hareto the Monkey King",
+  "crystal": "Energy",
+  "phase": "Warm-Up / Ball Control",
+  "focus": "Ball control, teamwork, movement awareness, and quick passing",
+  "space": "Field",
+  "summary": "Trapped on Monkey Island, Super Moverz dribble coconuts with their Zabers while avoiding Gaby the Gorilla, protecting coconuts and rescuing teammates.",
+  "diagramReady": false,
+  "diagram": "diagrams/coco-nuts.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Soft Dodge Balls (“Coconuts”)",
+    "Blockers or Inflatables (optional)"
+  ],
+  "overview": "The Super Moverz are trapped on Monkey Island in the world of Hareto, where they dribble coconuts using their Zabers while avoiding Gaby the Gorilla. Players must work together to protect their coconuts, rescue teammates, and survive the Gorilla invasion before time expires.",
+  "setup": "Create a large circular island boundary using cones. Scatter blockers, inflatables, or obstacles around the island to create movement pathways. Each Super Mover begins with one Zaber and one Coconut (ball). Create a Gorilla Cave outside the island boundary using a separate cone circle. Gorillas begin inside their cave before entering play.",
+  "steps": [
+    "Super Moverz move around Monkey Island while dribbling or passing their Coconut using only their Zaber.",
+    "Players may pass coconuts to teammates, dribble around obstacles, and protect their coconuts from Gorillas.",
+    "Gorillas may use their hands to steal one Coconut at a time.",
+    "When a Gorilla steals a Coconut, they bring it back to the Gorilla Cave, and the player without a Coconut becomes frozen with feet apart.",
+    "Frozen players may only be rescued when another Super Mover passes a Coconut through their legs.",
+    "Once rescued, the player may run to the Gorilla Cave, retrieve their Coconut, and return to the island.",
+    "Super Moverz complete the mission if at least one player still has a Coconut when time expires."
+  ],
+  "powerDown": "Players without a Coconut freeze with feet apart until rescued by a teammate pass-through.",
+  "rescue": "Frozen players are rescued when a teammate passes a Coconut through their legs. Optional variation: rescuers may escort frozen players to the Gorilla Cave instead of using the pass-through rescue system.",
+  "levelUp": [
+    "Level 1 — One Gorilla, survive for 1 minute",
+    "Level 2 — Two Gorillas, increase game speed and pressure",
+    "Level 3 — Three Gorillas, extend survival timer to 90 seconds"
+  ],
+  "coachingObjective": "Teach players to protect possession, communicate under pressure, move continuously, and support teammates through quick passing decisions.",
+  "guardianConnection": "Hareto teaches that energy and joy grow stronger when shared with others. Super Moverz learn that teamwork and movement can overcome even the strongest Gorilla attacks.",
+  "quickReset": "Return all Coconuts to players, reset Gorillas to their cave, revive frozen players, and restart the survival timer immediately."
+}

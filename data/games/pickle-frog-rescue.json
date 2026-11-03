@@ -1,0 +1,43 @@
+{
+  "id": "pickle-frog-rescue",
+  "name": "Pickle Frog Rescue",
+  "guardian": "Mrs. Picklefrog",
+  "crystal": "Unity",
+  "phase": "Cooperative Rescue / Teamwork Builder",
+  "focus": "Rescue timing, territory awareness, group coordination",
+  "space": "Field",
+  "summary": "Players leave their base to cross guarded territory, rescue the captured Pickle Frog, and return safely before time expires while avoiding Void Jail Guards.",
+  "diagramReady": false,
+  "diagram": "diagrams/pickle-frog-rescue.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones (starting base)",
+    "Cones (jail base)"
+  ],
+  "overview": "Players leave their base to cross guarded territory, rescue the captured Pickle Frog, and return safely before time expires while avoiding Void Jail Guards who patrol the field.",
+  "setup": "Create a clearly defined starting base using cones at one end of the field. Create a jail base across the field using cones. Select one player to be the Pickle Frog positioned inside the jail base. Select 1–3 players to act as Void Jail Guards patrolling the space between the two bases. All remaining players begin inside the starting base.",
+  "steps": [
+    "Level 1 — Rescue the Pickle Frog: Super Moverz leave the starting base and attempt to reach the jail base.",
+    "Void Jail Guards patrol the field attempting to tag players below the waist.",
+    "Tagged players power down where tagged and remain seated.",
+    "Active players may rescue powered-down teammates by touching hands.",
+    "Once rescued, players receive a protected walk back to base.",
+    "One player reaches the jail base and rescues the Pickle Frog.",
+    "The team escorts the Pickle Frog safely back to the starting base.",
+    "If all players return before time expires, Super Moverz win the mission.",
+    "Level 2 — Multi-Rescue Mission: Increase the number of guards. Require multiple teammate rescues before approaching the jail base. Encourage staggered movement timing across the field. Continue play until the Pickle Frog returns safely or time expires.",
+    "Level 3 — Rotating Guard Challenge: Rotate new players into the Void Jail Guard role each round. Guards coordinate patrol coverage between bases, and Super Moverz adjust movement timing and rescue strategy accordingly."
+  ],
+  "powerDown": "Tagged players immediately sit where tagged and remain powered down until rescued by a teammate. Rescued players place hands on their head and walk safely back to the starting base.",
+  "rescue": "Advanced rescue requires two teammates touching the powered-down player before escort begins. Optional escort rule: rescuers must remain connected to the rescued player during protected return.",
+  "levelUp": [
+    "Level 1 — Single Pickle Frog rescue with light guard coverage",
+    "Level 2 — Increase number of Void Jail Guards",
+    "Level 3 — Require multiple rescues before jail entry attempt",
+    "Level 4 — Limit number of players allowed outside base at one time",
+    "Level 5 — Add second captured teammate inside jail base"
+  ],
+  "coachingObjective": "Teach players to coordinate rescue timing, communicate movement decisions, and support teammates while navigating guarded territory together.",
+  "guardianConnection": "Mrs. Picklefrog teaches Super Moverz that no one completes a mission alone. Players succeed by helping teammates, moving together, and returning safely as a group.",
+  "quickReset": "Return all players to the starting base, select new guards and a new Pickle Frog, and restart immediately with a fresh rescue attempt."
+}

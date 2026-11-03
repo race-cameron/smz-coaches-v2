@@ -1,0 +1,46 @@
+{
+  "id": "bizzerk",
+  "name": "Bizzerk",
+  "guardian": "Coming soon",
+  "crystal": "Coming soon",
+  "phase": "Main Game",
+  "focus": "Spatial Awareness",
+  "space": "Field",
+  "summary": "A multi-stage survival gauntlet where Super Moverz navigate a changing forest maze, avoid Space Monkey ambush zones, and defend a central fortress from explosive attacks.",
+  "diagramReady": false,
+  "diagram": "diagrams/bizzerk.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Blockers",
+    "Inflatables",
+    "Tunnels"
+  ],
+  "overview": "Bizzerk is a multi-stage survival gauntlet where Super Moverz navigate a changing forest maze, avoid Space Monkey ambush zones, and defend a central fortress from explosive attacks. The game develops awareness, timing, teamwork, and defensive coordination under pressure.",
+  "setup": "Build a forest maze using cones, blockers, tunnels, and inflatables. Create one entry point and one exit point on opposite sides. Assign villain throwing zones inside the maze. Place four fortress pillars inside a circle for Stage Two. Position defenders inside the fortress circle. Position Space Monkeys outside the throwing perimeter.",
+  "steps": [
+    "Stage One — Forest Attack: Super Moverz attempt to travel through a guarded bamboo forest maze while avoiding Space Monkey attacks.",
+    "Level 1: One Space Monkey with two balls throws from designated forest zones. Run groups through the maze multiple times. Goal: at least one player exits successfully each round.",
+    "Level 2: Add a second Space Monkey and a second throwing circle. Players restart from the beginning together, increasing coordination and spacing challenges.",
+    "Level 3: Add a third Space Monkey and a third throwing zone. Villains attack from multiple forest angles, so players must time crossings more carefully.",
+    "Stage Two — Deep Forest Maze: The maze becomes more complex and restrictive. Add tunnels and tighter pathways, with four Space Monkeys active and two throwing locations inside the maze. Players must navigate shifting attack lanes. The level completes if at least one Super Mover escapes.",
+    "Stage Three — Pop-Up Barrier Fortress Defense: Super Moverz defend a central structure (Hero's House) from explosive ball attacks. Place four pillars inside a defensive circle. Assign two Space Monkeys and additional defenders (about 20% of players). Remaining players defend the pillars using Zabers or Zields while Space Monkeys throw “exploding balls” toward the pillars.",
+    "Explosion Rule: If a ball remains inside the circle longer than 10 seconds, the fortress fails the level. Defenders must kick or clear balls safely outside the circle before the timer expires.",
+    "Conversion Rule: If a Super Mover is hit by a Space Monkey's ball, they become a Space Monkey."
+  ],
+  "powerDown": "If a Super Mover is hit by a Space Monkey's ball, they become a Space Monkey.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Stage One, Level 1 — One Space Monkey with two balls",
+    "Stage One, Level 2 — Add a second Space Monkey and a second throwing circle",
+    "Stage One, Level 3 — Add a third Space Monkey and a third throwing zone",
+    "Stage Two — Deep Forest Maze: tunnels, tighter pathways, four Space Monkeys",
+    "Stage Three — Pop-Up Barrier Fortress Defense"
+  ],
+  "coachingObjective": "Coming soon — to be added.",
+  "guardianConnection": "Coming soon — to be added.",
+  "quickReset": "Coming soon — to be added."
+}

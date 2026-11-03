@@ -1,0 +1,44 @@
+{
+  "id": "swamp-trap",
+  "name": "Swamp Trap",
+  "guardian": "Coming soon",
+  "crystal": "Coming soon",
+  "phase": "Skill Builder",
+  "focus": "Cooperative movement",
+  "space": "Field",
+  "summary": "Super Moverz hop between Lily Pads and Rocks while avoiding swamp creatures, staying active on safe surfaces as villains increase pressure each level.",
+  "diagramReady": false,
+  "diagram": "diagrams/swamp-trap.png",
+  "videoUrl": null,
+  "equipment": [
+    "Pop-Out Lily Pads (or collapsed tunnels / sun guards)",
+    "Rocks or Floor Markers",
+    "Zields (for Alligators)",
+    "Swing Ball (for Titus the Toad)",
+    "Cones (Sandbar Regeneration Zone)",
+    "Timer or Music Source"
+  ],
+  "overview": "Swamp Trap is a survival balance-and-movement challenge where Super Moverz hop between Lily Pads and Rocks while avoiding swamp creatures. Players must stay active on safe surfaces while teammates regenerate and villains increase pressure each level.",
+  "setup": "Spread Lily Pads and Rocks across the play area (jumping zone). Create a Sandbar Regeneration Zone just outside the swamp. Select Vicky the Vulture as the starting villain. Define swamp boundaries clearly for all players. Set a round timer (typically 2 minutes).",
+  "steps": [
+    "All Super Moverz begin standing on Lily Pads or Rocks.",
+    "Players must move between surfaces without touching the swamp.",
+    "If tagged by Vicky the Vulture, players enter the swamp and begin crawling.",
+    "Crawling players must reach the Sandbar Regeneration Zone.",
+    "At the Sandbar, players complete an exercise (example: jumping jacks, push-ups, or star jumps).",
+    "After regenerating, players return to the jumping zone and rejoin play.",
+    "If any body part touches the swamp, the player must crawl to regenerate.",
+    "If at least one Super Mover remains active when time expires, the level is cleared."
+  ],
+  "powerDown": "Players who are tagged, or who touch the swamp with any body part, enter the swamp and crawl to the Sandbar Regeneration Zone.",
+  "rescue": "At the Sandbar, players complete an exercise (example: jumping jacks, push-ups, or star jumps), then return to the jumping zone and rejoin play.",
+  "levelUp": [
+    "Level 1 — Villain: Vicky the Vulture. The Vulture must remain on Lily Pads and Rocks only. If the Vulture steps into the swamp, Super Moverz clear the level.",
+    "Level 2 — Add Ally the Alligator, who moves through the swamp using two Zields and may tag crawling players traveling to regeneration. When tagged by the Alligator, the tagged player becomes the new Alligator and the previous Alligator returns to Super Mover status.",
+    "Level 3 — Add a second Alligator",
+    "Level 4 — Add Titus the Toad, who stays outside the jumping zone and uses a swing ball as a tongue attack. Tagged players enter the swamp and must spin three times before crawling to regeneration."
+  ],
+  "coachingObjective": "Coming soon — to be added.",
+  "guardianConnection": "Coming soon — to be added.",
+  "quickReset": "Coming soon — to be added."
+}

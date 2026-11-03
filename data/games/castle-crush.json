@@ -1,0 +1,47 @@
+{
+  "id": "castle-crush",
+  "name": "Castle Crush",
+  "guardian": "Woodsy the Wizard",
+  "crystal": "Energy",
+  "phase": "Mid-to-Late Strategy / Escort Finale",
+  "focus": "Team movement timing, role protection, coordinated escort strategy",
+  "space": "Field",
+  "summary": "Teams race across the arena to enter the opposing castle, take on structured roles, and finally escort the Royal safely across the field.",
+  "diagramReady": false,
+  "diagram": "diagrams/castle-crush.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Royal Identifier (pinnie, crown, or marker)"
+  ],
+  "overview": "Teams race to move across the arena and enter the opposing castle while avoiding elimination. As the mission progresses, players take on structured roles and eventually escort the Royal safely across the field while protecting them from defenders.",
+  "setup": "Create two castle bases using cones positioned across the field from one another. Divide players into two teams and assign each team a starting castle. Introduce equipment progressively across rounds as roles are added. Designate one player per team as the Royal during final rounds.",
+  "steps": [
+    "Level 1 — Castle Crossing Race: Teams begin inside their own castle base.",
+    "On the coach's signal, players attempt to cross the field and enter the opposing castle.",
+    "Tagged players power down where tagged.",
+    "Teams win the round if all players successfully enter the opposing castle before the other team.",
+    "Level 2 — Role-Based Crossing: Assign players team roles such as Knights and Guards.",
+    "Knights move ahead to create safe pathways across the arena. Guards protect teammates attempting to cross.",
+    "Tagged players remain powered down until the round resets. Teams continue attempting full-team crossings.",
+    "Level 3 — Royal Escort Mission: Each team selects one player to act as the Royal.",
+    "The Royal must travel from their castle to the opposing castle while teammates escort and protect them.",
+    "Opponents attempt to tag the Royal below the waist.",
+    "If the Royal reaches the opposing castle safely, that team wins the round."
+  ],
+  "powerDown": "Tagged players immediately stop movement and remain in place until the round ends. During Royal Escort rounds, only the Royal may be rescued after being tagged.",
+  "rescue": "Royal Escort rounds only: teammates may rescue the Royal by touching hands, touching Zabers, or escorting the Royal back into motion after recovery.",
+  "levelUp": [
+    "Level 1 — Movement-only castle crossing race",
+    "Level 2 — Introduce Knights and Guards roles",
+    "Level 3 — Add equipment for defensive protection",
+    "Level 4 — Activate Royal Escort mission",
+    "Level 5 — Require full-team escort formation around the Royal"
+  ],
+  "coachingObjective": "Teach players to coordinate movement roles, protect priority teammates, and manage team positioning while advancing across contested territory.",
+  "guardianConnection": "Woodsy the Wizard teaches Super Moverz how to move with energy and purpose as a team, protecting key players and advancing together through coordinated castle missions.",
+  "quickReset": "Return teams to their starting castles, rotate Royal selections if needed, and restart immediately with the next crossing challenge."
+}

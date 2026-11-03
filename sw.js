@@ -11,8 +11,8 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v21';
-const DATA_CACHE     = 'smz-v2-data-v18';
+const CACHE_VERSION  = 'smz-v2-v22';
+const DATA_CACHE     = 'smz-v2-data-v19';
 
 // ── App shell — cached on install ─────────────────────────────────
 const SHELL_ASSETS = [
@@ -64,6 +64,23 @@ const SHELL_ASSETS = [
   './data/games/super-seeker.json',
   './data/games/survivor.json',
   './data/games/troopers-vs-jedi.json',
+  './data/games/bizzerk.json',
+  './data/games/pickle-frog-rescue.json',
+  './data/games/gator-gamble.json',
+  './data/games/island-crossfire.json',
+  './data/games/river-crosser.json',
+  './data/games/swamp-trap.json',
+  './data/games/castle-crush.json',
+  './data/games/charge.json',
+  './data/games/coco-nuts.json',
+  './data/games/dragon-slayer.json',
+  './data/games/hunting-party.json',
+  './data/games/jackal-hassle.json',
+  './data/games/raiders.json',
+  './data/games/role-player-survivor.json',
+  './data/games/3-way-gauntlet.json',
+  './data/games/space-base.json',
+  './data/games/zorb-lord.json',
   // Diagrams
   './diagrams/adventure-quest.png',
   './diagrams/crystal-capture.png',

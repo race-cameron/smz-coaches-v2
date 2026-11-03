@@ -1,0 +1,42 @@
+{
+  "id": "3-way-gauntlet",
+  "name": "3-Way Gauntlet",
+  "guardian": "Master Commander",
+  "crystal": "Will Power",
+  "phase": "Mid-Session Crossing Challenge",
+  "focus": "Timing movement lanes, pressure navigation, defender awareness",
+  "space": "Field",
+  "summary": "Players cross the field through three defender lanes to reach a protected safe zone, timing their movement to avoid being tagged.",
+  "diagramReady": false,
+  "diagram": "diagrams/3-way-gauntlet.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls"
+  ],
+  "overview": "Players attempt to cross the field through multiple defender lanes to reach a protected safe zone before being tagged. Defenders control movement corridors using equipment while attackers coordinate timing to move safely across the arena.",
+  "setup": "Create a clearly marked start line and finish line across the field using cones. Divide the space between the two lines into three defender lanes positioned evenly across the crossing zone. Assign defenders to each lane using available equipment. All attackers begin behind the start line.",
+  "steps": [
+    "Level 1 — Gauntlet Crossing: Attackers begin behind the start line.",
+    "On the coach's signal, attackers attempt to cross the field toward the finish line.",
+    "Defenders remain inside their assigned lanes and attempt to tag attackers below the waist.",
+    "Tagged attackers power down where tagged.",
+    "Remaining attackers continue attempting to cross until all players reach the safe zone or time expires.",
+    "Level 2 — Lane Control Pressure: Increase the number of defenders inside lanes. Attackers must identify open movement windows before crossing. Encourage staggered crossing instead of group rushing.",
+    "Level 3 — Rotating Defender Challenge: Rotate attackers into defender roles between rounds and assign different equipment to each defender lane. Attackers adapt movement strategy based on lane type (Zaber lane, ball lane, Zield lane)."
+  ],
+  "powerDown": "Tagged attackers immediately stop movement and remain seated where tagged until the round ends or the coach resets the crossing attempt.",
+  "rescue": "Advanced version: teammates may rescue powered-down players by touching hands or touching Zabers. Rescued players return to the start line before attempting another crossing.",
+  "levelUp": [
+    "Level 1 — Three fixed defender lanes",
+    "Level 2 — Increase number of defenders per lane",
+    "Level 3 — Assign different equipment types per lane",
+    "Level 4 — Limit number of attackers crossing at once",
+    "Level 5 — Add moving defender patrol zones between lanes"
+  ],
+  "coachingObjective": "Teach players to recognize safe movement timing, evaluate defender positioning, and choose efficient crossing paths through controlled pressure zones.",
+  "guardianConnection": "Master Commander trains Super Moverz to move through defended territory by reading the arena, choosing the right moment to advance, and supporting teammates during high-pressure crossings.",
+  "quickReset": "Return attackers to the start line, rotate defender assignments, and restart immediately with a new crossing round."
+}

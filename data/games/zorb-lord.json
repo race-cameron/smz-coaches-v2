@@ -1,0 +1,45 @@
+{
+  "id": "zorb-lord",
+  "name": "Zorb Lord",
+  "guardian": "Coming soon",
+  "crystal": "Coming soon",
+  "phase": "Advanced Game",
+  "focus": "Teamwork Strategy",
+  "space": "Field",
+  "summary": "A boss-battle mission where Super Moverz work together to defeat powerful multi-life villains before time expires.",
+  "diagramReady": false,
+  "diagram": "diagrams/zorb-lord.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers (for Zorb Lord)",
+    "Zields (Condor role)",
+    "Soft Dodge Balls",
+    "Blockers",
+    "Inflatables",
+    "Collapsed Tunnels (optional moving safe zones)"
+  ],
+  "overview": "Zorb Lord is a boss-battle mission where Super Moverz work together to defeat powerful multi-life villains before time expires. Players must coordinate movement, targeting, spacing, and equipment use while avoiding elimination during escalating encounters with multiple Zorb Lords.",
+  "setup": "Create a Super Mover Base circle using cones. Place a Zorb Lord Circle 20–30 yards away in the open field. Position blockers, inflatables, or tunnels throughout the play area. Assign one Zorb Lord inside their circle. Distribute soft dodge balls to approximately half of the Super Moverz. Set a round timer (typically 2 minutes).",
+  "steps": [
+    "Level 1 — Single Zorb Lord: Super Moverz begin inside their base circle (safe zone).",
+    "One Zorb Lord starts inside the center field circle with two Zabers and has three lives.",
+    "When music begins, Super Moverz leave base and attempt to remove all three lives.",
+    "Players with balls may throw at the Zorb Lord. Players without balls focus on spacing, positioning, and timing support.",
+    "When the Zorb Lord is tagged, play freezes, the coach counts down 5 seconds, and the Zorb Lord repositions anywhere in the field.",
+    "If a Super Mover is tagged, they remain down until the round ends. No rescues allowed during the round.",
+    "The mission succeeds when all Zorb Lord lives are removed before time expires.",
+    "Level 2 — Two Zorb Lords: Add a second Zorb Lord (Condor role using Zields) and provide additional balls to Super Moverz. The first Zorb Lord enters play alone; after it loses all lives, the second Zorb Lord is released. After the second loses all lives, both Zorb Lords regenerate with one life each and the final battle begins against the remaining Super Moverz.",
+    "Level 3 — Three Zorb Lords: Add a third Zorb Lord (staff or swing ball role). Zorb Lords are released one at a time — defeat the first to release the second, defeat the second to release the third. After the third is defeated, all Zorb Lords and all Super Moverz regenerate and the final battle begins with everyone active."
+  ],
+  "powerDown": "Tagged Super Moverz remain down until the round ends.",
+  "rescue": "N/A (No rescuing)",
+  "levelUp": [
+    "Level 1 — Single Zorb Lord with three lives",
+    "Level 2 — Two Zorb Lords released one at a time",
+    "Level 3 — Three Zorb Lords, then a full-regeneration final battle"
+  ],
+  "coachingObjective": "Coming soon — to be added.",
+  "guardianConnection": "Coming soon — to be added.",
+  "quickReset": "Coming soon — to be added."
+}

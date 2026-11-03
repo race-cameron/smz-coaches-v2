@@ -1,0 +1,45 @@
+{
+  "id": "hunting-party",
+  "name": "Hunting Party",
+  "guardian": "The Condor",
+  "crystal": "Reaction",
+  "phase": "Stealth Strategy / End-of-Session",
+  "focus": "Awareness, stealth movement, hiding strategy, and teamwork progression",
+  "space": "Field",
+  "summary": "A giant hide-and-seek survival mission where Hunters search for hidden Super Moverz and grow their team by recruiting tagged players into the Hunting Party.",
+  "diagramReady": false,
+  "diagram": "diagrams/hunting-party.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Blockers",
+    "Inflatables",
+    "Rocks or Natural Hiding Areas"
+  ],
+  "overview": "Hunting Party transforms the field into a giant hide-and-seek survival mission where Hunters search for hidden Super Moverz and slowly grow their team by recruiting tagged players into the Hunting Party.",
+  "setup": "Create a large play area with blockers, inflatables, rocks, trees, and hiding zones spread throughout the field. Create a center weapon zone where all Zeapons are placed before the game begins. Select one player to begin as the first Hunter. The Hunter begins in the center area with eyes down while the rest of the Super Moverz hide throughout the field.",
+  "steps": [
+    "The Hunter counts down from 20 while all other players hide.",
+    "Players must fully hide before the music begins. Hidden players may not remain standing openly in visible areas.",
+    "When the music starts, the Hunter begins searching for Super Moverz and may retrieve one Zeapon from the center area.",
+    "If a Super Mover is tagged, they immediately join the Hunting Party, retrieve one Zeapon from the center area, and begin helping search for remaining players.",
+    "The Hunting Party continues growing throughout the round.",
+    "The game continues until only one hidden Super Mover remains.",
+    "The final surviving player chooses the first Hunter for the next round."
+  ],
+  "powerDown": "Tagged players immediately join the Hunting Party instead of powering down.",
+  "rescue": "Optional variation: hidden players may rescue teammates before they fully join the Hunting Party by tagging them within five seconds of being caught.",
+  "levelUp": [
+    "Level 1 — One Hunter, smaller play area",
+    "Level 2 — Larger hiding area, additional Zeapons available",
+    "Level 3 — Add time pressure for hidden players to relocate periodically",
+    "Level 4 — Hunters may use multiple Zeapons",
+    "Level 5 — Introduce moving safe zones or shrinking boundaries"
+  ],
+  "coachingObjective": "Teach players stealth movement, environmental awareness, teamwork communication, and strategic searching under pressure.",
+  "guardianConnection": "The Condor teaches Super Moverz that awareness and patience reveal hidden opportunities. Players learn how observation, teamwork, and strategy can overcome even the best hiding spots.",
+  "quickReset": "Return all Zeapons to the center pile, reset the hiding area, select the next Hunter, and restart the countdown immediately."
+}

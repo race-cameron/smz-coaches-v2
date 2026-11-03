@@ -1,0 +1,43 @@
+{
+  "id": "gator-gamble",
+  "name": "Gator Gamble",
+  "guardian": "Mrs. Picklefrog",
+  "crystal": "Unity",
+  "phase": "Team Rescue / Cooperative Strategy",
+  "focus": "Rescuing teammates while coordinating crystal retrieval under pressure",
+  "space": "Field",
+  "summary": "Super Moverz work together to retrieve Unity Crystals from a guarded island while avoiding roaming Gators protecting the riverways.",
+  "diagramReady": false,
+  "diagram": "diagrams/gator-gamble.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Unity Crystals (small cones or objects)",
+    "Zabers",
+    "Blockers or Inflatables (optional)"
+  ],
+  "overview": "Gator Gamble challenges Super Moverz to work together to retrieve Unity Crystals from a guarded island while avoiding roaming Gators protecting the riverways. Players must balance risk-taking, rescuing teammates, and crystal retrieval in order to complete each level.",
+  "setup": "Create two large parallel oval boundaries to form a river track. The center area between the riverways becomes the Sandbar Island where the Unity Crystals are placed. Super Moverz begin at their team base outside the river boundary. Gators patrol only inside the river track while protecting the island.",
+  "steps": [
+    "Super Moverz leave their base and attempt to cross the river safely.",
+    "Players may carry only one Unity Crystal at a time.",
+    "Retrieved crystals must be returned safely back to base.",
+    "Gators patrol the riverways attempting to tag players using their Zabers.",
+    "Tagged players power down where they are.",
+    "Active teammates may rescue powered down players by tagging them.",
+    "Rescued players receive a protected free walk back to base before reentering play.",
+    "The level is completed once all Unity Crystals are returned safely to base and all powered down Super Moverz have been rescued."
+  ],
+  "powerDown": "Tagged players immediately sit down where they were tagged and wait for a teammate rescue.",
+  "rescue": "Active teammates may rescue powered down players by tagging them. Rescued players receive a protected free walk back to base before reentering play. Optional variation: rescuers may escort powered down players back to base together instead of using the free walk rule.",
+  "levelUp": [
+    "Level 1 — One upright running Gator",
+    "Level 2 — Two upright running Gators",
+    "Level 3 — Three upright running Gators",
+    "Level 4 — Add one crawling Gator",
+    "Level 5 — Add a second crawling Gator"
+  ],
+  "coachingObjective": "Teach players to coordinate rescue timing, spread defenders away from teammates, and communicate during high-pressure retrieval situations.",
+  "guardianConnection": "Mrs. Picklefrog teaches that true unity means helping teammates even when it puts you at risk. Super Moverz learn that successful missions require cooperation, awareness, and teamwork.",
+  "quickReset": "Return all crystals to the island, reset Gators to the riverways, revive all players, and restart immediately from base positions."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "dragon-slayer",
+  "name": "Dragon Slayer",
+  "guardian": "Woodsy the Wizard",
+  "crystal": "Energy",
+  "phase": "Adventure Mission / Team Rescue",
+  "focus": "Imagination activation, teamwork, rescuing, and object retrieval under pressure",
+  "space": "Field",
+  "summary": "In Woodsy the Wizard's magical valley, Dragons work together to recover their stolen eggs from Dragon Slayers and return safely to the nest before time expires.",
+  "diagramReady": false,
+  "diagram": "diagrams/dragon-slayer.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Soft Dodge Balls (“Dragon Eggs”)",
+    "Zabers",
+    "Blockers",
+    "Inflatables",
+    "Rocks or Natural Obstacles"
+  ],
+  "overview": "Dragon Slayer transports Super Moverz back in time into Woodsy the Wizard's magical valley, where peaceful dragons protect their precious eggs hidden throughout paradise. When Dragon Slayers invade the valley and steal the eggs, the dragons must work together to recover them and safely return to their nest before time expires.",
+  "setup": "Create a large Dragon Nest using a cone circle approximately 10 yards wide. Scatter blockers, inflatables, rocks, and obstacles throughout the valley to create hiding areas and pathways. Each Dragon begins inside the nest sleeping beside one Dragon Egg. Before each round, Dragon Slayers secretly remove and hide the eggs throughout the valley. Dragon Slayers may also hide throughout the play area during advanced levels.",
+  "steps": [
+    "Level 1 — Sleeping Dragons: All Dragons begin asleep inside the nest while Dragon Slayers secretly hide all Dragon Eggs throughout the valley.",
+    "When the music begins, Dragons leave the nest, search for their Egg, and attempt to return safely before the music stops.",
+    "If all Dragons return safely with their Eggs, the level is cleared.",
+    "Level 2 — Hidden Dragon Slayer: One Dragon Slayer hides throughout the valley using a Zaber. Dragons attempt to retrieve their Eggs while avoiding being tagged.",
+    "If a Dragon is tagged, they power down and wait for rescue. Teammates may rescue powered down Dragons.",
+    "Rescued Dragons place their hands in the air, receive an invisible protected walk back to the nest, and regenerate once safely inside. Rescued Dragons may not be tagged during their return to the nest.",
+    "Level 3 — Double Dragon Slayers: Add a second Dragon Slayer. Both Dragon Slayers work together to prevent Dragons from retrieving Eggs.",
+    "Level 4 — Valley Siege: Add a third Dragon Slayer. Dragons now face a timed mission — to clear the level, all Eggs and all Dragons must safely return to the nest before time expires."
+  ],
+  "powerDown": "Tagged Dragons immediately sit down and wait for rescue.",
+  "rescue": "Rescued Dragons receive an invisible protected walk back to the nest with hands raised overhead.",
+  "levelUp": [
+    "Level 1 — Egg retrieval only",
+    "Level 2 — Add one Dragon Slayer",
+    "Level 3 — Add multiple Dragon Slayers",
+    "Level 4 — Add mission timer pressure",
+    "Level 5 — Narrow safe areas or reduce hiding spots"
+  ],
+  "coachingObjective": "Teach players teamwork, rescue timing, awareness, imagination activation, and strategic movement through environmental obstacles.",
+  "guardianConnection": "Woodsy the Wizard teaches Super Moverz that imagination creates entire worlds of adventure. Dragons learn that protecting their team and helping others is more important than protecting themselves alone.",
+  "quickReset": "Return all Dragon Eggs to the nest, revive all Dragons, reposition Dragon Slayers, and restart the next mission immediately."
+}

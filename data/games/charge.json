@@ -1,0 +1,46 @@
+{
+  "id": "charge",
+  "name": "Charge",
+  "guardian": "Master Commander",
+  "crystal": "Energy",
+  "phase": "High-Energy Team Battle / Finale",
+  "focus": "Aggressive movement, battlefield decision-making, rescues, and resource management",
+  "space": "Field",
+  "summary": "Two opposing armies race across enemy territory while battling for control of scattered Zeapons and battlefield resources.",
+  "diagramReady": false,
+  "diagram": "diagrams/charge.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones",
+    "Zabers",
+    "Zields",
+    "Soft Dodge Balls",
+    "Swingers",
+    "Blockers or Obstacles (optional)"
+  ],
+  "overview": "Charge throws two opposing armies into a fast-paced battlefield clash where teams race across enemy territory while battling for control of scattered Zeapons and battlefield resources. Teams must balance speed, combat, rescues, and strategy in order to overwhelm the opposing side.",
+  "setup": "Create a rectangular battlefield approximately 20 yards wide and 40 yards long. Divide players into two opposing teams starting on opposite short ends of the field. Scatter Zeapons, cones representing currency, and optional blockers or obstacles throughout the battlefield. Teams begin with empty hands.",
+  "steps": [
+    "Level 1 — Battlefield Charge: When the music begins, both teams raise their arms, yell “CHARGE!” and sprint into the battlefield.",
+    "Players collect Zeapons while attempting to cross fully onto the enemy side of the field.",
+    "Players battle in the middle while trying to advance.",
+    "If a player is tagged, they power down and immediately drop their Zeapon. Any player may pick up dropped equipment.",
+    "Powered down players wait for a teammate rescue. Once rescued, players receive a protected free walk back to their own side before rejoining the battle.",
+    "If the battle lasts too long, the coach stops the music and begins a 10-second countdown. The team with the most players across the opposing line when the countdown reaches zero wins the round.",
+    "Level 2 — Currency System: Cones now act as battlefield currency. Players may collect cones, safely return them to their side, and spend them in the Zeapon Store between rounds. Players may save currency for future rounds.",
+    "Store Prices: Zaber = 2 cones, Zield = 1 cone, Ball = 1 cone, Swinger = 3 cones.",
+    "Final Round — Elimination Mode: Teams no longer attempt to cross lines. Both teams enter the battlefield for a final elimination battle with no rescues and no regeneration. The final surviving team wins the game."
+  ],
+  "powerDown": "Tagged players immediately sit down and drop all carried equipment.",
+  "rescue": "Rescued players receive a protected walk back to their side before rejoining gameplay.",
+  "levelUp": [
+    "Level 1 — Standard Charge battle",
+    "Level 2 — Currency and Zeapon store system",
+    "Level 3 — Increase battlefield obstacles",
+    "Level 4 — Increase weapon variety and team strategy",
+    "Final Level — Elimination Mode battle"
+  ],
+  "coachingObjective": "Teach players battlefield awareness, teamwork, rescues, resource management, aggressive movement, and strategic equipment choices.",
+  "guardianConnection": "Master Commander teaches that great warriors must balance courage with strategy. Super Moverz learn that teamwork, timing, and smart preparation are just as important as strength.",
+  "quickReset": "Reset players to starting sides, redistribute battlefield equipment and currency cones, revive all players, and restart the next Charge round immediately."
+}

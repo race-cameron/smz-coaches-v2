@@ -1,0 +1,45 @@
+{
+  "id": "space-base",
+  "name": "Space Base",
+  "guardian": "Coming soon",
+  "crystal": "Coming soon",
+  "phase": "Warmup",
+  "focus": "Spatial Awareness",
+  "space": "Any",
+  "summary": "Super Moverz leave their protected base to recover scattered Power Crystals while avoiding roaming villains, coordinating rescues and returning safely before time expires.",
+  "diagramReady": false,
+  "diagram": "diagrams/space-base.png",
+  "videoUrl": null,
+  "equipment": [
+    "Cones (Power Crystals)",
+    "Soft Dodge Balls",
+    "Blockers / Inflatables / Rocks",
+    "Music Source",
+    "Timer (2–3 minutes per round)"
+  ],
+  "overview": "Space Base is a cooperative mission game where Super Moverz leave their protected base to recover scattered Power Crystals while avoiding roaming villains. Players must coordinate rescues, manage risk, and return safely before time expires.",
+  "setup": "Create a central Space Base circle (safe zone). Scatter blockers, inflatables, and rocks across the playfield. Spread cones (Power Crystals) throughout the area. Select one starting villain (Space Monkey), who begins hidden behind a blocker with two dodge balls.",
+  "steps": [
+    "All Super Moverz begin inside Space Base.",
+    "When music starts, players leave base to retrieve Power Crystals.",
+    "Players may carry only one crystal at a time.",
+    "Tagged players power down where they are.",
+    "A teammate may rescue them by tapping them.",
+    "Rescued players must return directly to Space Base to regenerate before rejoining play.",
+    "Rescuers remain active and must escape on their own.",
+    "Villains may guard powered-down players to prevent rescues.",
+    "The level is complete when all crystals are collected and all Super Moverz return safely to Space Base."
+  ],
+  "powerDown": "Tagged players power down where they are.",
+  "rescue": "A teammate may rescue them by tapping them. Rescued players must return directly to Space Base to regenerate before rejoining play.",
+  "levelUp": [
+    "Level 1 — 1 Space Monkey",
+    "Level 2 — 2 Space Monkeys",
+    "Level 3 — Add Sally the Snake",
+    "Level 4 — Add the Condor",
+    "Level 5 — Add the Squirrel Fox"
+  ],
+  "coachingObjective": "Coming soon — to be added.",
+  "guardianConnection": "Coming soon — to be added.",
+  "quickReset": "Coming soon — to be added."
+}

@@ -1,0 +1,44 @@
+{
+  "id": "raiders",
+  "name": "Raiders",
+  "guardian": "Master Commander",
+  "crystal": "Reaction",
+  "phase": "Fast-Paced Team Battle / Intro Strategy",
+  "focus": "Weapon-role teamwork, movement awareness, and rescue coordination",
+  "space": "Any",
+  "summary": "A fast-action team battle where a Zaber team and a dodge ball team coordinate rescues and use battlefield cover to overpower each other.",
+  "diagramReady": false,
+  "diagram": "diagrams/raiders.png",
+  "videoUrl": null,
+  "equipment": [
+    "Zabers",
+    "Soft Dodge Balls",
+    "Cones",
+    "Blockers",
+    "Inflatables",
+    "Rocks or Obstacles"
+  ],
+  "overview": "Raiders is a fast-action team battle where two opposing factions use different Zeapons to overpower the enemy team. One side battles using Zabers while the other attacks using dodge balls. Teams must coordinate rescues, use battlefield cover, and eliminate the opposing team to claim victory.",
+  "setup": "Create a circular battlefield approximately 20–30 yards across, adjusted based on group size and age. Scatter blockers, inflatables, rocks, and obstacles throughout the battlefield to create cover and movement pathways. Divide players into two teams — a Zaber Team and a Ball Team. Each team begins on opposite sides of the battlefield.",
+  "steps": [
+    "When the music begins, both teams enter the battlefield and attempt to eliminate the opposing team.",
+    "The Ball Team attempts to hit Zaber players using soft dodge balls.",
+    "If a ball hits a Zaber player, that player powers down but keeps their Zaber beside them.",
+    "Players may move throughout the battlefield using obstacles for cover.",
+    "Powered down players may be rescued by active teammates.",
+    "Once rescued, players receive a 3-second invisibility countdown before fully regenerating into gameplay.",
+    "The round ends when one entire team is powered down at the same time."
+  ],
+  "powerDown": "Tagged players immediately sit down where they were hit while keeping their Zeapon beside them.",
+  "rescue": "Teammates may reactivate players by tagging them. Rescued players receive a 3-second invisible regeneration countdown before rejoining active play.",
+  "levelUp": [
+    "Level 1 — Small battlefield, basic team roles",
+    "Level 2 — Add more obstacles and barriers",
+    "Level 3 — Increase movement speed and team size",
+    "Level 4 — Add additional Zeapon types",
+    "Level 5 — Add timed elimination rounds or shrinking battlefield"
+  ],
+  "coachingObjective": "Teach players teamwork, spacing, timing, rescue coordination, and how different Zeapon roles create different strategic responsibilities.",
+  "guardianConnection": "Master Commander teaches that every warrior has a different strength. Super Moverz learn that victory comes from combining different abilities together as one united team.",
+  "quickReset": "Revive all players, redistribute teams to starting sides, reset battlefield spacing, and restart immediately."
+}
