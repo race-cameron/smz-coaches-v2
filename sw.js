@@ -11,7 +11,7 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v26';
+const CACHE_VERSION  = 'smz-v2-v27';
 const DATA_CACHE     = 'smz-v2-data-v19';
 
 // ── App shell — cached on install ─────────────────────────────────
@@ -26,6 +26,7 @@ const SHELL_ASSETS = [
   './css/components.css',
   './css/cards.css',
   './css/home.css',
+  './css/games.css',
   './js/state.js',
   './js/router.js',
   './js/data.js',

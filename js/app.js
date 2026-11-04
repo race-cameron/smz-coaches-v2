@@ -378,6 +378,9 @@ function render(route) {
   // Attach search input handler if on library screen
   attachSearchHandler();
 
+  // Games page: load the spotlight card's equipment list
+  if (route.screen === 'games' && typeof gsLoadEquipment === 'function') gsLoadEquipment();
+
   // Attach cards events if on cards screen
   if (route.screen === 'cards') {
     attachCardsEvents();
@@ -418,6 +421,13 @@ function handleClick(e) {
     const id = favBtn.dataset.fav;
     State.toggleFavorite(id);
     render(State.getRoute());
+    return;
+  }
+
+  // Games page: crystal buttons, shelf cards and card flips
+  const gsEl = e.target.closest('[data-gs]');
+  if (gsEl && typeof handleGameSelect === 'function') {
+    handleGameSelect(gsEl);
     return;
   }
 
