@@ -121,12 +121,27 @@ document.addEventListener('click', e => {
 });
 
 // ── Game Card (shared between Home, Library, Favorites) ───────────
+// Picture at the top of each game's box: the art from its Power Card,
+// or a placeholder in the game's crystal color until a card is made.
+function renderGameCardMedia(game, color) {
+  const art = typeof gameCardArt === 'function' ? gameCardArt(game.id) : null;
+  if (art) {
+    return `<div class="game-card-media"><img src="${art}" alt="${escHtml(game.name)} card art" loading="lazy" /></div>`;
+  }
+  return `
+    <div class="game-card-media game-card-media-empty" style="--crystal:${color};">
+      <img src="img/smz_emblem_sm.png" alt="" />
+      <span>Card coming soon</span>
+    </div>`;
+}
+
 function renderGameCard(game) {
   const color = State.crystalColor(game.crystal);
   const isFav = State.isFavorite(game.id);
 
   return `
     <div class="card game-card" data-game="${escHtml(game.id)}">
+      ${renderGameCardMedia(game, color)}
       <div class="card-bar" style="background:linear-gradient(90deg,${color},#facc15);"></div>
       <div class="card-body">
         <div class="game-card-header">

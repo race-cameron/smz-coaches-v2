@@ -11,7 +11,7 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v23';
+const CACHE_VERSION  = 'smz-v2-v24';
 const DATA_CACHE     = 'smz-v2-data-v19';
 
 // ── App shell — cached on install ─────────────────────────────────
@@ -38,6 +38,23 @@ const SHELL_ASSETS = [
   './js/print-sheets.js',
   './js/scoring-guide.js',
   './js/app.js',
+  './js/game-cards.js',
+  './img/smz_emblem_sm.png',
+  // Game card art (Games page boxes)
+  './assets/game-cards/art/adventure-quest.jpg',
+  './assets/game-cards/art/charge.jpg',
+  './assets/game-cards/art/coco-nuts.jpg',
+  './assets/game-cards/art/crystal-capture.jpg',
+  './assets/game-cards/art/dragon-slayer.jpg',
+  './assets/game-cards/art/meteor-shower.jpg',
+  './assets/game-cards/art/pirate-ship.jpg',
+  './assets/game-cards/art/robo-shark.jpg',
+  './assets/game-cards/art/royal-rescue.jpg',
+  './assets/game-cards/art/sportnite.jpg',
+  './assets/game-cards/art/super-seeker.jpg',
+  './assets/game-cards/art/survivor.jpg',
+  './assets/game-cards/art/troopers-vs-jedi.jpg',
+  './assets/game-cards/art/zorb-lord.jpg',
   './pages/home.js',
   // Home page art
   './img/smz_logo.png',

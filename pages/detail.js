@@ -78,6 +78,7 @@ async function renderDetail(id) {
 
       <!-- Sidebar -->
       <div>
+        ${renderPowerCardArt(game, color)}
         ${renderQuickInfo(game, color)}
         ${renderEquipment(game.equipment)}
         ${renderVideo(game)}
@@ -88,6 +89,15 @@ async function renderDetail(id) {
 
   // Re-attach events after async render
   attachEvents();
+
+  // Tap the game card to see it big and flip it
+  const cardBtn = app.querySelector('.power-card-btn');
+  if (cardBtn && typeof openCardViewer === 'function') {
+    cardBtn.addEventListener('click', () => {
+      const back = (typeof CARD_ASSETS !== 'undefined' && CARD_ASSETS.back) || cardBtn.dataset.cardFront;
+      openCardViewer(cardBtn.dataset.cardFront, back);
+    });
+  }
 }
 
 // ── Section helpers ───────────────────────────────────────────────
@@ -160,6 +170,32 @@ function renderDiagram(game, color) {
                Diagram coming soon — add image to ${escHtml(game.diagram || 'diagrams/')}
              </div>`
         }
+      </div>
+    </div>
+  `;
+}
+
+// The game's Power Card, under the diagram on the right. Tap to flip it in 3D.
+function renderPowerCardArt(game, color) {
+  const full = typeof gameCardFull === 'function' ? gameCardFull(game.id) : null;
+  if (full) {
+    return `
+      <div class="section-card power-card-art">
+        <div class="section-card-title">Game Card</div>
+        <button class="power-card-btn" data-card-front="${full}" aria-label="Open the ${escHtml(game.name)} card">
+          <img src="${full}" alt="${escHtml(game.name)} game card" loading="lazy" />
+        </button>
+        <div class="power-card-hint">Tap to flip</div>
+      </div>
+    `;
+  }
+  return `
+    <div class="section-card power-card-art">
+      <div class="section-card-title">Game Card</div>
+      <div class="power-card-empty" style="--crystal:${color};">
+        <img src="img/smz_emblem_sm.png" alt="" />
+        <span>${escHtml(game.name)}</span>
+        <small>Card coming soon</small>
       </div>
     </div>
   `;
