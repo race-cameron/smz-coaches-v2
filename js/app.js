@@ -19,12 +19,12 @@ function escHtml(str) {
 function renderNav(route) {
   const favCount = State.getFavoriteIds().size;
   const tabs = [
-    { hash: '#home',      label: 'Home',                      screen: 'home'      },
-    { hash: '#games',     label: 'Games',                     screen: 'games'     },
-    { hash: '#cards',     label: 'Power Cards',               screen: 'cards'     },
-    { hash: '#crystals',  label: 'Power Crystals',             screen: 'crystals' },
-    { hash: '#cardvault', label: 'Card Vault',                 screen: 'cardvault' },
-    { hash: '#favorites', label: `★ Favorites (${favCount})`, screen: 'favorites' },
+    { hash: '#home',      label: 'Home',                      screen: 'home',      short: 'Home',     icon: 'home'    },
+    { hash: '#games',     label: 'Games',                     screen: 'games',     short: 'Games',    icon: 'games'   },
+    { hash: '#cards',     label: 'Power Cards',               screen: 'cards',     short: 'Cards',    icon: 'card'    },
+    { hash: '#crystals',  label: 'Power Crystals',             screen: 'crystals',  short: 'Crystals', icon: 'crystal' },
+    { hash: '#cardvault', label: 'Card Vault',                 screen: 'cardvault', short: 'Vault',    icon: 'vault'   },
+    { hash: '#favorites', label: `★ Favorites (${favCount})`, screen: 'favorites', short: 'Favorites', icon: 'star'   },
   ];
 
   const activeScreen = route.screen === 'detail' ? 'games' : route.screen;
@@ -46,8 +46,31 @@ function renderNav(route) {
         `).join('')}
       </div>
     </nav>
+
+    <!-- Phone-only bottom tab bar (shown under 720px wide) -->
+    <nav class="tabbar" aria-label="Main navigation">
+      ${tabs.map(t => `
+        <a href="${t.hash}"
+           class="tabbar-item ${activeScreen === t.screen ? 'active' : ''}"
+           aria-current="${activeScreen === t.screen ? 'page' : 'false'}">
+          ${TABBAR_ICONS[t.icon]}
+          <span>${t.short}</span>
+          ${t.icon === 'star' && favCount ? `<i class="tabbar-count">${favCount}</i>` : ''}
+        </a>
+      `).join('')}
+    </nav>
   `;
 }
+
+// Line icons for the phone tab bar
+const TABBAR_ICONS = {
+  home:    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>',
+  games:   '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  card:    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="2"/><path d="M8 6.5h8M12 11l1.5 3h-3z"/></svg>',
+  crystal: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M9 3l-1.5 6L12 21M15 3l1.5 6L12 21"/></svg>',
+  vault:   '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M12 8.5V7M15.5 12H17M12 15.5V17M8.5 12H7"/></svg>',
+  star:    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+};
 
 // ── Render the current page based on route ─────────────────────────
 function renderPage(route) {

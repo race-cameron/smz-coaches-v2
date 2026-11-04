@@ -276,3 +276,96 @@ body.app-bg-off .app-motes {
     margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-3)) calc(-1 * var(--space-10));
   }
 }
+
+
+/* ═══ Phone layout: bottom tab bar ═══
+   The top tab row is too wide for a phone, which made phones shrink the
+   whole app to fit it. Under 720px the tabs move to a bar along the bottom. */
+:root { --tabbar-height: 64px; }
+.tabbar { display: none; }
+
+@media (max-width: 720px) {
+  .nav { justify-content: center; }
+  .nav-tabs { display: none; }
+
+  .tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 200;
+    display: flex;
+    height: calc(var(--tabbar-height) + env(safe-area-inset-bottom, 0px));
+    padding: 0 4px env(safe-area-inset-bottom, 0px);
+    background: rgba(8, 14, 28, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+  }
+  .tabbar-item {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 10.5px;
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tabbar-item svg {
+    width: 23px;
+    height: 23px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tabbar-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .tabbar-item.active { color: #facc15; }
+  .tabbar-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 22%;
+    right: 22%;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: #facc15;
+  }
+  .tabbar-count {
+    position: absolute;
+    top: 7px;
+    left: calc(50% + 6px);
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #facc15;
+    color: #0a1220;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  /* keep page content clear of the bar */
+  .page { padding-bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom, 0px) + var(--space-8)); }
+  .crystals-page-frame,
+  .cardvault-page-frame { margin-bottom: 0; }
+  .crystals-iframe,
+  .cardvault-iframe {
+    height: calc(100vh - var(--nav-height) - var(--tabbar-height) - env(safe-area-inset-bottom, 0px));
+    height: calc(100dvh - var(--nav-height) - var(--tabbar-height) - env(safe-area-inset-bottom, 0px));
+  }
+
+  /* long tags wrap instead of running off the screen */
+  .badge-row .badge,
+  .detail-badges .badge { white-space: normal; max-width: 100%; border-radius: 12px; }
+}
