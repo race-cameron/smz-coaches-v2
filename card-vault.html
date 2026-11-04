@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>The Card Vault</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -205,6 +206,10 @@
     align-items:stretch;
   }
   #guardians, #games{ height:100%; }
+  #combos{ grid-column:1 / -1; }
+  #combos .page-grid{ grid-template-columns:repeat(6, minmax(0,1fr)); }
+  #combos .card-slot{ min-width:0; }
+  #combos .card-slot .name{ display:block; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 
   /* ---------- gilded frame ---------- */
   .case-frame{
@@ -456,6 +461,7 @@
     .chest{ padding:22px 12px 16px; }
     .case{ padding:20px 10px 10px; }
     .page-grid{ grid-template-columns:repeat(3,1fr); gap:12px 8px; }
+    #combos .page-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); }
     .case-banner{ padding:6px 14px; }
     .case-banner .txt{ font-size:12.5px; }
     #tooltip{ width:min(260px, calc(100vw - 28px)); }
@@ -859,6 +865,12 @@
           <div class="case" id="game-case"><div class="case-glass"></div></div>
         </div>
       </div>
+      <div id="combos">
+        <div class="case-frame">
+          <div class="case-banner"><span class="gem"></span><span class="txt">Combo Guardians &amp; The Void</span><span class="gem"></span></div>
+          <div class="case" id="combo-case"><div class="case-glass"></div></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -956,7 +968,30 @@ const GAMES = [
   { name:'Meteor Shower',     img:'img/Meteor_Shower.jpg',     power:'energy',     focus:'Full send, full smile.' },
   { name:'Troopers vs. Jedi', img:'img/Troopers_vs_Jedi.jpg',  power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
   { name:'Super Seeker',      img:'img/Super_Seeker.jpg',      power:'reaction',   focus:'Feel it, don’t fight it — then choose your move.' },
+  // Set 2
+  { name:'Sportnite',         img:'img/Sportnite.jpg',         power:'willpower',  focus:'Lock in. Ignore the noise. Finish what you started.' },
+  { name:'Dragon Slayer',     img:'img/Dragon_Slayer.jpg',     power:'energy',     focus:'Full send, full smile.' },
+  { name:'Coco-Nuts',         img:'img/Coco_Nuts.jpg',         power:'energy',     focus:'Full send, full smile.' },
+  { name:'Zord Lords',        img:'img/Zord_Lords.jpg',        power:'unassigned', focus:'Power not assigned yet.' },
+  { name:'Volcano Blaster',   img:'img/Volcano_Blaster.jpg',   power:'unassigned', focus:'Power not assigned yet.' },
 ];
+
+// Set 2: one Combo Guardian card per Guardian, plus The Void
+const COMBOS = [
+  { name:'Hiro',              tag:'Combo', img:'img/Hiro_Combo.jpg',             power:'safety',
+    history:'Drop in Hiro’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Mrs. Picklefrog',   tag:'Combo', img:'img/Picklefrog_Combo.jpg',       power:'unity',
+    history:'Drop in Mrs. Picklefrog’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Master Commander',  tag:'Combo', img:'img/Master_Commander_Combo.jpg', power:'willpower',
+    history:'Drop in Master Commander’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Woodsy the Wizard', tag:'Combo', img:'img/Woodsy_Combo.jpg',           power:'energy',
+    history:'Drop in Woodsy’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'Serenity',          tag:'Combo', img:'img/Serenity_Combo.jpg',         power:'reaction',
+    history:'Drop in Serenity’s Guardian history here — origin, real-world inspiration, Guardian Animal.' },
+  { name:'The Void',          img:'img/The_Void.jpg', power:'unassigned', isVoid:true,
+    focus:'The darkness every Guardian and every Super Mover stands against.' },
+];
+
 
 function buildLegend(){
   const root = document.getElementById('legend');
@@ -1013,7 +1048,7 @@ function makeCardSlot(item, kind){
     <button class="card-face" type="button">
       <img src="${item.img}" alt="${item.name}" loading="lazy">
     </button>
-    <span class="name">${item.variant ? `${item.name} · ${item.variant}` : item.name}</span>
+    <span class="name">${item.variant ? `${item.name} · ${item.variant}` : item.tag ? `${item.name} · ${item.tag}` : item.name}</span>
   `;
   const btn = slot.querySelector('.card-face');
   const activate = () => showTooltip(slot, item, meta, kind);
@@ -1049,9 +1084,14 @@ function showTooltip(slot, item, meta, kind){
   slot.classList.add('is-active');
 
   tooltip.style.setProperty('--c', meta.color);
-  ttTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.name;
+  ttTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.tag ? `${item.name} · ${item.tag}` : item.name;
 
-  if(kind === 'guardian'){
+  if(item.isVoid){
+    ttKicker.textContent = 'The Villain';
+    ttText.textContent = item.focus;
+    ttText.classList.remove('placeholder');
+    ttSub.hidden = true;
+  } else if(kind === 'guardian'){
     ttKicker.textContent = `${meta.name} Guardian`;
     ttText.textContent = meta.desc;
     ttText.classList.remove('placeholder');
@@ -1190,8 +1230,13 @@ function openCardModal(slot, item, meta, kind){
   modalCardImg.src = item.img;
   modalCardImg.alt = item.name;
 
-  miTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.name;
-  if(kind === 'guardian'){
+  miTitle.textContent = item.variant ? `${item.name} · Art ${item.variant}` : item.tag ? `${item.name} · ${item.tag}` : item.name;
+  if(item.isVoid){
+    miKicker.textContent = 'The Villain';
+    miText.textContent = item.focus;
+    miText.classList.remove('placeholder');
+    miSub.hidden = true;
+  } else if(kind === 'guardian'){
     miKicker.textContent = `${meta.name} Guardian`;
     miText.textContent = meta.desc;
     miText.classList.remove('placeholder');
@@ -1303,6 +1348,7 @@ for(let i=0;i<85;i++){
 buildLegend();
 buildFlatCase('guardian-case', GUARDIANS, 'guardian');
 buildFlatCase('game-case', GAMES, 'game');
+buildFlatCase('combo-case', COMBOS, 'guardian');
 
 /* ---------- book-opening intro ---------- */
 (function(){
