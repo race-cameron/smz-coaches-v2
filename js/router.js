@@ -45,6 +45,12 @@ const Router = (() => {
       return { screen: 'cardvault', id: null };
     }
 
+    // Field HUD (live game screen) for one game
+    if (clean.startsWith('hud/')) {
+      const id = clean.slice(4);
+      return { screen: 'hud', id: id || null };
+    }
+
     if (clean.startsWith('game/')) {
       const id = clean.slice(5);
       return { screen: 'detail', id: id || null };

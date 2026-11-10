@@ -149,9 +149,55 @@ body.app-bg-off .app-motes {
 }
 
 .nav-tab.active {
-  color: var(--brand-green);
-  border-color: var(--brand-green-glow);
-  background: var(--brand-green-glow);
+  color: var(--brand-gold-light);
+  border-color: rgba(234, 179, 8, 0.45);
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.20), rgba(234, 179, 8, 0.07));
+  box-shadow: 0 0 14px rgba(234, 179, 8, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+/* ── Top bar branding: shield + chrome/gold wordmark, gold hairline ── */
+.nav::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #b8862b 12%, #f5d67a 50%, #b8862b 88%, transparent);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.nav-logo { gap: 10px; }
+
+.nav-logo img.nav-logo-shield {
+  height: 40px;
+  width: auto;
+  filter: drop-shadow(0 2px 6px rgba(59, 130, 246, 0.55));
+}
+
+.nav-logo-word {
+  font-family: var(--font-display);
+  font-size: 24px;
+  letter-spacing: 2px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.nav-logo-super {
+  background: linear-gradient(180deg, #ffffff 0%, #dbe7f5 42%, #8fb0d8 58%, #eef5ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-logo-moverz {
+  background: linear-gradient(180deg, #fff3c4 0%, #f5d67a 40%, #d99a1c 62%, #f8e08e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ── Page Wrapper ── */

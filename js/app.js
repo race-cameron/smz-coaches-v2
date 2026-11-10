@@ -27,14 +27,13 @@ function renderNav(route) {
     { hash: '#favorites', label: `★ Favorites (${favCount})`, screen: 'favorites', short: 'Favorites', icon: 'star'   },
   ];
 
-  const activeScreen = route.screen === 'detail' ? 'games' : route.screen;
+  const activeScreen = (route.screen === 'detail' || route.screen === 'hud') ? 'games' : route.screen;
 
   return `
     <nav class="nav">
       <a class="nav-logo" href="#home" aria-label="Super Moverz Home">
-        <span style="font-family:var(--font-display);font-size:22px;letter-spacing:2px;color:var(--brand-green);">
-          SUPER <span style="color:var(--text-primary);">MOVERZ</span>
-        </span>
+        <img class="nav-logo-shield" src="img/smz_emblem_sm.png" alt="" />
+        <span class="nav-logo-word"><span class="nav-logo-super">SUPER</span> <span class="nav-logo-moverz">MOVERZ</span></span>
       </a>
       <div class="nav-tabs" role="navigation" aria-label="Main navigation">
         ${tabs.map(t => `
@@ -82,6 +81,7 @@ function renderPage(route) {
     case 'crystals':  return renderCrystals();
     case 'cardvault': return renderCardVault();
     case 'detail':    return ''; // async — renderDetail writes directly to #main-content
+    case 'hud':       return ''; // async — renderHud writes directly to #main-content
     default:          return renderHome();
   }
 }
@@ -395,6 +395,11 @@ function render(route) {
   // Trigger async detail render if on detail screen
   if (route.screen === 'detail' && route.id) {
     renderDetail(route.id);
+  }
+
+  // Field HUD (live game screen)
+  if (route.screen === 'hud' && typeof renderHud === 'function') {
+    renderHud(route.id);
   }
 
   // Scroll to top on route change

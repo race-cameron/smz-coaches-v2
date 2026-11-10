@@ -161,9 +161,6 @@ function renderGameCard(game) {
             ${escHtml(game.crystal)}
           </span>
           <span class="badge">${escHtml(game.phase)}</span>
-          ${game.diagramReady
-            ? `<span class="badge" style="background:rgba(121,183,44,0.12);border-color:rgba(121,183,44,0.35);color:#79b72c;">Diagram ✓</span>`
-            : ''}
         </div>
         <div class="game-card-summary">${escHtml(game.summary)}</div>
         <button class="open-btn" data-game="${escHtml(game.id)}">

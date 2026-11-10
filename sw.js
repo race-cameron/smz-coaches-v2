@@ -11,7 +11,7 @@
  * - Bump CACHE_VERSION to force all clients to update on next visit
  */
 
-const CACHE_VERSION  = 'smz-v2-v27';
+const CACHE_VERSION  = 'smz-v2-v29';
 const DATA_CACHE     = 'smz-v2-data-v19';
 
 // ── App shell — cached on install ─────────────────────────────────
@@ -27,6 +27,7 @@ const SHELL_ASSETS = [
   './css/cards.css',
   './css/home.css',
   './css/games.css',
+  './css/hud.css',
   './js/state.js',
   './js/router.js',
   './js/data.js',
@@ -40,6 +41,7 @@ const SHELL_ASSETS = [
   './js/scoring-guide.js',
   './js/app.js',
   './js/game-cards.js',
+  './js/hud-data.js',
   './img/smz_emblem_sm.png',
   // Game card art (Games page boxes)
   './assets/game-cards/art/adventure-quest.jpg',
@@ -74,6 +76,7 @@ const SHELL_ASSETS = [
   './img/home/game-pirate-ship.jpg',
   './pages/library.js',
   './pages/detail.js',
+  './pages/hud.js',
   './pages/favorites.js',
   './pages/cards.js',
   './pages/card-creator.js',

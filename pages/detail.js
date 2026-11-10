@@ -112,7 +112,6 @@ async function renderDetail(id) {
               <span><span>Space</span><span>${escHtml(game.space || '—')}</span></span>
               <span><span>Guardian</span><span>${escHtml(game.guardian || '—')}</span></span>
               <span><span>Crystal</span><span class="gd-c">${escHtml(crystalName)}</span></span>
-              <span><span>Diagram</span><span>${game.diagramReady ? 'Ready' : 'Pending'}</span></span>
             </div>
           </section>
 
@@ -145,11 +144,13 @@ function gdDiagram(game) {
     <section class="gd-panel gd-diagram" aria-label="Field layout">
       <div class="gd-diagram-head">
         <h2 class="gd-h big">Field Layout</h2>
-        <span class="gd-badge ${ready ? 'ok' : ''}">${ready ? 'Diagram ready' : 'Diagram pending'}</span>
+        ${typeof hudHas === 'function' && hudHas(game.id)
+          ? `<a class="gd-start" href="#hud/${escHtml(game.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Start Game</a>`
+          : ''}
       </div>
       ${ready
         ? `<img class="gd-diagram-img" src="${escHtml(game.diagram)}" alt="${escHtml(game.name)} field diagram"
-             onerror="this.outerHTML='<div class=&quot;gd-diagram-empty&quot;>Diagram image not found at ${escHtml(game.diagram)}</div>'" />`
+             onerror="this.outerHTML='<div class=&quot;gd-diagram-empty&quot;>Diagram coming soon</div>'" />`
         : `<div class="gd-diagram-empty">Diagram coming soon</div>`}
     </section>`;
 }
