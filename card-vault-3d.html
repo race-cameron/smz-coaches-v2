@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#070504">
+<title>The Card Vault — Super Moverz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root { --gold: #f5d67a; --gold-deep: #c9982f; --ink: #0a0705; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; background: #070504; color: #f3ead8; font-family: 'DM Sans', system-ui, sans-serif; overflow: hidden; overscroll-behavior: none; }
+  #vault { position: fixed; inset: 0; }
+  #vault-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  [hidden] { display: none !important; }
+  .v-vignette { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.62) 100%); }
+  button { font-family: inherit; cursor: pointer; }
+  .v-gold { border: 1px solid #fff3c4; border-radius: 10px; background: linear-gradient(180deg, #f8e08e, #e0a41f); color: #1a1005;
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: 2.5px; text-transform: uppercase; box-shadow: 0 8px 24px rgba(234,179,8,.38), inset 0 1px 0 rgba(255,255,255,.6); }
+  .v-ghost { border: 1px solid rgba(201,152,47,.75); border-radius: 10px; background: rgba(14,9,5,.78); color: #f3ead8; font-weight: 600; font-size: 15px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .v-round { width: 68px; height: 68px; flex: none; border-radius: 50%; border: 1px solid var(--gold); background: rgba(14,9,5,.8); color: var(--gold); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  svg.i { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  #v-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #070504; font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 4px; color: var(--gold); }
+  #v-start { position: absolute; left: 0; right: 0; bottom: max(40px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  #v-count { font-size: 14px; font-weight: 700; letter-spacing: 4px; color: #f3ead8; text-shadow: 0 1px 8px #000; }
+  #v-enter { height: 72px; padding: 0 46px; font-size: 36px; }
+
+  #v-hud { position: absolute; left: max(20px, env(safe-area-inset-left)); top: max(16px, env(safe-area-inset-top)); pointer-events: none; }
+  #v-hud-sub { font-size: 12px; font-weight: 700; letter-spacing: 4px; text-shadow: 0 1px 6px #000; }
+  #v-hud-name { font-family: 'Bebas Neue', sans-serif; font-size: 40px; line-height: 1; letter-spacing: 2px; color: #fff; text-shadow: 0 2px 10px #000; }
+  .v-home { position: absolute; right: max(20px, env(safe-area-inset-right)); top: max(16px, env(safe-area-inset-top)); height: 44px; padding: 0 16px; display: flex; align-items: center; text-decoration: none; }
+
+  .v-bar { position: absolute; left: max(20px, env(safe-area-inset-left)); right: max(20px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .v-bar .v-btn { height: 68px; padding: 0 20px; display: flex; align-items: center; justify-content: center; gap: 8px; user-select: none; -webkit-user-select: none; touch-action: none; }
+  #v-walk { width: 150px; font-size: 26px; } #v-back { width: 124px; }
+  #v-hint { flex: 1 1 auto; min-width: 0; text-align: center; font-size: 14px; color: #f3ead8; text-shadow: 0 1px 6px #000; }
+  .v-mid { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  #v-item { font-size: 12px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-shadow: 0 1px 6px #000; text-align: center; }
+  .v-mid-row { display: flex; gap: 10px; }
+  .v-mid-row button { height: 56px; padding: 0 20px; display: flex; align-items: center; gap: 8px; }
+  #v-open { font-size: 22px; }
+
+  .v-pill { position: absolute; height: 62px; padding: 0 22px; font-size: 24px; border: 1px solid #fff3c4; border-radius: 10px; background: linear-gradient(180deg, #f8e08e, #e0a41f); color: #1a1005;
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: 2.5px; box-shadow: 0 8px 24px rgba(234,179,8,.38), inset 0 1px 0 rgba(255,255,255,.6); white-space: nowrap; }
+  .v-pill.left { left: max(20px, env(safe-area-inset-left)); top: 50%; } .v-pill.right { right: max(20px, env(safe-area-inset-right)); top: 50%; }
+  .v-pill.center { left: 50%; transform: translateX(-50%); bottom: 108px; }
+  .v-pill.sealed { background: rgba(14,9,5,.85); color: #c4b5fd; border: 1px dashed rgba(196,181,253,.7); box-shadow: none; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+  #v-toast { position: absolute; left: 50%; top: 22%; transform: translate(-50%, 8px); padding: 12px 20px; border-radius: 10px; background: rgba(14,9,5,.9); border: 1px solid rgba(196,181,253,.6); color: #e9e2ff; font-weight: 600; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; }
+  #v-toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+  #v-modal { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(6,4,2,.88); perspective: 1100px; touch-action: none; }
+  #v-modal.on { display: flex; animation: v-fade .3s ease-out both; }
+  #v-card-sub { font-size: 12px; font-weight: 700; letter-spacing: 4px; color: var(--gold); text-align: center; }
+  #v-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 46px; line-height: 1; letter-spacing: 2px; color: #fff; text-align: center; }
+  #v-card { --glow: #f5d67a; --gx: 50%; --gy: 50%; position: relative; width: min(390px, 70vw, 46vh); aspect-ratio: 620 / 825; transition: transform .14s ease-out; transform-style: preserve-3d; }
+  #v-card-inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3,.8,.3,1); border-radius: 16px; box-shadow: 0 0 80px var(--glow), 0 40px 60px rgba(0,0,0,.6); }
+  #v-card-inner.flipped { transform: rotateY(180deg); }
+  #v-card-inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+  #v-card-back { transform: rotateY(180deg); }
+  #v-card-glint { position: absolute; inset: 0; border-radius: 16px; pointer-events: none; mix-blend-mode: screen; background: radial-gradient(circle at var(--gx) var(--gy), rgba(255,255,255,.34) 0%, rgba(255,255,255,.1) 20%, rgba(0,0,0,0) 46%); transform: translateZ(1px); }
+  .v-modal-row { display: flex; gap: 12px; } .v-modal-row button { height: 58px; padding: 0 28px; } #v-flip { font-size: 26px; }
+  @keyframes v-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (max-width: 700px) {
+    .v-round { width: 56px; height: 56px; } .v-bar .v-btn { height: 56px; padding: 0 12px; } #v-walk { width: 110px; font-size: 22px; } #v-back { width: 92px; font-size: 13px; }
+    #v-hint { display: none; } .v-pill { height: 52px; font-size: 19px; padding: 0 14px; } .v-pill.left, .v-pill.right { top: 58%; } #v-hud-name { font-size: 30px; }
+    .v-mid-row button { height: 50px; padding: 0 12px; font-size: 13px; } #v-open { font-size: 18px; } #v-enter { height: 62px; font-size: 30px; padding: 0 30px; }
+  }
+</style>
+</head>
+<body>
+<div id="vault">
+  <canvas id="vault-canvas" aria-label="The Card Vault, a 3D hall of Power Cards"></canvas>
+  <div class="v-vignette" aria-hidden="true"></div>
+  <div id="v-loading">Opening the vault…</div>
+
+  <div id="v-start" hidden>
+    <span id="v-count"></span>
+    <button id="v-enter" class="v-gold" type="button">Enter the Vault</button>
+  </div>
+
+  <div id="v-hud" hidden><div id="v-hud-sub">THE CARD VAULT</div><div id="v-hud-name">MAIN HALL</div></div>
+
+  <div id="v-hallbar" class="v-bar" hidden>
+    <button id="v-look-l" class="v-round" type="button" aria-label="Look left"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button id="v-back" class="v-btn v-ghost" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Back</button>
+    <span id="v-hint"></span>
+    <button id="v-walk" class="v-btn v-gold" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Walk</button>
+    <button id="v-look-r" class="v-round" type="button" aria-label="Look right"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+  <button id="v-enter-l" class="v-pill left" data-pos="left" type="button" hidden></button>
+  <button id="v-enter-r" class="v-pill right" data-pos="right" type="button" hidden></button>
+  <button id="v-enter-c" class="v-pill center" data-pos="center" type="button" hidden></button>
+
+  <div id="v-roombar" class="v-bar" hidden>
+    <button id="v-turn-l" class="v-round" type="button" aria-label="Turn left"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="v-mid">
+      <span id="v-item"></span>
+      <div class="v-mid-row">
+        <button id="v-exit" class="v-ghost" type="button"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>Back to the hall</button>
+        <button id="v-open" class="v-gold" type="button">Lift card</button>
+      </div>
+    </div>
+    <button id="v-turn-r" class="v-round" type="button" aria-label="Turn right"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+
+  <div id="v-toast" role="status"></div>
+
+  <div id="v-modal" role="dialog" aria-label="Power Card">
+    <div><div id="v-card-sub"></div><div id="v-card-name"></div></div>
+    <div id="v-card"><div id="v-card-inner"><img id="v-card-front" alt=""><img id="v-card-back" src="img/power-card-back.jpg" alt="Power Card back"><div id="v-card-glint"></div></div></div>
+    <div class="v-modal-row"><button id="v-flip" class="v-gold" type="button">Flip card</button><button id="v-close" class="v-ghost" type="button">Put it back</button></div>
+  </div>
+</div>
+<script src="vault3d/three.min.js"></script>
+<script src="vault3d/GLTFLoader.js"></script>
+<script src="vault3d/vault.js"></script>
+</body>
+</html>
