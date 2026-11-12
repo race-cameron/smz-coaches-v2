@@ -2,14 +2,17 @@
  * Super Moverz — The Card Vault (3D walk-through)
  *
  * A wooden vault hall with rooms off the sides:
- *   front:  Game Arena (left)  ·  The Void, sealed (right)
+ *   front:  Game Arena (left)  ·  The Void (right)
  *   middle: Safety (left)      ·  Energy (right)
  *   back:   Unity (left)       ·  Reaction (right)
  *   end:    Will Power
+ * Each Guardian stands beside the door of their own room.
  *
  * Runs on three.js (the same engine as the Power Crystals page).
  * To use your own artwork for the wood, drop images into vault3d/tex/ named
  * floor.jpg, wall.jpg, ceiling.jpg, door.jpg — they replace the wood drawn in code.
+ * To use real 3D Guardians, drop models into vault3d/guardians/ named safety.glb, unity.glb,
+ * willpower.glb, energy.glb, reaction.glb — they replace the stand-in figures.
  */
 (function () {
   'use strict';
@@ -19,11 +22,11 @@
   // ───────────────────────── data ─────────────────────────
   var GOLD = '#f5d67a';
   var CRYSTALS = {
-    safety:    { name: 'SAFETY',     guardian: 'HIRO',              color: '#ef4444', origin: 'Southern Japan',         tagline: 'Aware body. Aware team. Safe moves.',          cards: ['Hiro_1', 'Hiro_3', 'Hiro_3v'] },
-    unity:     { name: 'UNITY',      guardian: 'MRS. PICKLEFROG',   color: '#22c55e', origin: 'Southern United States', tagline: 'Work together. Lift each other up.',           cards: ['Picklefrog_1', 'Picklefrog_3', 'Picklefrog_3v'] },
-    willpower: { name: 'WILL POWER', guardian: 'MASTER COMMANDER',  color: '#3b82f6', origin: 'Santa Cruz, California', tagline: 'Focus. Resist. Choose on purpose.',            cards: ['Master_Commander_2', 'Master_Commander_3', 'Master_Commander_3v'] },
-    energy:    { name: 'ENERGY',     guardian: 'WOODSY THE WIZARD', color: '#eab308', origin: 'Ireland',                tagline: 'Bring the joy. Bring the effort.',             cards: ['Woodsy_2', 'Woodsy_3', 'Woodsy_3v'] },
-    reaction:  { name: 'REACTION',   guardian: 'SERENITY',          color: '#a855f7', origin: 'Africa',                 tagline: "Pause. Breathe. Respond, don't just react.",   cards: ['Serenity_2', 'Serenity_3', 'Serenity_3v'] }
+    safety:    { name: 'SAFETY',     guardian: 'HIRO',              color: '#ef4444', origin: 'Southern Japan',         tagline: 'Aware body. Aware team. Safe moves.',          cards: ['Hiro_1', 'Hiro_3', 'Hiro_3v'], combo: 'Hiro_Combo' },
+    unity:     { name: 'UNITY',      guardian: 'MRS. PICKLEFROG',   color: '#22c55e', origin: 'Southern United States', tagline: 'Work together. Lift each other up.',           cards: ['Picklefrog_1', 'Picklefrog_3', 'Picklefrog_3v'], combo: 'Picklefrog_Combo' },
+    willpower: { name: 'WILL POWER', guardian: 'MASTER COMMANDER',  color: '#3b82f6', origin: 'Santa Cruz, California', tagline: 'Focus. Resist. Choose on purpose.',            cards: ['Master_Commander_2', 'Master_Commander_3', 'Master_Commander_3v'], combo: 'Master_Commander_Combo' },
+    energy:    { name: 'ENERGY',     guardian: 'WOODSY THE WIZARD', color: '#eab308', origin: 'Ireland',                tagline: 'Bring the joy. Bring the effort.',             cards: ['Woodsy_2', 'Woodsy_3', 'Woodsy_3v'], combo: 'Woodsy_Combo' },
+    reaction:  { name: 'REACTION',   guardian: 'SERENITY',          color: '#a855f7', origin: 'Africa',                 tagline: "Pause. Breathe. Respond, don't just react.",   cards: ['Serenity_2', 'Serenity_3', 'Serenity_3v'], combo: 'Serenity_Combo' }
   };
   // Game cards, grouped by crystal as they hang in the Game Arena
   var GAMES = [
@@ -39,7 +42,7 @@
   var ROWS = [-9, -23, -37], HALL_END = -47;
   var ROOMS = [
     { key: 'arena',     side: -1, z: ROWS[0], R: 7.6, name: 'GAME ARENA', sub: 'ALL GAME CARDS', color: GOLD },
-    { key: 'void',      side:  1, z: ROWS[0], R: 0,   name: 'THE VOID',   sub: 'SEALED',         color: '#7c3aed', sealed: true },
+    { key: 'void',      side:  1, z: ROWS[0], R: 4.6, name: 'THE VOID',   sub: 'THE VOID CARD',  color: '#7c3aed' },   // add  sealed: true  to lock this door again
     { key: 'safety',    side: -1, z: ROWS[1], R: 5.6 },
     { key: 'energy',    side:  1, z: ROWS[1], R: 5.6 },
     { key: 'unity',     side: -1, z: ROWS[2], R: 5.6 },
@@ -55,7 +58,9 @@
     r.cx = r.side * (HW + reach); r.cz = r.side === 0 ? r.z - reach : r.z;
     r.items = [];
   });
-  var STOPS = [ROWS[0] + 7, ROWS[1] + 7, ROWS[2] + 7, HALL_END + 7.5];
+  // Walk stops right between each pair of doors, so you can look left and right into the rooms
+  var STOPS = [ROWS[0], ROWS[1], ROWS[2], HALL_END + 5];
+  function atEnd() { return cam.z < HALL_END + 7; }
   var CARDS = [];   // every card in the vault
 
   // ───────────────────────── renderer ─────────────────────────
@@ -153,7 +158,7 @@
   var world = new THREE.Group(); scene.add(world);
   function box(w, h, d, mat, x, y, z, parent) { var m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat); m.position.set(x, y, z); (parent || world).add(m); return m; }
   function plane(w, h, mat, parent) { var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat); (parent || world).add(m); return m; }
-  var flames = [], spinners = [], bobbers = [], clickables = [];
+  var flames = [], spinners = [], bobbers = [], clickables = [], veils = [], guardians = [];
   function torch(x, y, z, withLight) {
     box(0.12, 0.7, 0.12, ironMat, x, y - 0.35, z);
     box(0.3, 0.12, 0.3, goldMat, x, y, z);
@@ -223,12 +228,12 @@
     var s = room.side, z = room.z, col = new THREE.Color(room.color);
     if (s === 0) {
       var g = doorFrame(0, HALL_END + 0.2, 0, col);
-      var v = veil(col, DOOR_W, DOOR_H); v.position.set(0, DOOR_H / 2, HALL_END + 0.05); world.add(v); room.veil = v;
+      var v = veil(col, DOOR_W, DOOR_H); v.position.set(0, DOOR_H / 2, HALL_END + 0.05); world.add(v); veils.push(v);
       hangingSign('WILL POWER', 'THE HEART OF THE VAULT', room.color, 0, 4.72, HALL_END + 1.4);
       clickables.push({ o: v, fn: function () { enterRoom(room); } });
     } else {
       doorFrame(s * (HW - 0.05), z, -s * PI / 2, col);
-      hangingSign(room.door, room.sealed ? 'COMING SOON' : (room.key === 'arena' ? 'ALL GAMES' : 'ROOM'), room.color, s * (HW - 1.75), 4.3, z);
+      hangingSign(room.door, room.sealed ? 'COMING SOON' : (room.key === 'arena' ? 'ALL GAMES' : (room.key === 'void' ? 'ENTER IF YOU DARE' : 'ROOM')), room.color, s * (HW - 1.75), 4.3, z);
       if (room.sealed) {
         var d = new THREE.Group(); d.position.set(s * (HW + 0.2), 0, z); d.rotation.y = -s * PI / 2; world.add(d);
         box(DOOR_W, DOOR_H, 0.2, woodMat('door', woodDarkC, 1, 1), 0, DOOR_H / 2, 0, d);
@@ -239,7 +244,7 @@
         var vl = new THREE.PointLight(0x7c3aed, 0.9, 9, 1.6); vl.position.set(s * (HW - 1), 2.2, z); world.add(vl);
         clickables.push({ o: d.children[0], fn: function () { toast('The Void is sealed. Coming soon.'); } });
       } else {
-        var v2 = veil(col, DOOR_W, DOOR_H); v2.position.set(s * (HW + 0.25), DOOR_H / 2, z); v2.rotation.y = -s * PI / 2; world.add(v2);
+        var v2 = veil(col, DOOR_W, DOOR_H); v2.position.set(s * (HW + 0.25), DOOR_H / 2, z); v2.rotation.y = -s * PI / 2; world.add(v2); veils.push(v2);
         clickables.push({ o: v2, fn: function () { enterRoom(room); } });
       }
     }
@@ -253,10 +258,10 @@
   function addCard(room, angleDeg, info) {
     var yaw = room.yaw - rad(angleDeg), rc = room.R - 0.75;
     var g = new THREE.Group(); g.position.set(room.cx - Math.sin(yaw) * rc, 0, room.cz - Math.cos(yaw) * rc); g.rotation.y = yaw; world.add(g);
-    var W = 1.36, Hc = W / 0.7515, cy = 2.0, col = new THREE.Color(info.color);
+    var sc = info.scale || 1, W = 1.36 * sc, Hc = W / 0.7515, cy = 2.0 + (sc - 1) * 0.6, col = new THREE.Color(info.color);
     box(W + 0.1, Hc + 0.1, 0.08, goldMat, 0, cy, -0.05, g);
     var face = plane(W, Hc, new THREE.MeshBasicMaterial({ map: cardTexture(info.url), toneMapped: false }), g); face.position.set(0, cy, 0.0);
-    var halo = glowSprite(col, 4.4, 0.42); halo.position.set(0, cy, -0.4); g.add(halo);
+    var halo = glowSprite(col, 4.4 * sc, 0.42); halo.position.set(0, cy, -0.4); g.add(halo);
     var plate = plane(W + 0.16, 0.3, new THREE.MeshBasicMaterial({ toneMapped: false, map: textTexture([{ text: info.name, font: '62px ' + F_DISPLAY, color: GOLD, y: 50 }], 512, 96, { dim: 0.6 }) }), g); plate.position.set(0, cy - Hc / 2 - 0.3, 0.0);
     box(0.5, cy - Hc / 2 - 0.5, 0.3, beamMat, 0, (cy - Hc / 2 - 0.5) / 2, -0.08, g);
     info.index = CARDS.length; CARDS.push(info);
@@ -290,7 +295,7 @@
 
     var c = CRYSTALS[room.key];
     if (c) {
-      var angles = [-76, -38, 38, 76];
+      var angles = [-80, -52, -26, 26, 52];      // tablet, cards I and II, (crystal in the middle), card III, combo card
       // lore tablet
       var yawT = room.yaw - rad(angles[0]), rc = R - 0.7, tg = new THREE.Group();
       tg.position.set(cx - Math.sin(yawT) * rc, 0, cz - Math.cos(yawT) * rc); tg.rotation.y = yawT; world.add(tg);
@@ -305,11 +310,20 @@
       // cards I, II, III
       addCrystal(room, c, grp);
       ['I', 'II', 'III'].forEach(function (rn, i) {
-        addCard(room, [angles[1], angles[2], angles[3]][i],
+        addCard(room, angles[i + 1],
           { name: c.guardian + ' ' + rn, sub: c.name + ' CRYSTAL · GUARDIAN CARD', color: room.color, url: 'assets/card-vault/' + c.cards[i] + '.jpg' });
       });
+      addCard(room, angles[4], { name: c.guardian + ' COMBO', sub: c.name + ' CRYSTAL · COMBO CARD', color: room.color, url: 'img/' + c.combo + '.jpg' });
       room.items.sort(function (p, q) { return p.a - q.a; });
-      room.start = 2;
+      room.start = 3;   // you walk in facing the crystal
+    } else if (room.key === 'void') {      // The Void: one card, alone in the dark
+      light.intensity = 1.25;
+      addCard(room, 0, { name: 'THE VOID', sub: 'THE VOID CARD', color: room.color, url: 'img/The_Void.jpg', scale: 1.3 });
+      [-1, 1].forEach(function (sd) {
+        var yv = room.yaw - rad(sd * 34), sw = glowSprite(0x7c3aed, 5.5, 0.4); sw.position.set(cx - Math.sin(yv) * (R - 0.5), 2.3, cz - Math.cos(yv) * (R - 0.5)); world.add(sw);
+        flames.push({ f: sw, L: null, seed: sd * 2 + 3, slow: true, base: 5.5 });
+      });
+      room.start = 0;
     } else {            // Game Arena
       var n = GAMES.length, step = 300 / n;
       GAMES.forEach(function (gm, i) {
@@ -344,6 +358,36 @@
       var obj = res.scene, bb = new THREE.Box3().setFromObject(obj), size = bb.getSize(new THREE.Vector3()), ctr = bb.getCenter(new THREE.Vector3());
       var sc = 1.3 / Math.max(size.x, size.y, size.z); obj.scale.setScalar(sc); obj.position.set(-ctr.x * sc, -ctr.y * sc, -ctr.z * sc);
       holder.remove(stand); holder.add(obj);
+    }, undefined, function () {});
+  }
+
+  // ───────────────────────── Guardians by their doors ─────────────────────────
+  // Each Guardian stands on a small plinth just past their door and turns to watch you.
+  // The figure is a cut-out for now; a real model at vault3d/guardians/<room>.glb replaces it.
+  var G_TALL = { safety: 2.15, unity: 1.95, willpower: 1.9, energy: 2.25, reaction: 2.1 };   // how tall each stand-in figure is, in metres
+  function buildGuardian(room) {
+    var c = CRYSTALS[room.key]; if (!c) return;
+    var s = room.side, col = new THREE.Color(room.color);
+    var x = s === 0 ? -(DOOR_W / 2 + 0.95) : s * (HW - 0.66), z = s === 0 ? HALL_END + 0.95 : room.z - (DOOR_W / 2 + 1.1);
+    var g = new THREE.Group(); g.position.set(x, 0, z); world.add(g);
+    var base = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.58, 0.16, 20), beamMat); base.position.y = 0.08; g.add(base);
+    var rim = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.035, 8, 32), goldMat); rim.rotation.x = PI / 2; rim.position.y = 0.16; g.add(rim);
+    var pool = plane(2.6, 2.6, new THREE.MeshBasicMaterial({ map: glowWhite, color: col, transparent: true, opacity: 0.55, blending: THREE.AdditiveBlending, depthWrite: false }), g); pool.rotation.x = -PI / 2; pool.position.y = 0.175;
+    var aura = glowSprite(col, 3.4, 0.22); aura.position.set(s === 0 ? 0 : s * 0.3, 1.25, s === 0 ? -0.3 : 0); g.add(aura);
+    var body = new THREE.Group(); body.position.y = 0.16; g.add(body);
+    var fig = plane(1, 1, new THREE.MeshBasicMaterial({ color: 0xe9e0d4, alphaTest: 0.45, side: THREE.DoubleSide, toneMapped: false, visible: false }), body);
+    loader.load('vault3d/guardians/' + room.key + '.png', function (t) {
+      t.encoding = THREE.sRGBEncoding; t.anisotropy = 4; fig.material.map = t; fig.material.visible = true; fig.material.needsUpdate = true;
+      var tall = G_TALL[room.key], w = tall * t.image.width / t.image.height; fig.scale.set(w, tall, 1); fig.position.y = tall / 2;
+    });
+    var plate = plane(1.0, 0.19, new THREE.MeshBasicMaterial({ toneMapped: false, map: textTexture([{ text: c.guardian, font: '62px ' + F_DISPLAY, color: GOLD, y: 50 }], 512, 96, { dim: 0.6 }) }), body); plate.position.set(0, -0.045, 0.6);
+    var me = { g: g, body: body, fig: fig, room: room, seed: Math.random() * 6 };
+    guardians.push(me); room.guardian = me;
+    clickables.push({ o: fig, fn: function () { toast(c.guardian + ' · Guardian of the ' + c.name + ' Crystal'); } });
+    if (gltf) gltf.load('vault3d/guardians/' + room.key + '.glb', function (res) {      // your real 3D Guardian
+      var obj = res.scene, bb = new THREE.Box3().setFromObject(obj), size = bb.getSize(new THREE.Vector3()), ctr = bb.getCenter(new THREE.Vector3());
+      var k = 2.1 / size.y; obj.scale.setScalar(k); obj.position.set(-ctr.x * k, -bb.min.y * k, -ctr.z * k);
+      fig.visible = false; body.add(obj); me.model = obj;
     }, undefined, function () {});
   }
 
@@ -402,7 +446,7 @@
   var look = { yaw: 0, pitch: 0 };                // where your finger has turned you
   var state = { mode: 'outside', room: null, idx: 0, path: [], hold: 0, busy: false, stopZ: 15.5, faceYaw: 0 };
   function angDiff(a, b) { var d = (a - b) % (PI * 2); if (d > PI) d -= PI * 2; if (d < -PI) d += PI * 2; return d; }
-  function nearestRow() { var best = -1, bd = 1e9; ROWS.forEach(function (z, i) { var d = Math.abs((cam.z - 3.2) - z); if (d < bd) { bd = d; best = i; } }); return bd < 5.6 ? best : -1; }
+  function nearestRow() { var best = -1, bd = 1e9; ROWS.forEach(function (z, i) { var d = Math.abs(cam.z - z); if (d < bd) { bd = d; best = i; } }); return bd < 3.4 ? best : -1; }
   function roomsAtRow(i) { var L = null, Rr = null; ROOMS.forEach(function (r) { if (r.z === ROWS[i]) { if (r.side < 0) L = r; else if (r.side > 0) Rr = r; } }); return { l: L, r: Rr }; }
   function walkTo(z) { state.path = [{ x: 0, z: z }]; state.stopZ = z; state.faceYaw = 0; look.target = 0; look.useTarget = true; }
   function stepStop(dir) {
@@ -419,34 +463,34 @@
   function enterRoom(room) {
     if (state.mode !== 'hall' || state.busy || !room) return;
     if (room.sealed) { toast('The Void is sealed. Coming soon.'); return; }
-    state.busy = true; state.room = room; look.yaw = 0; look.pitch = 0;
+    state.busy = true; state.room = room; look.yaw = 0; look.pitch = 0; look.target = 0;
     var inner = itemSpot(room, room.start);
     if (room.side === 0) state.path = [{ x: 0, z: room.z + 1.5 }, { x: 0, z: room.z - PASS }, inner];
     else state.path = [{ x: 0, z: room.z }, { x: room.side * (HW + PASS), z: room.z }, inner];
     state.mode = 'entering'; state.idx = room.start; ui();
   }
   function exitRoom() {
-    if (state.mode !== 'room' || state.busy) return; var room = state.room; state.busy = true; look.yaw = 0; look.pitch = 0;
+    if (state.mode !== 'room' || state.busy) return; var room = state.room; state.busy = true; look.yaw = 0; look.pitch = 0; look.target = 0;
     if (room.side === 0) state.path = [{ x: 0, z: room.z - PASS }, { x: 0, z: STOPS[STOPS.length - 1] }];
     else state.path = [{ x: room.side * (HW + PASS), z: room.z }, { x: 0, z: room.z }];
     state.mode = 'leaving'; closeCard(); ui();
   }
   // where you stand to look at one item in a room
-  function itemSpot(room, i) { var yaw = room.yaw - rad(room.items[i].a), step = room.key === 'arena' ? room.R * 0.42 : (room.items[i].card < 0 && room.items[i].a === 0 ? 0 : room.R * 0.2); return { x: room.cx - Math.sin(yaw) * step, z: room.cz - Math.cos(yaw) * step, yaw: yaw }; }
+  function itemSpot(room, i) { var yaw = room.yaw - rad(room.items[i].a), step = room.key === 'arena' ? room.R * 0.42 : room.key === 'void' ? -room.R * 0.3 : (room.items[i].card < 0 && room.items[i].a === 0 ? 0 : room.R * 0.2); return { x: room.cx - Math.sin(yaw) * step, z: room.cz - Math.cos(yaw) * step, yaw: yaw }; }
   function turn(d) {
     if (state.mode !== 'room' || state.busy) return; var room = state.room;
     var n = Math.max(0, Math.min(room.items.length - 1, state.idx + d)); if (n === state.idx) return;
-    state.idx = n; look.yaw = 0; look.pitch = 0; state.path = [itemSpot(room, n)]; ui();
+    state.idx = n; look.yaw = 0; look.pitch = 0; look.target = 0; state.path = [itemSpot(room, n)]; ui();
   }
-  function lookStep(d) {         // arrows in the hall: glance toward the doors
-    if (state.mode !== 'hall') return; var t = look.target || 0; t = (d < 0 ? (t > 0.01 ? 0 : 0.62) : (t < -0.01 ? 0 : -0.62)); look.target = t; look.useTarget = true;
+  function lookStep(d) {         // arrows in the hall: turn to look straight through the doors
+    if (state.mode !== 'hall') return; var t = look.target || 0; t = (d < 0 ? (t > 0.01 ? 0 : PI / 2) : (t < -0.01 ? 0 : -PI / 2)); look.target = t; look.useTarget = true;
   }
 
   var clock = new THREE.Clock(), tmp = new THREE.Vector3();
   function update(dt, t) {
     // hold-to-walk in the hall
     if (state.mode === 'hall' && state.hold && !state.busy) {
-      var nz = Math.max(STOPS[STOPS.length - 1], Math.min(STOPS[0] + 3, cam.z - state.hold * 6 * dt * 1.2));
+      var nz = Math.max(STOPS[STOPS.length - 1], Math.min(STOPS[0] + 6, cam.z - state.hold * 6 * dt * 1.2));
       state.path = [{ x: 0, z: nz }]; state.stopZ = nz; state.faceYaw = 0;
     }
     // follow the current path
@@ -483,6 +527,14 @@
     spinners.forEach(function (s) { if (s.axis === 'z') s.o.rotation.z += dt * s.s; else s.o.rotation.y += dt * s.s; });
     bobbers.forEach(function (b) { b.o.position.y = b.y + Math.sin(t * b.s) * b.a; });
     if (dust) { dust.rotation.y = Math.sin(t * 0.05) * 0.02; dust.position.y = Math.sin(t * 0.2) * 0.15; }
+    // doorway glows thin out as you come close, so you can see into the room
+    veils.forEach(function (v) { var d = Math.sqrt((v.position.x - cam.x) * (v.position.x - cam.x) + (v.position.z - cam.z) * (v.position.z - cam.z)), k = Math.max(0, Math.min(1, (d - 4) / 9)); v.material.opacity = 0.1 + 0.5 * k * k * (3 - 2 * k); });
+    // Guardians turn to watch you, and breathe
+    guardians.forEach(function (gd) {
+      var want = Math.atan2(cam.x - gd.g.position.x, cam.z - gd.g.position.z);
+      gd.body.rotation.y += angDiff(want, gd.body.rotation.y) * Math.min(1, dt * (gd.model ? 2.2 : 9));
+      gd.body.scale.y = 1 + Math.sin(t * 1.5 + gd.seed) * 0.012;
+    });
     maybeUi();
   }
   function arrived(p) {
@@ -495,7 +547,8 @@
   // ───────────────────────── screen controls ─────────────────────────
   var $ = function (id) { return document.getElementById(id); };
   var lastKey = '';
-  function maybeUi() { var k = state.mode + '|' + (state.mode === 'hall' ? nearestRow() + '|' + (cam.z < HALL_END + 11) + '|' + (cam.z <= STOPS[STOPS.length - 1] + 0.3) + '|' + (cam.z >= STOPS[0] - 0.3) : state.idx) + '|' + state.busy; if (k !== lastKey) { lastKey = k; ui(); } }
+  function lookSide() { return look.yaw > 0.6 ? 'l' : (look.yaw < -0.6 ? 'r' : ''); }
+  function maybeUi() { var k = state.mode + '|' + (state.mode === 'hall' ? nearestRow() + '|' + lookSide() + '|' + atEnd() + '|' + (cam.z <= STOPS[STOPS.length - 1] + 0.3) + '|' + (cam.z >= STOPS[0] - 0.3) : state.idx) + '|' + state.busy; if (k !== lastKey) { lastKey = k; ui(); } }
   function show(el, on) { el.hidden = !on; }
   function ui() {
     var m = state.mode, hall = m === 'hall', room = m === 'room';
@@ -506,12 +559,14 @@
     $('v-hud-sub').textContent = (room || m === 'entering') && r ? r.sub : 'THE CARD VAULT';
     $('v-hud-name').textContent = (room || m === 'entering') && r ? r.name : 'MAIN HALL';
     $('v-hud-sub').style.color = (room || m === 'entering') && r ? r.color : GOLD;
-    var row = hall ? nearestRow() : -1, rr = row >= 0 ? roomsAtRow(row) : { l: null, r: null }, atEnd = hall && cam.z < HALL_END + 11;
-    pill($('v-enter-l'), hall && !state.busy && !atEnd ? rr.l : null); pill($('v-enter-r'), hall && !state.busy && !atEnd ? rr.r : null);
-    pill($('v-enter-c'), atEnd && !state.busy ? ROOMS[6] : null);
+    var row = hall ? nearestRow() : -1, rr = row >= 0 ? roomsAtRow(row) : { l: null, r: null }, end = hall && atEnd();
+    // facing a doorway: one button for that room, low in the middle, so it doesn't cover the view
+    var facing = hall ? lookSide() : '', ok = hall && !state.busy;
+    pill($('v-enter-l'), ok && !facing ? rr.l : null); pill($('v-enter-r'), ok && !facing ? rr.r : null);
+    pill($('v-enter-c'), ok ? (facing ? rr[facing] : (end ? ROOMS[6] : null)) : null);
     if (hall) {
       $('v-walk').style.opacity = cam.z <= STOPS[STOPS.length - 1] + 0.3 ? 0.4 : 1; $('v-back').style.opacity = cam.z >= STOPS[0] - 0.3 ? 0.4 : 1;
-      $('v-hint').textContent = atEnd ? 'The Will Power room is straight ahead.' : 'Tap Walk for the next doors, or hold it to keep walking. Drag to look around.';
+      $('v-hint').textContent = end ? 'The Will Power room is straight ahead.' : (row >= 0 ? 'Drag left or right to look into each room.' : 'Tap Walk for the next doors, or hold it to keep walking.');
     }
     if (room && r) {
       var it = r.items[state.idx]; $('v-item').textContent = it.label + '  ·  ' + (state.idx + 1) + ' OF ' + r.items.length;
@@ -557,7 +612,7 @@
     canvas.addEventListener('pointermove', function (e) {
       if (!drag) return; var dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.moved = Math.max(drag.moved, Math.abs(dx) + Math.abs(dy));
       if (state.mode === 'outside') return;
-      var lim = state.mode === 'room' ? 0.75 : 0.95;
+      var lim = state.mode === 'room' ? 0.75 : 1.9;
       look.yaw = Math.max(-lim, Math.min(lim, drag.yaw + dx * 0.0042)); look.pitch = Math.max(-0.35, Math.min(0.35, drag.pitch + dy * 0.003));
     });
     function end(e) {
@@ -598,7 +653,7 @@
   }
   function build() {
     scene.add(new THREE.AmbientLight(0x5a4334, 0.5)); scene.add(new THREE.HemisphereLight(0xffcf9a, 0x140b06, 0.28));
-    buildEnvironment(); buildHall(); buildEntrance(); ROOMS.forEach(function (r) { buildDoor(r); if (!r.sealed) buildRoom(r); });
+    buildEnvironment(); buildHall(); buildEntrance(); ROOMS.forEach(function (r) { buildDoor(r); if (!r.sealed) buildRoom(r); buildGuardian(r); });
     buildDust(); loadSkins(); bind(); resize(); window.addEventListener('resize', resize);
     $('v-count').textContent = CARDS.length + ' POWER CARDS INSIDE'; ui(); $('v-loading').hidden = true; frame();
   }
@@ -611,7 +666,7 @@
     state: state, cam: cam, rooms: ROOMS, scene: scene, camera: camera,
     tick: function (secs) { for (var i = 0; i < secs / 0.033; i++) update(0.033, clock.elapsedTime + i * 0.033); },
     jump: function (where, idx) {
-      state.path = []; state.busy = false; look.yaw = 0; look.pitch = 0; look.useTarget = false; gateTarget = 1; gateOpen = 1;
+      state.path = []; state.busy = false; look.yaw = 0; look.pitch = 0; look.target = 0; look.useTarget = false; gateTarget = 1; gateOpen = 1;
       if (where === 'outside') { state.mode = 'outside'; cam.x = 0; cam.z = 15.5; cam.yaw = state.faceYaw = 0; gateTarget = gateOpen = 0; }
       else if (typeof where === 'number') { state.mode = 'hall'; state.room = null; cam.x = 0; cam.z = where; cam.yaw = state.faceYaw = 0; look.yaw = idx || 0; }
       else { var r = ROOMS.filter(function (q) { return q.key === where; })[0]; state.mode = 'room'; state.room = r; state.idx = idx == null ? r.start : idx; var s = itemSpot(r, state.idx); cam.x = s.x; cam.z = s.z; cam.yaw = state.faceYaw = s.yaw; }
